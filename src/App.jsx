@@ -8,8 +8,8 @@ function App() {
       <Routes>
         <Route path="/visa" element={<VisaPathwayExplorer />} />
         <Route path="/cities" element={<CitySelector />} />
-        <Route path="/GLN" element={<CitySelector />} />
-        <Route path="*" element={<Navigate to="/GLN" replace />} />
+        <Route path="/gln-tools" element={<CitySelector />} />
+        <Route path="*" element={<Navigate to="/gln-tools" replace />} />
       </Routes>
     </BrowserRouter>
   );
