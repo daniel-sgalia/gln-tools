@@ -8,7 +8,8 @@ function App() {
       <Routes>
         <Route path="/visa" element={<VisaPathwayExplorer />} />
         <Route path="/cities" element={<CitySelector />} />
-        <Route path="*" element={<Navigate to="/visa" replace />} />
+        <Route path="/GLN" element={<CitySelector />} />
+        <Route path="*" element={<Navigate to="/GLN" replace />} />
       </Routes>
     </BrowserRouter>
   );
