@@ -46,6 +46,14 @@ const style = `
     align-items: center;
     text-align: center;
   }
+  .header-logo {
+    height: 38px;
+    margin-bottom: 20px;
+    filter: invert(1) brightness(0.92) sepia(0.15) hue-rotate(10deg) saturate(0.3);
+    opacity: 0.85;
+    transition: opacity 0.3s;
+  }
+  .header-logo:hover { opacity: 1; }
   .header-eyebrow {
     font-family: 'Outfit', sans-serif;
     font-size: 11px;
@@ -54,6 +62,7 @@ const style = `
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 14px;
+    display: none;
   }
   .header h1 {
     font-family: 'Cormorant Garant', serif;
@@ -184,7 +193,7 @@ const style = `
     background: rgba(201,169,110,0.12);
     color: var(--gold-light);
   }
-  .option-icon { font-size: 18px; flex-shrink: 0; }
+  .option-icon { display: none; }
 
   .next-btn {
     margin-top: 24px;
@@ -215,11 +224,14 @@ const style = `
     border-radius: 16px;
     animation: fadeUp 0.4s ease;
   }
-  .globe-spinner {
-    font-size: 52px;
-    animation: spin 3s linear infinite;
-    display: block;
-    margin: 0 auto 24px;
+  .spinner-ring {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 28px;
   }
   @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   .loading-title {
@@ -244,7 +256,7 @@ const style = `
   }
   .loading-step.done { color: var(--green); background: rgba(76,175,130,0.08); }
   .loading-step.active { color: var(--gold); background: rgba(201,169,110,0.08); }
-  .step-icon { font-size: 16px; }
+  .step-icon { font-size: 13px; font-weight: 600; width: 18px; text-align: center; flex-shrink: 0; }
 
   /* RESULTS */
   .results-header {
@@ -737,10 +749,13 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
 
         {/* HEADER */}
         <div className="header">
+          <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" />
           <div className="header-eyebrow">Global Living Network</div>
-          <h1>Find Your <em>Visa Pathway</em><br />Abroad</h1>
+          <h1>Your Path to <em>Living</em><br />Abroad</h1>
           <p className="header-sub">
-            Answer 5 questions and our AI advisor will map your best legal pathways across 6 top expat destinations — personalized to your income, family, and timeline.
+            Thinking about moving abroad? Tell us about your situation and we'll
+            show you exactly how to make it happen — residency options across 6
+            top destinations, personalized to your income, family, and timeline.
           </p>
           <div className="divider" />
         </div>
@@ -764,13 +779,15 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
         {/* INTRO */}
         {step === 0 && (
           <div className="question-card" style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 52, marginBottom: 20 }}>🌍</div>
-            <div className="question-text" style={{ marginBottom: 10 }}>Ready to find your path?</div>
+            <div className="question-text" style={{ marginBottom: 10 }}>See where you can live abroad</div>
             <p className="question-hint">
-              This 5-question assessment analyzes your citizenship, income type, budget, family situation, and timeline — then maps your strongest legal pathways across Puerto Rico, Costa Rica, Portugal, Mexico, Panama, and Brazil.
+              Answer 5 quick questions about your citizenship, income, family,
+              and timeline — we'll show you the strongest residency options across
+              Puerto Rico, Costa Rica, Portugal, Mexico, Panama, and Brazil with
+              honest, data-driven guidance.
             </p>
             <button className="next-btn" onClick={handleStart}>
-              Start My Assessment →
+              Start Your Relocation Plan →
             </button>
           </div>
         )}
@@ -802,19 +819,19 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
         {/* LOADING */}
         {step === 6 && (
           <div className="loading-screen">
-            <span className="globe-spinner">🌐</span>
+            <div className="spinner-ring" />
             <div className="loading-title">Mapping Your Pathways</div>
             <div className="loading-sub">Our AI is analyzing 6 destinations against your profile…</div>
             <div className="loading-steps">
               {[
-                ["🛂", "Checking visa eligibility by citizenship"],
-                ["💼", "Matching income type to program requirements"],
-                ["👨‍👩‍👦", "Evaluating family & dependent pathways"],
-                ["📊", "Scoring & ranking all 6 destinations"],
-                ["✅", "Generating your personalized report"],
-              ].map(([icon, label], i) => (
+                "Checking visa eligibility by citizenship",
+                "Matching income type to program requirements",
+                "Evaluating family & dependent pathways",
+                "Scoring & ranking all 6 destinations",
+                "Generating your personalized report",
+              ].map((label, i) => (
                 <div key={i} className={`loading-step ${loadingStep > i ? "done" : loadingStep === i ? "active" : ""}`}>
-                  <span className="step-icon">{loadingStep > i ? "✓" : icon}</span>
+                  <span className="step-icon">{loadingStep > i ? "✓" : `${i + 1}`}</span>
                   {label}
                 </div>
               ))}
@@ -831,8 +848,8 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
         {step === 7 && results && (
           <>
             <div className="results-header">
-              <div className="results-title">Your Visa Pathway Report</div>
-              <div className="results-sub">6 destinations analyzed · Ranked by fit for your profile</div>
+              <div className="results-title">Your Residency Options</div>
+              <div className="results-sub">6 destinations matched to your situation · Ranked by fit</div>
               <div className="profile-pill">
                 <span>{answers.citizenship}</span>
                 <span>{answers.incomeType}</span>
@@ -903,13 +920,16 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
             <div className="results-cta">
               <div className="cta-title">Ready to take the next step?</div>
               <div className="cta-sub">
-                Our relocation specialists will map out your exact pathway, connect you with vetted immigration attorneys, and introduce you to local real estate agents in your top destination.
+                Tell us about your move and we'll connect you with vetted
+                immigration attorneys, local real estate agents, and relocation
+                specialists in your top destination. Zero spam, zero pressure —
+                just useful guidance.
               </div>
               <a className="cta-btn" href="https://globallivingnetwork.com/contact-us/" target="_blank" rel="noreferrer">
-                Start My Relocation Plan
+                Start Your Relocation Plan
               </a>
               <button className="restart-link" onClick={restart}>
-                ← Run a new assessment
+                ← Explore different options
               </button>
             </div>
           </>
