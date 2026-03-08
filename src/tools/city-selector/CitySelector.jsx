@@ -1337,6 +1337,39 @@ const CITY_SCORE_DATA = {
       default: "Immediate permanent residency available",
     },
   },
+  florianopolis: {
+    key: "florianopolis", city: "Florianópolis", country: "Brazil", flag: "🇧🇷",
+    costOfLivingIndex: 45, safetyRating: "High", healthcareQuality: "Good",
+    internetReliability: "Good", expatCommunity: "Growing",
+    climate: "Subtropical — warm summers, mild winters, beach lifestyle year-round",
+    scores: {
+      climateType: "tropical", budgetFriendliness: 7, safety: 7, healthcare: 6,
+      schools: 5, culture: 7, nature: 10, expat: 5, business: 5, visaSpeed: 6, costSavings: 7,
+    },
+    visaByOrigin: {
+      "United States": { speed: 6, boost: 0 }, "Canada": { speed: 6, boost: 0 },
+      "United Kingdom": { speed: 6, boost: 0 }, "Australia / NZ": { speed: 6, boost: 0 },
+      "EU Country": { speed: 6, boost: 0 }, "Other": { speed: 5, boost: -2 },
+    },
+    caveat: "Florianópolis is an island city — traffic over the bridges can be challenging during peak season (Dec–Feb). Portuguese is essential for daily life outside tourist areas.",
+    schoolsData: [
+      { name: "Escola Internacional de Florianópolis", type: "International / Bilingual", curriculum: "Brazilian & IB-influenced", grades: "Pre-K through 9", tuitionUSD: "$4,000–$8,000/year", note: "Bilingual English-Portuguese. Growing international school with small class sizes. Popular with expat families." },
+      { name: "Colégio Catarinense", type: "Private", curriculum: "Brazilian National", grades: "Pre-K through 12", tuitionUSD: "$3,000–$6,000/year", note: "Top-rated private school in Florianópolis. Portuguese instruction. Strong academics and extracurriculars." },
+    ],
+    highlightsByDimension: {
+      nature: "42 beaches on a stunning island — surf, hike, and sail year-round",
+      safety: "One of Brazil's safest and highest quality-of-life cities",
+      cost: "40–60% cheaper than major US cities with beach lifestyle",
+      culture: "Vibrant surf culture, Azorean heritage, and foodie scene",
+      healthcare: "SUS public healthcare plus affordable private clinics",
+      expat: "Growing digital nomad and international community",
+      business: "Brazil's top tech hub — 'Silicon Island' startup ecosystem",
+      visa: "Digital Nomad Visa for remote workers",
+      schools: "Bilingual school options for expat families",
+      climate: "Subtropical climate with warm summers and mild winters",
+      default: "42 beaches on a stunning island — surf, hike, and sail year-round",
+    },
+  },
 };
 
 // ─── SCORING LOOKUP CONSTANTS ────────────────────────────────
@@ -1833,6 +1866,40 @@ const DEEP_DIVE_DATA = {
       { service: "Utilities, internet, SIM & home furnishing", detail: "Your apartment fully set up and ready before you arrive" },
     ],
   },
+  "Florianópolis": {
+    budgetBreakdown: [
+      { category: "Housing", amount: "$800–$2,000", note: "2–3 bed apartment in Lagoa da Conceição, Campeche, or Centro" },
+      { category: "International School", amount: "$350–$700/child", note: "Per child/month at bilingual or private schools", familyOnly: true },
+      { category: "Healthcare", amount: "$100–$250", note: "Private health plan (Unimed) — SUS public system also available" },
+      { category: "Groceries & Dining", amount: "$350–$600", note: "Local markets, supermarkets, and beachside restaurants" },
+      { category: "Transport", amount: "$100–$250", note: "Car recommended on the island — Uber available in urban areas" },
+      { category: "Lifestyle", amount: "$300–$700", note: "Surf lessons, beach clubs, boat trips, nightlife" },
+    ],
+    totalRange: "$2,000–$4,500",
+    neighborhoods: [
+      { name: "Lagoa da Conceição", vibe: "Bohemian & active", description: "The island's social hub — surrounded by lagoon and dunes, packed with restaurants, bars, and surf shops. Most popular with expats and digital nomads." },
+      { name: "Campeche", vibe: "Beach & relaxed", description: "Quieter south-island neighborhood with stunning beach, growing café scene, and family-friendly vibes. Close to nature trails." },
+      { name: "Jurerê Internacional", vibe: "Upscale & resort-like", description: "Florianópolis' most exclusive neighborhood — luxury homes, beach clubs, and a polished resort atmosphere year-round." },
+    ],
+    visaPathway: {
+      type: "Digital Nomad Visa (VITEM XIV)",
+      processingTime: "2–4 months total",
+      steps: [
+        { label: "Prove remote income", time: "1–2 weeks", detail: "Documentation of $1,500+/mo remote income from foreign employer or clients" },
+        { label: "Consulate application", time: "1–2 weeks", detail: "Apply at your nearest Brazilian consulate with passport, background check, and income proof" },
+        { label: "Visa processing", time: "4–8 weeks", detail: "Consulate reviews application — processing times vary by location" },
+        { label: "Arrive & register", time: "First 30 days in BR", detail: "Register with Federal Police, get CPF tax number, open bank account" },
+      ],
+    },
+    glnServices: [
+      { service: "Apartment search in Lagoa, Campeche, or Jurerê", detail: "We find vetted properties and negotiate leases in the best island neighborhoods" },
+      { service: "Digital Nomad Visa — full application support", detail: "Income documentation, consulate filing, and Federal Police registration upon arrival" },
+      { service: "School enrollment at local bilingual schools", detail: "We arrange tours, handle applications, and manage enrollment for your children" },
+      { service: "CPF, bank account & health plan registration", detail: "Essential IDs, banking, and Unimed health coverage set up in your first week" },
+      { service: "Airport pickup & island orientation", detail: "Our Florianópolis team meets you at Hercílio Luz airport and handles settling in" },
+      { service: "Car rental, utilities, internet & home setup", detail: "Everything arranged so your island home is ready on day one" },
+    ],
+  },
 };
 
 // ─── COST OF LIVING DATA ─────────────────────────────────────
@@ -1854,6 +1921,7 @@ const DESTINATION_COL_DATA = {
   "San Juan": { housing: 2650, school: 1250, healthcare: 450, groceries: 750, transport: 300, lifestyle: 750 },
   "Escazú": { housing: 1850, school: 1350, healthcare: 200, groceries: 650, transport: 250, lifestyle: 600 },
   "Panama City": { housing: 2000, school: 1250, healthcare: 300, groceries: 550, transport: 200, lifestyle: 650 },
+  "Florianópolis": { housing: 1400, school: 525, healthcare: 175, groceries: 475, transport: 175, lifestyle: 500 },
 };
 
 // ─── TAX DATA ────────────────────────────────────────────────
@@ -1887,6 +1955,14 @@ const MEXICO_BRACKETS = [
   { min: 374837, max: 590796, rate: 0.2352 },
   { min: 590796, max: 1127927, rate: 0.30 },
   { min: 1127927, max: Infinity, rate: 0.35 },
+];
+
+const BRAZIL_BRACKETS = [
+  { min: 0, max: 26400, rate: 0 },
+  { min: 26400, max: 33120, rate: 0.075 },
+  { min: 33120, max: 43980, rate: 0.15 },
+  { min: 43980, max: 54936, rate: 0.225 },
+  { min: 54936, max: Infinity, rate: 0.275 },
 ];
 
 const DESTINATION_TAX_PROGRAMS = {
@@ -1927,6 +2003,14 @@ const DESTINATION_TAX_PROGRAMS = {
   },
 };
 DESTINATION_TAX_PROGRAMS["Mérida"] = DESTINATION_TAX_PROGRAMS["Mexico City"];
+DESTINATION_TAX_PROGRAMS["Florianópolis"] = {
+  programName: "Progressive Tax (Resident)",
+  programDesc: "Rates from 0% to 27.5% on worldwide income as a tax resident",
+  effectiveRate: null,
+  method: "progressive",
+  brackets: "brazil",
+  caveat: "Tax residents (183+ days) are taxed on worldwide income. Digital Nomad Visa holders may qualify for simplified tax treatment. Consult a Brazilian tax advisor.",
+};
 
 // ─── MAIN COMPONENT ──────────────────────────────────────────
 export default function CitySelector() {
@@ -2004,7 +2088,7 @@ export default function CitySelector() {
 
   const buildPrompt = (profile) => `You are a senior international relocation advisor for Global Living Network, specializing in helping high-income families and professionals relocate to Latin America and Southern Europe.
 
-A user has completed a relocation profile quiz. Based on their answers, recommend 4–6 specific cities ranked by fit.
+A user has completed a relocation profile quiz. Based on their answers, recommend 4–7 specific cities ranked by fit.
 
 IMPORTANT: Use real, accurate, current data. Real school names, real cost figures, real safety assessments. This is for live client use — accuracy matters.
 
@@ -2106,7 +2190,7 @@ Rules:
 
   const LOADING_STEPS = [
     "Analyzing your priorities and family profile",
-    "Evaluating cities across 6 countries",
+    "Evaluating cities across 7 countries",
     "Comparing cost of living and safety data",
     "Matching international schools to your family",
     "Generating your personalized city report",
@@ -2229,8 +2313,9 @@ Rules:
     if (prog.method === "territorial") return 0;
     if (prog.method === "flat") return income * prog.effectiveRate;
     if (prog.method === "progressive") {
+      const brackets = prog.brackets === "brazil" ? BRAZIL_BRACKETS : MEXICO_BRACKETS;
       let tax = 0;
-      for (const b of MEXICO_BRACKETS) {
+      for (const b of brackets) {
         if (income <= b.min) break;
         tax += (Math.min(income, b.max) - b.min) * b.rate;
       }
@@ -2324,7 +2409,7 @@ Rules:
             <p className="question-hint">
               Answer 6 quick questions about your situation — where you're
               coming from, what matters most, and when you might move. We'll
-              recommend the best cities across 6 top destinations, with school
+              recommend the best cities across 7 top destinations, with school
               options, cost of living data, and honest guidance to help you
               take the next step with clarity.
             </p>
@@ -2379,7 +2464,7 @@ Rules:
             <div className="spinner-ring" />
             <div className="loading-title">Building Your Plan</div>
             <div className="loading-sub">
-              We're matching your situation to cities across 6 countries…
+              We're matching your situation to cities across 7 countries…
             </div>
             <div className="loading-steps">
               {LOADING_STEPS.map((label, i) => (
