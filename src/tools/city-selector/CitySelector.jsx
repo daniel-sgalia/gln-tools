@@ -1165,6 +1165,386 @@ const style = `
   }
 `;
 
+// ─── CITY SCORING DATA ───────────────────────────────────────
+const CITY_SCORE_DATA = {
+  lisbon: {
+    key: "lisbon", city: "Lisbon", country: "Portugal", flag: "\u{1F1F5}\u{1F1F9}",
+    costOfLivingIndex: 58, safetyRating: "Very High", healthcareQuality: "Excellent",
+    internetReliability: "Very Good", expatCommunity: "Large & established",
+    climate: "Mediterranean — warm dry summers, mild rainy winters",
+    scores: {
+      climateType: "mediterranean", budgetFriendliness: 5, safety: 10, healthcare: 10,
+      schools: 9, culture: 8, nature: 6, expat: 9, business: 7, visaSpeed: 5, costSavings: 5,
+    },
+    visaByOrigin: {
+      "United States": { speed: 5, boost: 0 }, "Canada": { speed: 5, boost: 0 },
+      "United Kingdom": { speed: 5, boost: 0 }, "Australia / NZ": { speed: 5, boost: 0 },
+      "EU Country": { speed: 10, boost: 15 }, "Other": { speed: 4, boost: -3 },
+    },
+    caveat: "Lisbon housing costs have risen sharply since 2020 — expect $2,000–$3,500/month for a quality family apartment in desirable neighborhoods like Estrela or Cascais.",
+    schoolsData: [
+      { name: "St. Julian's School", type: "International", curriculum: "IB & British A-Levels", grades: "Pre-K through 13", tuitionUSD: "$12,000–$22,000/year", note: "Founded 1932. English-medium with mandatory Portuguese. Strong university placement to UK and US institutions." },
+      { name: "Carlucci American International School of Lisbon", type: "American International", curriculum: "American / AP & IB Diploma", grades: "Pre-K through 12", tuitionUSD: "$15,000–$28,000/year", note: "US college-prep focused with IB Diploma option. Fully English instruction. US-accredited." },
+      { name: "Oeiras International School", type: "International", curriculum: "IB (PYP, MYP, DP)", grades: "K through 12", tuitionUSD: "$10,000–$18,000/year", note: "Full IB continuum in Oeiras suburb. Smaller class sizes, 25 minutes from central Lisbon." },
+    ],
+    highlightsByDimension: {
+      safety: "Ranked #4 safest country globally", healthcare: "World-class public healthcare (SNS)",
+      schools: "Thriving international school scene", visa: "EU residency via D8 Digital Nomad Visa",
+      culture: "Vibrant arts, fado music, and café culture", business: "NHR tax program for new residents",
+      expat: "One of Europe's largest English-speaking expat hubs", cost: "30–40% cheaper than Western Europe",
+      nature: "Atlantic beaches and Sintra hills within 30 minutes", climate: "300+ days of sunshine — Europe's sunniest capital",
+      default: "EU residency via D8 Digital Nomad Visa",
+    },
+  },
+  mexicoCity: {
+    key: "mexicoCity", city: "Mexico City", country: "Mexico", flag: "\u{1F1F2}\u{1F1FD}",
+    costOfLivingIndex: 42, safetyRating: "Moderate", healthcareQuality: "Very Good",
+    internetReliability: "Very Good", expatCommunity: "Large & established",
+    climate: "Temperate — spring-like year-round at 7,350 ft elevation",
+    scores: {
+      climateType: "temperate", budgetFriendliness: 8, safety: 5, healthcare: 8,
+      schools: 8, culture: 10, nature: 5, expat: 10, business: 7, visaSpeed: 8, costSavings: 8,
+    },
+    visaByOrigin: {
+      "United States": { speed: 8, boost: 2 }, "Canada": { speed: 8, boost: 2 },
+      "United Kingdom": { speed: 7, boost: 0 }, "Australia / NZ": { speed: 7, boost: 0 },
+      "EU Country": { speed: 7, boost: 0 }, "Other": { speed: 6, boost: -2 },
+    },
+    caveat: "Air quality can be poor during dry season (Nov–May) and altitude adjustment takes 1–2 weeks. Choose neighborhoods like Condesa, Roma, or Polanco for best quality of life.",
+    schoolsData: [
+      { name: "American School Foundation (ASF)", type: "American International", curriculum: "American / AP", grades: "Pre-K through 12", tuitionUSD: "$18,000–$30,000/year", note: "Founded 1888. Largest American school in Latin America. English instruction with required Spanish. Exceptional college placement." },
+      { name: "Greengates School", type: "British International", curriculum: "British / IGCSE & IB", grades: "Pre-K through 13", tuitionUSD: "$14,000–$24,000/year", note: "British curriculum school in Balcones de la Herradura. Strong IB results. English medium with Spanish." },
+      { name: "Colegio Peterson", type: "Bilingual Private", curriculum: "Mexican SEP & IB", grades: "Pre-K through 12", tuitionUSD: "$8,000–$15,000/year", note: "Top-tier Mexican bilingual school with IB Diploma. Three campuses across the city. Strong local and international reputation." },
+    ],
+    highlightsByDimension: {
+      culture: "World-class cultural and dining scene", visa: "Fastest visa processing (1–3 months)",
+      climate: "Spring-like climate year-round", expat: "Massive and established expat community",
+      cost: "Your money goes 2–3x further than US cities", business: "Booming startup and remote-work ecosystem",
+      schools: "Top international schools (ASF, Greengates)", healthcare: "Private healthcare at a fraction of US costs",
+      nature: "Day trips to mountains, pyramids, and forests", safety: "Safe expat neighborhoods (Condesa, Roma, Polanco)",
+      default: "World-class cultural and dining scene",
+    },
+  },
+  merida: {
+    key: "merida", city: "Mérida", country: "Mexico", flag: "\u{1F1F2}\u{1F1FD}",
+    costOfLivingIndex: 35, safetyRating: "High", healthcareQuality: "Good",
+    internetReliability: "Good", expatCommunity: "Growing",
+    climate: "Tropical — hot and humid year-round, rainy season June–October",
+    scores: {
+      climateType: "tropical", budgetFriendliness: 10, safety: 8, healthcare: 6,
+      schools: 4, culture: 5, nature: 6, expat: 6, business: 4, visaSpeed: 8, costSavings: 10,
+    },
+    visaByOrigin: {
+      "United States": { speed: 8, boost: 2 }, "Canada": { speed: 8, boost: 2 },
+      "United Kingdom": { speed: 7, boost: 0 }, "Australia / NZ": { speed: 7, boost: 0 },
+      "EU Country": { speed: 7, boost: 0 }, "Other": { speed: 6, boost: -2 },
+    },
+    caveat: "International school options are more limited than Mexico City or Lisbon — families with teens may need to consider online/hybrid schooling supplements.",
+    schoolsData: [
+      { name: "Mérida International School", type: "International / Bilingual", curriculum: "American / Mexican SEP", grades: "Pre-K through 9", tuitionUSD: "$4,000–$7,000/year", note: "Bilingual English-Spanish. Small class sizes. Expanding to upper grades. Popular with expat families." },
+      { name: "Colegio Americano de Mérida", type: "Private / Bilingual", curriculum: "American / Mexican", grades: "Pre-K through 12", tuitionUSD: "$3,500–$6,000/year", note: "Established bilingual school with strong local reputation. American-style curriculum with Mexican SEP compliance." },
+    ],
+    highlightsByDimension: {
+      safety: "Safest large city in Mexico (#1 consistently)", cost: "Extremely low cost of living",
+      culture: "Rich Mayan culture and cuisine", expat: "Growing expat community",
+      nature: "Cenotes, beaches, and Mayan ruins nearby", climate: "Warm tropical weather year-round",
+      healthcare: "Affordable private healthcare options", business: "Low operating costs for small businesses",
+      visa: "Fast Mexican visa processing (1–3 months)", schools: "Affordable bilingual school options",
+      default: "Safest large city in Mexico (#1 consistently)",
+    },
+  },
+  sanJuan: {
+    key: "sanJuan", city: "San Juan", country: "Puerto Rico", flag: "\u{1F1F5}\u{1F1F7}",
+    costOfLivingIndex: 78, safetyRating: "Moderate", healthcareQuality: "Good",
+    internetReliability: "Very Good", expatCommunity: "Large & established",
+    climate: "Tropical — warm year-round with hurricane season June–November",
+    scores: {
+      climateType: "tropical", budgetFriendliness: 3, safety: 5, healthcare: 6,
+      schools: 7, culture: 7, nature: 7, expat: 8, business: 10, visaSpeed: 10, costSavings: 3,
+    },
+    visaByOrigin: {
+      "United States": { speed: 10, boost: 15 }, "Canada": { speed: 3, boost: -5 },
+      "United Kingdom": { speed: 3, boost: -5 }, "Australia / NZ": { speed: 3, boost: -5 },
+      "EU Country": { speed: 3, boost: -5 }, "Other": { speed: 2, boost: -8 },
+    },
+    caveat: "Cost of living is higher than mainland Latin America (closer to mid-tier US cities). Hurricane preparedness is essential — the 2017 season was a major disruption.",
+    schoolsData: [
+      { name: "Baldwin School of Puerto Rico", type: "Private / College-Prep", curriculum: "American / AP", grades: "Pre-K through 12", tuitionUSD: "$12,000–$18,000/year", note: "Top-ranked private school in PR. English-medium instruction. Strong AP program and US college placement." },
+      { name: "Robinson School", type: "Private / Bilingual", curriculum: "American / AP", grades: "Pre-K through 12", tuitionUSD: "$10,000–$16,000/year", note: "Bilingual English-Spanish. IB candidate school. Located in Condado area. Strong STEM and arts programs." },
+    ],
+    highlightsByDimension: {
+      visa: "No visa needed (US territory)", business: "Act 60: 4% corporate tax, 0% capital gains",
+      expat: "English-speaking with US infrastructure", culture: "Caribbean lifestyle with US legal protections",
+      cost: "Act 60 tax savings can offset higher living costs", safety: "US federal law enforcement and legal system",
+      healthcare: "US-standard hospitals and insurance networks", nature: "El Yunque rainforest and Caribbean beaches",
+      climate: "Year-round tropical warmth", schools: "US-accredited schools with AP programs",
+      default: "No visa needed (US territory)",
+    },
+  },
+  escazu: {
+    key: "escazu", city: "Escazú", country: "Costa Rica", flag: "\u{1F1E8}\u{1F1F7}",
+    costOfLivingIndex: 55, safetyRating: "High", healthcareQuality: "Very Good",
+    internetReliability: "Very Good", expatCommunity: "Large & established",
+    climate: "Tropical highland — spring-like year-round at 3,900 ft",
+    scores: {
+      climateType: "tropical", budgetFriendliness: 5, safety: 8, healthcare: 8,
+      schools: 9, culture: 5, nature: 10, expat: 9, business: 5, visaSpeed: 5, costSavings: 5,
+    },
+    visaByOrigin: {
+      "United States": { speed: 5, boost: 2 }, "Canada": { speed: 5, boost: 2 },
+      "United Kingdom": { speed: 5, boost: 0 }, "Australia / NZ": { speed: 5, boost: 0 },
+      "EU Country": { speed: 5, boost: 0 }, "Other": { speed: 4, boost: -2 },
+    },
+    caveat: "Escazú's expat-heavy areas can feel like an American suburb — if you want authentic Costa Rican culture, consider spending weekends outside the central valley.",
+    schoolsData: [
+      { name: "Country Day School", type: "American International", curriculum: "American / AP & IB", grades: "Pre-K through 12", tuitionUSD: "$12,000–$20,000/year", note: "Costa Rica's top international school. US-accredited. English instruction. Outstanding college placement including Ivy League." },
+      { name: "Lincoln School", type: "American International", curriculum: "American / IB Diploma", grades: "Pre-K through 12", tuitionUSD: "$10,000–$17,000/year", note: "Founded by the US Embassy community. Full IB program. Diverse student body from 40+ nationalities." },
+    ],
+    highlightsByDimension: {
+      healthcare: "Universal healthcare (CAJA) for residents", climate: "Spring-like climate year-round",
+      expat: "Premier expat community in Central America", schools: "Excellent international schools",
+      nature: "Cloud forests, volcanoes, and beaches within hours", safety: "One of the safest communities in Latin America",
+      cost: "Strong value compared to US suburbs", business: "Growing tech and startup presence",
+      culture: "Pura Vida lifestyle and local markets", visa: "Multiple visa pathways (Rentista, Pensionado)",
+      default: "Universal healthcare (CAJA) for residents",
+    },
+  },
+  panamaCity: {
+    key: "panamaCity", city: "Panama City", country: "Panama", flag: "\u{1F1F5}\u{1F1E6}",
+    costOfLivingIndex: 52, safetyRating: "Moderate", healthcareQuality: "Very Good",
+    internetReliability: "Very Good", expatCommunity: "Large & established",
+    climate: "Tropical — hot and humid year-round, dry season Dec–April",
+    scores: {
+      climateType: "tropical", budgetFriendliness: 6, safety: 5, healthcare: 8,
+      schools: 7, culture: 6, nature: 7, expat: 8, business: 9, visaSpeed: 9, costSavings: 7,
+    },
+    visaByOrigin: {
+      "United States": { speed: 9, boost: 5 }, "Canada": { speed: 9, boost: 5 },
+      "United Kingdom": { speed: 9, boost: 5 }, "Australia / NZ": { speed: 9, boost: 5 },
+      "EU Country": { speed: 9, boost: 5 }, "Other": { speed: 6, boost: 0 },
+    },
+    caveat: "Panama City traffic is notoriously bad — choose your neighborhood carefully (Costa del Este or Clayton for families) to minimize commute stress.",
+    schoolsData: [
+      { name: "International School of Panama (ISP)", type: "International", curriculum: "IB (PYP, MYP, DP)", grades: "Pre-K through 12", tuitionUSD: "$14,000–$22,000/year", note: "Full IB school with 50+ nationalities. English instruction. State-of-the-art campus in Ciudad del Saber." },
+      { name: "Balboa Academy", type: "American International", curriculum: "American / AP", grades: "Pre-K through 12", tuitionUSD: "$8,000–$14,000/year", note: "American-style curriculum near the Panama Canal Zone. English-medium. Strong community feel with smaller class sizes." },
+    ],
+    highlightsByDimension: {
+      visa: "Immediate permanent residency available", business: "0% tax on foreign-sourced income",
+      cost: "US dollar economy — no currency risk", healthcare: "Modern infrastructure & healthcare",
+      expat: "Cosmopolitan city with global expat community", nature: "Panama Canal, rainforests, and island getaways",
+      safety: "Safe expat neighborhoods (Costa del Este, Clayton)", climate: "Tropical warmth with a pleasant dry season",
+      schools: "Strong IB and American school options", culture: "Casco Viejo historic district and dining scene",
+      default: "Immediate permanent residency available",
+    },
+  },
+};
+
+// ─── SCORING LOOKUP CONSTANTS ────────────────────────────────
+const CLIMATE_MAP = {
+  "Tropical — warm year-round": "tropical",
+  "Mediterranean — warm & dry summers": "mediterranean",
+  "Temperate — four distinct seasons": "temperate",
+  "Doesn't matter to me": null,
+};
+
+const BUDGET_TIERS = {
+  "Under $3,000 / month": 1,
+  "$3,000 – $6,000 / month": 2,
+  "$6,000 – $12,000 / month": 3,
+  "$12,000+ / month": 4,
+};
+
+const TIMELINE_URGENCY = {
+  "Within 3 months": 4,
+  "3–12 months": 3,
+  "1–2 years out": 2,
+  "Just exploring for now": 1,
+};
+
+const PRIORITY_TO_DIMENSIONS = {
+  "Safety & stability": ["safety"],
+  "Top schools & family life": ["schools"],
+  "Low cost of living": ["budgetFriendliness", "costSavings"],
+  "Healthcare quality": ["healthcare"],
+  "Nightlife & culture": ["culture"],
+  "Nature & outdoor lifestyle": ["nature"],
+  "Strong expat community": ["expat"],
+  "Business & entrepreneurship": ["business"],
+};
+
+const PRIORITY_TO_HIGHLIGHT_KEY = {
+  "Safety & stability": "safety",
+  "Top schools & family life": "schools",
+  "Low cost of living": "cost",
+  "Healthcare quality": "healthcare",
+  "Nightlife & culture": "culture",
+  "Nature & outdoor lifestyle": "nature",
+  "Strong expat community": "expat",
+  "Business & entrepreneurship": "business",
+};
+
+const DIM_TO_HIGHLIGHT_KEY = {
+  budgetFriendliness: "cost", safety: "safety", healthcare: "healthcare",
+  schools: "schools", culture: "culture", nature: "nature",
+  expat: "expat", business: "business", visaSpeed: "visa", costSavings: "cost",
+};
+
+// ─── SCORING FUNCTIONS ───────────────────────────────────────
+function scoreCities(profile) {
+  const cities = Object.values(CITY_SCORE_DATA);
+  const priorities = profile.priorities.split(", ");
+  const climatePreference = CLIMATE_MAP[profile.climate];
+  const budgetTier = BUDGET_TIERS[profile.budget];
+  const timelineUrgency = TIMELINE_URGENCY[profile.timeline];
+  const hasKids = profile.familySituation?.includes("children") || profile.familySituation?.includes("teens");
+  const isRetiree = profile.familySituation?.includes("Retiree");
+  const isSolo = profile.familySituation === "Just me" || profile.familySituation === "Me and my partner";
+
+  return cities.map((cityData) => {
+    let score = 50;
+    const s = cityData.scores;
+    const visa = cityData.visaByOrigin[profile.citizenship] || cityData.visaByOrigin["Other"];
+
+    // 1. Climate match
+    if (climatePreference === null) {
+      score += 3;
+    } else if (s.climateType === climatePreference) {
+      score += 12;
+    } else if (climatePreference === "temperate" && (cityData.key === "escazu" || cityData.key === "mexicoCity")) {
+      score += 7;
+    } else {
+      score -= 4;
+    }
+
+    // 2. Budget fit
+    if (budgetTier === 1) score += s.budgetFriendliness * 1.2;
+    else if (budgetTier === 2) score += s.budgetFriendliness * 0.8;
+    else if (budgetTier === 3) score += Math.min(s.budgetFriendliness, 7) * 0.5;
+    else score += (10 - s.budgetFriendliness) * 0.4;
+
+    // 3. Priorities
+    priorities.forEach((priority) => {
+      const dims = PRIORITY_TO_DIMENSIONS[priority];
+      if (dims) dims.forEach((dim) => { score += (s[dim] || 0) * 0.8; });
+    });
+
+    // 4. Family situation
+    if (hasKids) { score += s.schools * 0.6 + s.safety * 0.3; }
+    else if (isRetiree) { score += s.healthcare * 0.6 + s.costSavings * 0.3 + s.safety * 0.2; }
+    else if (isSolo) { score += s.culture * 0.3 + s.expat * 0.2; }
+
+    // 5. Visa & citizenship
+    score += visa.boost + visa.speed * 0.3;
+
+    // 6. Timeline urgency
+    if (timelineUrgency >= 3) score += visa.speed * (timelineUrgency === 4 ? 0.8 : 0.4);
+
+    return { cityData, rawScore: score };
+  });
+}
+
+function normalizeScores(scoredCities) {
+  scoredCities.sort((a, b) => b.rawScore - a.rawScore);
+  const maxRaw = scoredCities[0].rawScore;
+  const minRaw = scoredCities[scoredCities.length - 1].rawScore;
+  const rawRange = maxRaw - minRaw || 1;
+  return scoredCities.map((item, index) => ({
+    ...item,
+    matchScore: Math.round(96 - ((maxRaw - item.rawScore) / rawRange) * 21),
+    rank: index + 1,
+  }));
+}
+
+function buildHighlights(cityData, priorities, profile) {
+  const highlights = [];
+  const usedKeys = new Set();
+
+  // 1. Lead with highlights matching user priorities
+  priorities.forEach((priority) => {
+    if (highlights.length >= 4) return;
+    const key = PRIORITY_TO_HIGHLIGHT_KEY[priority];
+    if (key && cityData.highlightsByDimension[key] && !usedKeys.has(key)) {
+      highlights.push(cityData.highlightsByDimension[key]);
+      usedKeys.add(key);
+    }
+  });
+
+  // 2. Add visa highlight if citizenship gives a big boost
+  if (highlights.length < 4 && !usedKeys.has("visa")) {
+    const visa = cityData.visaByOrigin[profile.citizenship] || cityData.visaByOrigin["Other"];
+    if (visa.boost >= 5 || visa.speed >= 9) {
+      highlights.push(cityData.highlightsByDimension.visa);
+      usedKeys.add("visa");
+    }
+  }
+
+  // 3. Fill with highest-scoring dimensions
+  const dimensionRanking = Object.entries(cityData.scores)
+    .filter(([key]) => key !== "climateType")
+    .sort(([, a], [, b]) => b - a);
+
+  for (const [dim] of dimensionRanking) {
+    if (highlights.length >= 4) break;
+    const hKey = DIM_TO_HIGHLIGHT_KEY[dim];
+    if (hKey && !usedKeys.has(hKey) && cityData.highlightsByDimension[hKey]) {
+      highlights.push(cityData.highlightsByDimension[hKey]);
+      usedKeys.add(hKey);
+    }
+  }
+
+  if (highlights.length < 4) highlights.push(cityData.highlightsByDimension.default);
+  return highlights;
+}
+
+function buildAiSummary(cityData, profile) {
+  const s = cityData.scores;
+  const priorities = profile.priorities.split(", ");
+  const visa = cityData.visaByOrigin[profile.citizenship] || cityData.visaByOrigin["Other"];
+  const hasKids = profile.familySituation?.includes("children") || profile.familySituation?.includes("teens");
+  const isRetiree = profile.familySituation?.includes("Retiree");
+  const fragments = [];
+
+  // Citizenship-specific opener
+  if (visa.boost >= 10) {
+    if (cityData.key === "sanJuan") fragments.push(`As a ${profile.citizenship} citizen, ${cityData.city} requires no visa, no passport, and no immigration process`);
+    else if (cityData.key === "lisbon") fragments.push(`As an EU citizen, you have automatic right to live and work in ${cityData.city} — no visa needed`);
+  }
+
+  // Budget relevance
+  if (s.budgetFriendliness >= 8) fragments.push(`your ${profile.budget.toLowerCase()} budget stretches remarkably far here — expect 2–3x the purchasing power of a comparable US city`);
+  else if (s.budgetFriendliness <= 3) fragments.push(`while the cost of living is higher than other options, your ${profile.budget.toLowerCase()} budget positions you comfortably`);
+
+  // Priority-driven sentences
+  if (priorities.includes("Safety & stability") && s.safety >= 8)
+    fragments.push(`${cityData.safetyRating.toLowerCase()} safety ratings make it ideal for ${hasKids ? "raising a family" : isRetiree ? "a peaceful retirement" : "peace of mind"}`);
+  if (priorities.includes("Top schools & family life") && s.schools >= 8)
+    fragments.push("excellent international schools provide strong options from pre-K through graduation");
+  if (priorities.includes("Healthcare quality") && s.healthcare >= 8)
+    fragments.push(`${cityData.healthcareQuality.toLowerCase()} healthcare at a fraction of US costs`);
+  if (priorities.includes("Nightlife & culture") && s.culture >= 8)
+    fragments.push("a world-class cultural scene ensures there's always something to explore");
+  if (priorities.includes("Nature & outdoor lifestyle") && s.nature >= 8)
+    fragments.push("unparalleled access to nature and outdoor activities right at your doorstep");
+  if (priorities.includes("Business & entrepreneurship") && s.business >= 8)
+    fragments.push("significant tax advantages and a business-friendly environment make it ideal for entrepreneurs");
+  if (priorities.includes("Strong expat community") && s.expat >= 8)
+    fragments.push(`a ${cityData.expatCommunity.toLowerCase()} expat community means easy social connections and English-language services`);
+  if (priorities.includes("Low cost of living") && s.costSavings >= 7)
+    fragments.push("one of the most affordable relocation destinations with genuine cost savings");
+
+  // Timeline relevance
+  if (visa.speed >= 9) fragments.push(`fast-track residency aligns perfectly with your ${profile.timeline.toLowerCase()} timeline`);
+
+  const selected = fragments.slice(0, 3);
+  if (selected.length === 0)
+    return `${cityData.city} offers a solid match for your profile — combining ${cityData.safetyRating.toLowerCase()} safety, ${cityData.healthcareQuality.toLowerCase()} healthcare, and a ${cityData.expatCommunity.toLowerCase()} expat community. Your ${profile.budget.toLowerCase()} budget works well here, and the ${cityData.climate.toLowerCase()} climate suits many relocators.`;
+
+  selected[0] = selected[0].charAt(0).toUpperCase() + selected[0].slice(1);
+  if (selected.length === 1) return `${selected[0]}. ${cityData.city} is a strong fit for ${profile.familySituation.toLowerCase()} looking to relocate.`;
+  if (selected.length === 2) return `${selected[0]}, and ${selected[1]}.`;
+  return `${selected[0]}. Additionally, ${selected[1]}, and ${selected[2]}.`;
+}
+
 // ─── QUESTIONS ────────────────────────────────────────────────
 const QUESTIONS = [
   {
@@ -1697,272 +2077,32 @@ Rules:
     const hasKids =
       profile.familySituation?.includes("children") ||
       profile.familySituation?.includes("teens");
+    const priorities = profile.priorities.split(", ");
 
-    return [
-      {
-        city: "Lisbon",
-        country: "Portugal",
-        flag: "\u{1F1F5}\u{1F1F9}",
-        matchScore: 93,
-        costOfLivingIndex: 58,
-        safetyRating: "Very High",
-        healthcareQuality: "Excellent",
-        internetReliability: "Very Good",
-        expatCommunity: "Large & established",
-        climate: "Mediterranean — warm dry summers, mild rainy winters",
-        aiSummary: `As a ${profile.citizenship} citizen prioritizing ${profile.priorities.toLowerCase()}, Lisbon offers an exceptional blend of safety, culture, and modern infrastructure. With a ${profile.budget.toLowerCase()} budget, you'll enjoy a high quality of life in Europe's sunniest capital — and the D8 visa makes relocation straightforward for your timeline.`,
-        highlights: [
-          "EU residency via D8 Digital Nomad Visa",
-          "Ranked #4 safest country globally",
-          "World-class public healthcare (SNS)",
-          "Thriving international school scene",
-        ],
-        schools: hasKids
-          ? [
-              {
-                name: "St. Julian's School",
-                type: "International",
-                curriculum: "IB & British A-Levels",
-                grades: "Pre-K through 13",
-                tuitionUSD: "$12,000–$22,000/year",
-                note: "Founded 1932. English-medium with mandatory Portuguese. Strong university placement to UK and US institutions.",
-              },
-              {
-                name: "Carlucci American International School of Lisbon",
-                type: "American International",
-                curriculum: "American / AP & IB Diploma",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$15,000–$28,000/year",
-                note: "US college-prep focused with IB Diploma option. Fully English instruction. US-accredited.",
-              },
-              {
-                name: "Oeiras International School",
-                type: "International",
-                curriculum: "IB (PYP, MYP, DP)",
-                grades: "K through 12",
-                tuitionUSD: "$10,000–$18,000/year",
-                note: "Full IB continuum in Oeiras suburb. Smaller class sizes, 25 minutes from central Lisbon.",
-              },
-            ]
-          : [],
-        caveat:
-          "Lisbon housing costs have risen sharply since 2020 — expect $2,000–$3,500/month for a quality family apartment in desirable neighborhoods like Estrela or Cascais.",
-      },
-      {
-        city: "Mexico City",
-        country: "Mexico",
-        flag: "\u{1F1F2}\u{1F1FD}",
-        matchScore: 89,
-        costOfLivingIndex: 42,
-        safetyRating: "Moderate",
-        healthcareQuality: "Very Good",
-        internetReliability: "Very Good",
-        expatCommunity: "Large & established",
-        climate: "Temperate — spring-like year-round at 7,350 ft elevation",
-        aiSummary: `Mexico City delivers extraordinary value for your ${profile.budget.toLowerCase()} budget — your money goes 2–3x further than in most US cities. The city's world-class dining, museums, and cultural scene make it ideal for someone prioritizing ${profile.priorities.toLowerCase()}. Fast visa processing aligns well with your ${profile.timeline.toLowerCase()} timeline.`,
-        highlights: [
-          "World-class cultural and dining scene",
-          "Fastest visa processing (1–3 months)",
-          "Spring-like climate year-round",
-          "Massive and established expat community",
-        ],
-        schools: hasKids
-          ? [
-              {
-                name: "American School Foundation (ASF)",
-                type: "American International",
-                curriculum: "American / AP",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$18,000–$30,000/year",
-                note: "Founded 1888. Largest American school in Latin America. English instruction with required Spanish. Exceptional college placement.",
-              },
-              {
-                name: "Greengates School",
-                type: "British International",
-                curriculum: "British / IGCSE & IB",
-                grades: "Pre-K through 13",
-                tuitionUSD: "$14,000–$24,000/year",
-                note: "British curriculum school in Balcones de la Herradura. Strong IB results. English medium with Spanish.",
-              },
-              {
-                name: "Colegio Peterson",
-                type: "Bilingual Private",
-                curriculum: "Mexican SEP & IB",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$8,000–$15,000/year",
-                note: "Top-tier Mexican bilingual school with IB Diploma. Three campuses across the city. Strong local and international reputation.",
-              },
-            ]
-          : [],
-        caveat:
-          "Air quality can be poor during dry season (Nov–May) and altitude adjustment takes 1–2 weeks. Choose neighborhoods like Condesa, Roma, or Polanco for best quality of life.",
-      },
-      {
-        city: "Mérida",
-        country: "Mexico",
-        flag: "\u{1F1F2}\u{1F1FD}",
-        matchScore: 86,
-        costOfLivingIndex: 35,
-        safetyRating: "High",
-        healthcareQuality: "Good",
-        internetReliability: "Good",
-        expatCommunity: "Growing",
-        climate: "Tropical — hot and humid year-round, rainy season June–October",
-        aiSummary: `Mérida is consistently ranked Mexico's safest large city, making it an excellent match for ${profile.familySituation.toLowerCase()}. Your ${profile.budget.toLowerCase()} budget stretches remarkably far here — a family can live well on $2,500–$4,000/month. The growing expat community means more English-speaking services every year.`,
-        highlights: [
-          "Safest large city in Mexico (#1 consistently)",
-          "Extremely low cost of living",
-          "Rich Mayan culture and cuisine",
-          "Growing expat community",
-        ],
-        schools: hasKids
-          ? [
-              {
-                name: "Mérida International School",
-                type: "International / Bilingual",
-                curriculum: "American / Mexican SEP",
-                grades: "Pre-K through 9",
-                tuitionUSD: "$4,000–$7,000/year",
-                note: "Bilingual English-Spanish. Small class sizes. Expanding to upper grades. Popular with expat families.",
-              },
-              {
-                name: "Colegio Americano de Mérida",
-                type: "Private / Bilingual",
-                curriculum: "American / Mexican",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$3,500–$6,000/year",
-                note: "Established bilingual school with strong local reputation. American-style curriculum with Mexican SEP compliance.",
-              },
-            ]
-          : [],
-        caveat:
-          "International school options are more limited than Mexico City or Lisbon — families with teens may need to consider online/hybrid schooling supplements.",
-      },
-      {
-        city: "San Juan",
-        country: "Puerto Rico",
-        flag: "\u{1F1F5}\u{1F1F7}",
-        matchScore: 84,
-        costOfLivingIndex: 78,
-        safetyRating: "Moderate",
-        healthcareQuality: "Good",
-        internetReliability: "Very Good",
-        expatCommunity: "Large & established",
-        climate: "Tropical — warm year-round with hurricane season June–November",
-        aiSummary: `As a ${profile.citizenship} citizen, San Juan offers a unique advantage: no visa required, no passport needed, and Act 60 tax incentives can dramatically reduce your tax burden. Your ${profile.budget.toLowerCase()} budget works well in metro San Juan, and the ${profile.timeline.toLowerCase()} timeline is achievable since there's no visa processing involved.`,
-        highlights: [
-          "No visa needed (US territory)",
-          "Act 60: 4% corporate tax, 0% capital gains",
-          "English-speaking with US infrastructure",
-          "Caribbean lifestyle with US legal protections",
-        ],
-        schools: hasKids
-          ? [
-              {
-                name: "Baldwin School of Puerto Rico",
-                type: "Private / College-Prep",
-                curriculum: "American / AP",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$12,000–$18,000/year",
-                note: "Top-ranked private school in PR. English-medium instruction. Strong AP program and US college placement.",
-              },
-              {
-                name: "Robinson School",
-                type: "Private / Bilingual",
-                curriculum: "American / AP",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$10,000–$16,000/year",
-                note: "Bilingual English-Spanish. IB candidate school. Located in Condado area. Strong STEM and arts programs.",
-              },
-            ]
-          : [],
-        caveat:
-          "Cost of living is higher than mainland Latin America (closer to mid-tier US cities). Hurricane preparedness is essential — the 2017 season was a major disruption.",
-      },
-      {
-        city: "Escazú",
-        country: "Costa Rica",
-        flag: "\u{1F1E8}\u{1F1F7}",
-        matchScore: 81,
-        costOfLivingIndex: 55,
-        safetyRating: "High",
-        healthcareQuality: "Very Good",
-        internetReliability: "Very Good",
-        expatCommunity: "Large & established",
-        climate: "Tropical highland — spring-like year-round at 3,900 ft",
-        aiSummary: `Escazú is Costa Rica's premier expat suburb — think of it as the Scottsdale of San José. For ${profile.familySituation.toLowerCase()}, the combination of top international schools, universal healthcare, and the "Pura Vida" lifestyle is hard to beat. Your ${profile.budget.toLowerCase()} budget positions you comfortably in this upscale community.`,
-        highlights: [
-          "Universal healthcare (CAJA) for residents",
-          "Spring-like climate year-round",
-          "Premier expat community in Central America",
-          "Excellent international schools",
-        ],
-        schools: hasKids
-          ? [
-              {
-                name: "Country Day School",
-                type: "American International",
-                curriculum: "American / AP & IB",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$12,000–$20,000/year",
-                note: "Costa Rica's top international school. US-accredited. English instruction. Outstanding college placement including Ivy League.",
-              },
-              {
-                name: "Lincoln School",
-                type: "American International",
-                curriculum: "American / IB Diploma",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$10,000–$17,000/year",
-                note: "Founded by the US Embassy community. Full IB program. Diverse student body from 40+ nationalities.",
-              },
-            ]
-          : [],
-        caveat:
-          "Escazú's expat-heavy areas can feel like an American suburb — if you want authentic Costa Rican culture, consider spending weekends outside the central valley.",
-      },
-      {
-        city: "Panama City",
-        country: "Panama",
-        flag: "\u{1F1F5}\u{1F1E6}",
-        matchScore: 79,
-        costOfLivingIndex: 52,
-        safetyRating: "Moderate",
-        healthcareQuality: "Very Good",
-        internetReliability: "Very Good",
-        expatCommunity: "Large & established",
-        climate: "Tropical — hot and humid year-round, dry season Dec–April",
-        aiSummary: `Panama City's Friendly Nations Visa offers immediate permanent residency — a major advantage for your ${profile.timeline.toLowerCase()} timeline. The territorial tax system means foreign-sourced income is tax-free, and the US dollar economy eliminates currency risk. Your ${profile.budget.toLowerCase()} budget goes far in a modern, cosmopolitan city.`,
-        highlights: [
-          "Immediate permanent residency available",
-          "0% tax on foreign-sourced income",
-          "US dollar economy — no currency risk",
-          "Modern infrastructure & healthcare",
-        ],
-        schools: hasKids
-          ? [
-              {
-                name: "International School of Panama (ISP)",
-                type: "International",
-                curriculum: "IB (PYP, MYP, DP)",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$14,000–$22,000/year",
-                note: "Full IB school with 50+ nationalities. English instruction. State-of-the-art campus in Ciudad del Saber.",
-              },
-              {
-                name: "Balboa Academy",
-                type: "American International",
-                curriculum: "American / AP",
-                grades: "Pre-K through 12",
-                tuitionUSD: "$8,000–$14,000/year",
-                note: "American-style curriculum near the Panama Canal Zone. English-medium. Strong community feel with smaller class sizes.",
-              },
-            ]
-          : [],
-        caveat:
-          "Panama City traffic is notoriously bad — choose your neighborhood carefully (Costa del Este or Clayton for families) to minimize commute stress.",
-      },
-    ];
+    const scored = scoreCities(profile);
+    const ranked = normalizeScores(scored);
+
+    return ranked.map((item) => {
+      const cd = item.cityData;
+      return {
+        city: cd.city,
+        country: cd.country,
+        flag: cd.flag,
+        matchScore: item.matchScore,
+        costOfLivingIndex: cd.costOfLivingIndex,
+        safetyRating: cd.safetyRating,
+        healthcareQuality: cd.healthcareQuality,
+        internetReliability: cd.internetReliability,
+        expatCommunity: cd.expatCommunity,
+        climate: cd.climate,
+        aiSummary: buildAiSummary(cd, profile),
+        highlights: buildHighlights(cd, priorities, profile),
+        schools: hasKids ? cd.schoolsData : [],
+        caveat: cd.caveat,
+      };
+    });
   };
+
 
   const LOADING_STEPS = [
     "Analyzing your priorities and family profile",
