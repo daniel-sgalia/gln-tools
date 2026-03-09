@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { loadAllData } from "../../data/dataProvider";
 
 const GOOGLE_FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
@@ -616,6 +617,23 @@ const style = `
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 20px;
+  }
+  .source-badge {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    color: rgba(240,235,225,0.35);
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .source-badge-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(201,169,110,0.4);
   }
 
   .budget-grid {
@@ -1423,8 +1441,8 @@ const DIM_TO_HIGHLIGHT_KEY = {
 };
 
 // ─── SCORING FUNCTIONS ───────────────────────────────────────
-function scoreCities(profile) {
-  const cities = Object.values(CITY_SCORE_DATA);
+function scoreCities(profile, cityData) {
+  const cities = Object.values(cityData || CITY_SCORE_DATA);
   const priorities = profile.priorities.split(", ");
   const climatePreference = CLIMATE_MAP[profile.climate];
   const budgetTier = BUDGET_TIERS[profile.budget];
@@ -1924,6 +1942,47 @@ const DESTINATION_COL_DATA = {
   "Florianópolis": { housing: 1400, school: 525, healthcare: 175, groceries: 475, transport: 175, lifestyle: 500 },
 };
 
+// ─── ORIGIN COUNTRY COL (typical major-city costs in USD for non-US origins) ──
+const ORIGIN_COUNTRY_COL = {
+  "Canada": {
+    label: "Canada", currency: "CAD", cities: {
+      "Toronto": { housing: 2800, school: 1800, healthcare: 200, groceries: 850, transport: 280, lifestyle: 1000 },
+      "Vancouver": { housing: 3200, school: 1900, healthcare: 200, groceries: 900, transport: 260, lifestyle: 1100 },
+      "Montreal": { housing: 2000, school: 1400, healthcare: 180, groceries: 750, transport: 220, lifestyle: 800 },
+      "Calgary": { housing: 2200, school: 1500, healthcare: 190, groceries: 800, transport: 300, lifestyle: 850 },
+    },
+  },
+  "United Kingdom": {
+    label: "UK", currency: "GBP", cities: {
+      "London": { housing: 3500, school: 2500, healthcare: 250, groceries: 900, transport: 350, lifestyle: 1200 },
+      "Manchester": { housing: 1800, school: 1600, healthcare: 200, groceries: 700, transport: 250, lifestyle: 800 },
+      "Edinburgh": { housing: 2000, school: 1700, healthcare: 200, groceries: 750, transport: 240, lifestyle: 850 },
+      "Bristol": { housing: 2100, school: 1600, healthcare: 200, groceries: 720, transport: 240, lifestyle: 800 },
+    },
+  },
+  "Australia / NZ": {
+    label: "Australia / NZ", currency: "AUD/NZD", cities: {
+      "Sydney": { housing: 3200, school: 2200, healthcare: 300, groceries: 950, transport: 300, lifestyle: 1100 },
+      "Melbourne": { housing: 2600, school: 2000, healthcare: 280, groceries: 900, transport: 280, lifestyle: 1000 },
+      "Auckland": { housing: 2400, school: 1800, healthcare: 250, groceries: 850, transport: 260, lifestyle: 900 },
+      "Brisbane": { housing: 2200, school: 1800, healthcare: 270, groceries: 850, transport: 260, lifestyle: 900 },
+    },
+  },
+  "EU Country": {
+    label: "EU", currency: "EUR", cities: {
+      "Paris": { housing: 2800, school: 2200, healthcare: 200, groceries: 850, transport: 250, lifestyle: 1100 },
+      "Amsterdam": { housing: 2600, school: 2000, healthcare: 250, groceries: 800, transport: 200, lifestyle: 950 },
+      "Berlin": { housing: 1800, school: 1400, healthcare: 200, groceries: 650, transport: 200, lifestyle: 750 },
+      "Madrid": { housing: 1600, school: 1500, healthcare: 180, groceries: 600, transport: 180, lifestyle: 700 },
+    },
+  },
+  "Other": {
+    label: "your home city", currency: "USD", cities: {
+      "Typical Major City": { housing: 2500, school: 1800, healthcare: 400, groceries: 800, transport: 280, lifestyle: 900 },
+    },
+  },
+};
+
 // ─── TAX DATA ────────────────────────────────────────────────
 const STATE_TAX_RATES = {
   NY: { rate: 0.0685, name: "New York", localRate: 0.03876 },
@@ -2026,6 +2085,23 @@ export default function CitySelector() {
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [compareCity, setCompareCity] = useState("");
   const [taxIncome, setTaxIncome] = useState("");
+  const [apiData, setApiData] = useState(null);
+
+  // Load data from admin backend on mount (falls back to hardcoded constants if unavailable)
+  useEffect(() => {
+    loadAllData().then(data => { if (data) setApiData(data); });
+  }, []);
+
+  // Use API data if available, otherwise fall back to hardcoded constants
+  const liveCityScoreData = apiData?.cities || CITY_SCORE_DATA;
+  const liveDeepDiveData = apiData?.deepDive || DEEP_DIVE_DATA;
+  const liveUsCityCOL = apiData?.usCityCOL || US_CITY_COL_DATA;
+  const liveDestCOL = apiData?.destinationCOL || DESTINATION_COL_DATA;
+  const liveStateTaxRates = apiData?.stateTaxRates || STATE_TAX_RATES;
+  const liveFederalBrackets = apiData?.federalBrackets || FEDERAL_BRACKETS;
+  const liveMexicoBrackets = apiData?.mexicoBrackets || MEXICO_BRACKETS;
+  const liveBrazilBrackets = apiData?.brazilBrackets || BRAZIL_BRACKETS;
+  const liveDestTaxPrograms = apiData?.destinationTaxPrograms || DESTINATION_TAX_PROGRAMS;
 
   const currentQ = step >= 1 && step <= TOTAL_QUESTIONS ? QUESTIONS[step - 1] : null;
   const progressPct = step === 0 ? 0 : step <= TOTAL_QUESTIONS ? (step / TOTAL_QUESTIONS) * 100 : 100;
@@ -2163,7 +2239,7 @@ Rules:
       profile.familySituation?.includes("teens");
     const priorities = profile.priorities.split(", ");
 
-    const scored = scoreCities(profile);
+    const scored = scoreCities(profile, liveCityScoreData);
     const ranked = normalizeScores(scored);
 
     return ranked.map((item) => {
@@ -2294,40 +2370,41 @@ Rules:
 
   const calcFederalTax = (income) => {
     let tax = 0;
-    for (const b of FEDERAL_BRACKETS) {
+    for (const b of liveFederalBrackets) {
       if (income <= b.min) break;
-      tax += (Math.min(income, b.max) - b.min) * b.rate;
+      const max = b.max === null || b.max === undefined ? Infinity : b.max;
+      tax += (Math.min(income, max) - b.min) * b.rate;
     }
     return tax;
   };
 
   const calcStateTax = (income, stateCode) => {
-    const s = STATE_TAX_RATES[stateCode];
+    const s = liveStateTaxRates[stateCode];
     if (!s) return 0;
     return income * (s.rate + s.localRate);
   };
 
   const calcDestinationTax = (income, cityName) => {
-    const prog = DESTINATION_TAX_PROGRAMS[cityName];
+    const prog = liveDestTaxPrograms[cityName];
     if (!prog) return 0;
     if (prog.method === "territorial") return 0;
     if (prog.method === "flat") return income * prog.effectiveRate;
     if (prog.method === "progressive") {
-      const brackets = prog.brackets === "brazil" ? BRAZIL_BRACKETS : MEXICO_BRACKETS;
+      const brackets = prog.brackets === "brazil" ? liveBrazilBrackets : liveMexicoBrackets;
       let tax = 0;
       for (const b of brackets) {
         if (income <= b.min) break;
-        tax += (Math.min(income, b.max) - b.min) * b.rate;
+        const max = b.max === null || b.max === undefined ? Infinity : b.max;
+        tax += (Math.min(income, max) - b.min) * b.rate;
       }
       return tax;
     }
     return 0;
   };
 
-  const getColComparison = (usCityName, destCityName, hasKids) => {
-    const us = US_CITY_COL_DATA[usCityName];
-    const dest = DESTINATION_COL_DATA[destCityName];
-    if (!us || !dest) return null;
+  const getColComparison = (originCosts, destCityName, hasKids) => {
+    const dest = liveDestCOL[destCityName];
+    if (!originCosts || !dest) return null;
     const categories = [
       { key: "housing", label: "Housing" },
       { key: "school", label: "International School", familyOnly: true },
@@ -2337,19 +2414,19 @@ Rules:
       { key: "lifestyle", label: "Lifestyle" },
     ].filter((c) => !c.familyOnly || hasKids);
     const items = categories.map((c) => {
-      const usCost = us[c.key];
+      const originCost = originCosts[c.key];
       const destCost = dest[c.key];
-      const pct = Math.round(((usCost - destCost) / usCost) * 100);
-      return { category: c.label, usCost, destCost, savingsPct: pct };
+      const pct = Math.round(((originCost - destCost) / originCost) * 100);
+      return { category: c.label, originCost, destCost, savingsPct: pct };
     });
-    const totalUS = items.reduce((s, i) => s + i.usCost, 0);
+    const totalOrigin = items.reduce((s, i) => s + i.originCost, 0);
     const totalDest = items.reduce((s, i) => s + i.destCost, 0);
     return {
       items,
-      totalUS,
+      totalOrigin,
       totalDest,
-      totalSavings: totalUS - totalDest,
-      overallPct: Math.round(((totalUS - totalDest) / totalUS) * 100),
+      totalSavings: totalOrigin - totalDest,
+      overallPct: Math.round(((totalOrigin - totalDest) / totalOrigin) * 100),
     };
   };
 
@@ -2652,7 +2729,7 @@ Rules:
 
         {/* DEEP DIVE */}
         {isDeepDiveStep && selectedCity && (() => {
-          const dd = DEEP_DIVE_DATA[selectedCity.city];
+          const dd = liveDeepDiveData[selectedCity.city];
           if (!dd) return null;
           const hasKids =
             answers.familySituation?.includes("children") ||
@@ -2688,80 +2765,111 @@ Rules:
               </div>
 
               {/* COST OF LIVING TRANSLATOR */}
-              <div className="dd-section">
-                <div className="dd-section-title">
-                  {compareCity ? "Cost of Living Comparison" : "Monthly Budget Breakdown"}
-                </div>
-                <div className="col-selector">
-                  <div className="col-selector-label">Compare costs with your current US city</div>
-                  <select
-                    className="col-dropdown"
-                    value={compareCity}
-                    onChange={(e) => setCompareCity(e.target.value)}
-                  >
-                    <option value="">Select your US city...</option>
-                    {Object.keys(US_CITY_COL_DATA).map((city) => (
-                      <option key={city} value={city}>{city}</option>
-                    ))}
-                  </select>
-                </div>
+              {(() => {
+                const isUS = answers.citizenship === "United States";
+                const originCountryData = !isUS ? ORIGIN_COUNTRY_COL[answers.citizenship] || ORIGIN_COUNTRY_COL["Other"] : null;
+                const originCities = isUS ? liveUsCityCOL : (originCountryData?.cities || {});
+                const originLabel = isUS ? "US" : (originCountryData?.label || "your home");
+                const compareCosts = isUS ? liveUsCityCOL[compareCity] : originCities[compareCity];
 
-                {compareCity ? (() => {
-                  const comparison = getColComparison(compareCity, selectedCity.city, hasKids);
-                  if (!comparison) return null;
-                  return (
-                    <>
-                      <div className="col-headline">
-                        Your dollar goes <em>{comparison.overallPct}% further</em> in {selectedCity.city}
+                return (
+                  <div className="dd-section">
+                    <div className="dd-section-title">
+                      {compareCity ? "Cost of Living Comparison" : "Monthly Budget Breakdown"}
+                    </div>
+                    <div className="col-selector">
+                      <div className="col-selector-label">
+                        {isUS ? "Compare costs with your current US city" : `Compare costs with your current city in ${originLabel}`}
                       </div>
-                      <div className="col-row-header">
-                        <span>Category</span>
-                        <span>In {compareCity.split(" ")[0]}</span>
-                        <span>In {selectedCity.city}</span>
-                        <span style={{ textAlign: "right" }}>Savings</span>
-                      </div>
-                      <div className="col-comparison-grid">
-                        {comparison.items.map((item, i) => (
-                          <div key={i} className="col-row">
-                            <span className="col-category">{item.category}</span>
-                            <span className="col-us-cost">{formatCurrency(item.usCost)}</span>
-                            <span className="col-dest-cost">{formatCurrency(item.destCost)}</span>
-                            <span className={`col-savings ${item.savingsPct < 0 ? "negative" : ""}`}>
-                              {item.savingsPct > 0 ? `-${item.savingsPct}%` : `+${Math.abs(item.savingsPct)}%`}
-                            </span>
-                          </div>
+                      <select
+                        className="col-dropdown"
+                        value={compareCity}
+                        onChange={(e) => setCompareCity(e.target.value)}
+                      >
+                        <option value="">{isUS ? "Select your US city..." : `Select your ${originLabel} city...`}</option>
+                        {Object.keys(originCities).map((city) => (
+                          <option key={city} value={city}>{city}</option>
                         ))}
-                      </div>
-                      <div className="col-totals">
-                        <div className="col-total-card">
-                          <div className="col-total-label">Monthly Savings</div>
-                          <div className="col-total-value">{formatCurrency(comparison.totalSavings)}/mo</div>
-                        </div>
-                        <div className="col-total-card">
-                          <div className="col-total-label">Annual Savings</div>
-                          <div className="col-total-value">{formatCurrency(comparison.totalSavings * 12)}/yr</div>
-                        </div>
-                      </div>
-                    </>
-                  );
-                })() : (
-                  <>
-                    <div className="budget-grid">
-                      {budgetItems.map((b, i) => (
-                        <div key={i} className="budget-item">
-                          <div className="budget-category">{b.category}</div>
-                          <div className="budget-amount">{b.amount}</div>
-                          <div className="budget-note">{b.note}</div>
-                        </div>
-                      ))}
+                      </select>
                     </div>
-                    <div className="budget-total">
-                      <span className="budget-total-label">Estimated Total</span>
-                      <span className="budget-total-amount">{dd.totalRange}/mo</span>
-                    </div>
-                  </>
-                )}
-              </div>
+
+                    {compareCity ? (() => {
+                      const comparison = getColComparison(compareCosts, selectedCity.city, hasKids);
+                      if (!comparison) return null;
+                      return (
+                        <>
+                          <div className="col-headline">
+                            Your dollar goes <em>{comparison.overallPct}% further</em> in {selectedCity.city}
+                          </div>
+                          <div className="col-row-header">
+                            <span>Category</span>
+                            <span>In {compareCity.split(",")[0]}</span>
+                            <span>In {selectedCity.city}</span>
+                            <span style={{ textAlign: "right" }}>Savings</span>
+                          </div>
+                          <div className="col-comparison-grid">
+                            {comparison.items.map((item, i) => (
+                              <div key={i} className="col-row">
+                                <span className="col-category">{item.category}</span>
+                                <span className="col-us-cost">{formatCurrency(item.originCost)}</span>
+                                <span className="col-dest-cost">{formatCurrency(item.destCost)}</span>
+                                <span className={`col-savings ${item.savingsPct < 0 ? "negative" : ""}`}>
+                                  {item.savingsPct > 0 ? `-${item.savingsPct}%` : `+${Math.abs(item.savingsPct)}%`}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="col-totals">
+                            <div className="col-total-card">
+                              <div className="col-total-label">Monthly Savings</div>
+                              <div className="col-total-value">{formatCurrency(comparison.totalSavings)}/mo</div>
+                            </div>
+                            <div className="col-total-card">
+                              <div className="col-total-label">Annual Savings</div>
+                              <div className="col-total-value">{formatCurrency(comparison.totalSavings * 12)}/yr</div>
+                            </div>
+                          </div>
+                          {!isUS && (
+                            <div className="source-badge">
+                              <span className="source-badge-dot" />
+                              Estimates based on typical expat costs (USD) · Numbeo & GLN Research 2025
+                            </div>
+                          )}
+                          {isUS && (liveDestCOL[selectedCity.city]?._meta?.source || liveUsCityCOL[compareCity]?._meta?.source) && (
+                            <div className="source-badge">
+                              <span className="source-badge-dot" />
+                              Source: {liveDestCOL[selectedCity.city]?._meta?.source || liveUsCityCOL[compareCity]?._meta?.source || "GLN Research"}
+                            </div>
+                          )}
+                        </>
+                      );
+                    })() : (
+                      <>
+                        <div className="budget-grid">
+                          {budgetItems.map((b, i) => (
+                            <div key={i} className="budget-item">
+                              <div className="budget-category">{b.category}</div>
+                              <div className="budget-amount">{b.amount}</div>
+                              <div className="budget-note">{b.note}</div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="budget-total">
+                          <span className="budget-total-label">Estimated Total</span>
+                          <span className="budget-total-amount">{dd.totalRange}/mo</span>
+                        </div>
+                        {dd._meta?.budgetSource && (
+                          <div className="source-badge">
+                            <span className="source-badge-dot" />
+                            Source: {dd._meta.budgetSource}
+                            {dd._meta.lastUpdated && <> · Updated {new Date(dd._meta.lastUpdated + 'Z').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</>}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* NEIGHBORHOODS */}
               <div className="dd-section">
@@ -2845,15 +2953,15 @@ Rules:
                   );
 
                   const stateCode = compareCity
-                    ? US_CITY_COL_DATA[compareCity]?.state
+                    ? liveUsCityCOL[compareCity]?.state
                     : "NY";
-                  const stateName = STATE_TAX_RATES[stateCode]?.name || "your state";
+                  const stateName = liveStateTaxRates[stateCode]?.name || "your state";
                   const fedTax = calcFederalTax(income);
                   const stateTax = calcStateTax(income, stateCode);
                   const totalUSTax = fedTax + stateTax;
                   const usRate = ((totalUSTax / income) * 100).toFixed(1);
                   const destTax = calcDestinationTax(income, selectedCity.city);
-                  const destProgram = DESTINATION_TAX_PROGRAMS[selectedCity.city];
+                  const destProgram = liveDestTaxPrograms[selectedCity.city];
                   const destRate = ((destTax / income) * 100).toFixed(1);
                   const annualSavings = totalUSTax - destTax;
 
@@ -2923,6 +3031,13 @@ Rules:
                       {destProgram?.caveat && (
                         <div className="tax-disclaimer">
                           ⚠ {destProgram.caveat}. This is a simplified estimate for illustration only — consult a qualified cross-border tax professional before making relocation decisions.
+                        </div>
+                      )}
+                      {destProgram?._meta?.source && (
+                        <div className="source-badge">
+                          <span className="source-badge-dot" />
+                          Source: {destProgram._meta.source}
+                          {destProgram._meta.lastUpdated && <> · Updated {new Date(destProgram._meta.lastUpdated + 'Z').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</>}
                         </div>
                       )}
                     </>
