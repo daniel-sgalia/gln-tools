@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { adminFetch } from "../api";
 
 // Strip diacritics for accent-insensitive matching
 const normalize = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -90,7 +91,7 @@ export default function CitiesList({ onEditCity, showToast }) {
   }, [newCity.country]);
 
   const loadCities = () => {
-    fetch("/api/admin/cities", { credentials: "include" })
+    adminFetch("/api/admin/cities")
       .then(r => r.json())
       .then(data => { setCities(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -108,9 +109,8 @@ export default function CitiesList({ onEditCity, showToast }) {
     const key = newCity.key || toKey(newCity.city_name);
     setCreating(true);
     try {
-      const res = await fetch("/api/admin/cities", {
-        method: "POST", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      const res = await adminFetch("/api/admin/cities", {
+        method: "POST",
         body: JSON.stringify({
           key,
           city_name: newCity.city_name.trim(),
@@ -135,7 +135,7 @@ export default function CitiesList({ onEditCity, showToast }) {
 
   const handleDelete = async (city) => {
     if (!window.confirm(`Delete "${city.city_name}, ${city.country}"?\n\nThis will permanently remove the city and all its data (schools, neighborhoods, budgets, visa info, etc.).`)) return;
-    const res = await fetch(`/api/admin/cities/${city.id}`, { method: "DELETE", credentials: "include" });
+    const res = await adminFetch(`/api/admin/cities/${city.id}`, { method: "DELETE" });
     if (res.ok) {
       showToast(`${city.city_name} deleted`);
       loadCities();

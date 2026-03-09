@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { adminFetch } from "../api";
 import SourceField from "../components/SourceField";
 
 const TABS = ["General", "Scores", "Schools", "Deep Dive", "Cost of Living", "Tax Program"];
@@ -10,7 +11,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   const [bracketSets, setBracketSets] = useState([]);
 
   const loadCity = () => {
-    fetch(`/api/admin/cities/${cityId}`, { credentials: "include" })
+    adminFetch(`/api/admin/cities/${cityId}`)
       .then(r => r.json())
       .then(setCity);
   };
@@ -18,7 +19,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   useEffect(loadCity, [cityId]);
 
   useEffect(() => {
-    fetch("/api/admin/tax/bracket-sets", { credentials: "include" })
+    adminFetch("/api/admin/tax/bracket-sets")
       .then(r => r.json())
       .then(setBracketSets)
       .catch(() => {});
@@ -29,9 +30,8 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   const saveGeneral = async () => {
     setSaving(true);
     try {
-      const res = await fetch(`/api/admin/cities/${cityId}`, {
-        method: "PUT", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      const res = await adminFetch(`/api/admin/cities/${cityId}`, {
+        method: "PUT",
         body: JSON.stringify(city),
       });
       if (res.ok) { showToast("City updated"); loadCity(); }
@@ -43,9 +43,8 @@ export default function CityEdit({ cityId, onBack, showToast }) {
     const scores = {};
     city.scores.forEach(s => { scores[s.dimension] = parseInt(s.score); });
     try {
-      const res = await fetch(`/api/admin/cities/${cityId}/scores`, {
-        method: "PUT", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      const res = await adminFetch(`/api/admin/cities/${cityId}/scores`, {
+        method: "PUT",
         body: JSON.stringify({ scores, source: city.source }),
       });
       if (res.ok) showToast("Scores updated");
@@ -55,9 +54,8 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   const saveSchool = async (school) => {
     const method = school.id ? "PUT" : "POST";
     const url = school.id ? `/api/admin/cities/schools/${school.id}` : `/api/admin/cities/${cityId}/schools`;
-    await fetch(url, {
-      method, credentials: "include",
-      headers: { "Content-Type": "application/json" },
+    await adminFetch(url, {
+      method,
       body: JSON.stringify(school),
     });
     showToast("School saved");
@@ -65,7 +63,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   };
 
   const deleteSchool = async (schoolId) => {
-    await fetch(`/api/admin/cities/schools/${schoolId}`, { method: "DELETE", credentials: "include" });
+    await adminFetch(`/api/admin/cities/schools/${schoolId}`, { method: "DELETE" });
     showToast("School removed");
     loadCity();
   };
@@ -73,9 +71,8 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   const saveBudget = async () => {
     setSaving(true);
     try {
-      await fetch(`/api/admin/cities/${cityId}/budget`, {
-        method: "PUT", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      await adminFetch(`/api/admin/cities/${cityId}/budget`, {
+        method: "PUT",
         body: JSON.stringify({
           items: city.budgetBreakdowns.map(b => ({
             category: b.category, amount: b.amount, note: b.note, familyOnly: !!b.family_only,
@@ -92,9 +89,8 @@ export default function CityEdit({ cityId, onBack, showToast }) {
     if (!city.destinationCol) return;
     setSaving(true);
     try {
-      await fetch(`/api/admin/cities/${cityId}/col`, {
-        method: "PUT", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      await adminFetch(`/api/admin/cities/${cityId}/col`, {
+        method: "PUT",
         body: JSON.stringify(city.destinationCol),
       });
       showToast("Cost of living updated");
@@ -106,9 +102,8 @@ export default function CityEdit({ cityId, onBack, showToast }) {
     setSaving(true);
     try {
       const tp = city.taxProgram;
-      await fetch(`/api/admin/cities/${cityId}/tax-program`, {
-        method: "PUT", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      await adminFetch(`/api/admin/cities/${cityId}/tax-program`, {
+        method: "PUT",
         body: JSON.stringify({
           programName: tp.program_name, programDesc: tp.program_desc,
           effectiveRate: tp.effective_rate, method: tp.method,

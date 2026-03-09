@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { adminFetch } from "../api";
 
 const US_STATES = [
   "AL Alabama","AK Alaska","AZ Arizona","AR Arkansas","CA California","CO Colorado",
@@ -20,7 +21,7 @@ export default function UsCitiesEdit({ showToast }) {
   const [creating, setCreating] = useState(false);
 
   const loadCities = () => {
-    fetch("/api/admin/us-cities", { credentials: "include" })
+    adminFetch("/api/admin/us-cities")
       .then(r => r.json()).then(setCities);
   };
 
@@ -33,9 +34,8 @@ export default function UsCitiesEdit({ showToast }) {
   const saveCity = async (city) => {
     setSaving(city.id);
     try {
-      await fetch(`/api/admin/us-cities/${city.id}`, {
-        method: "PUT", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      await adminFetch(`/api/admin/us-cities/${city.id}`, {
+        method: "PUT",
         body: JSON.stringify(city),
       });
       showToast(`${city.city_name} updated`);
@@ -49,9 +49,8 @@ export default function UsCitiesEdit({ showToast }) {
     }
     setCreating(true);
     try {
-      const res = await fetch("/api/admin/us-cities", {
-        method: "POST", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      const res = await adminFetch("/api/admin/us-cities", {
+        method: "POST",
         body: JSON.stringify(newCity),
       });
       if (res.ok) {
@@ -68,7 +67,7 @@ export default function UsCitiesEdit({ showToast }) {
 
   const handleDelete = async (city) => {
     if (!window.confirm(`Delete "${city.city_name}, ${city.state_code}"?\n\nThis will permanently remove this city's cost of living data.`)) return;
-    const res = await fetch(`/api/admin/us-cities/${city.id}`, { method: "DELETE", credentials: "include" });
+    const res = await adminFetch(`/api/admin/us-cities/${city.id}`, { method: "DELETE" });
     if (res.ok) {
       showToast(`${city.city_name} deleted`);
       loadCities();

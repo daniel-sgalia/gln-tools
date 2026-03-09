@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabase";
+import { adminFetch } from "./api";
 import AdminLogin from "./AdminLogin";
 import AdminDashboard from "./pages/Dashboard";
 import CitiesList from "./pages/CitiesList";
@@ -84,10 +86,33 @@ export default function AdminApp() {
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
-    fetch("/api/auth/me", { credentials: "include" })
-      .then((r) => r.ok ? r.json() : null)
-      .then((data) => { setUser(data); setLoading(false); })
-      .catch(() => setLoading(false));
+    // Check existing session and fetch user profile
+    const initAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        try {
+          const res = await adminFetch("/api/auth/me");
+          if (res.ok) {
+            setUser(await res.json());
+          }
+        } catch {}
+      }
+      setLoading(false);
+    };
+    initAuth();
+
+    // Listen for auth state changes (login/logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        try {
+          const res = await adminFetch("/api/auth/me");
+          if (res.ok) setUser(await res.json());
+        } catch {}
+      } else if (event === 'SIGNED_OUT') {
+        setUser(null);
+      }
+    });
+    return () => subscription.unsubscribe();
   }, []);
 
   const showToast = (message, type = "success") => {
@@ -95,9 +120,9 @@ export default function AdminApp() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const handleLogout = () => {
-    fetch("/api/auth/logout", { method: "POST", credentials: "include" })
-      .then(() => setUser(null));
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
   };
 
   const navigateToCity = (cityId) => {
@@ -144,7 +169,7 @@ export default function AdminApp() {
             ))}
           </div>
           <div className="admin-sidebar-footer">
-            <div className="admin-user-info">{user.displayName} ({user.role})</div>
+            <div className="admin-user-info">{user.displayName || user.display_name} ({user.role})</div>
             <button className="admin-logout-btn" onClick={handleLogout}>Log out</button>
           </div>
         </div>

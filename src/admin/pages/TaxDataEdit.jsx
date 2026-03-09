@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { adminFetch } from "../api";
 
 const KNOWN_SOURCES = {
   states: { label: "Tax Foundation", url: "https://taxfoundation.org/data/all/state/state-income-tax-rates-2025/" },
@@ -15,21 +16,21 @@ export default function TaxDataEdit({ showToast }) {
   const [refreshing, setRefreshing] = useState(null);
   const [tab, setTab] = useState("states");
 
-  const loadStateRates = () => fetch("/api/admin/tax/state-rates", { credentials: "include" }).then(r => r.json()).then(setStateRates);
+  const loadStateRates = () => adminFetch("/api/admin/tax/state-rates").then(r => r.json()).then(setStateRates);
 
   const loadBracketSets = async () => {
-    const res = await fetch("/api/admin/tax/bracket-sets", { credentials: "include" });
+    const res = await adminFetch("/api/admin/tax/bracket-sets");
     const sets = await res.json();
     setBracketSets(sets);
     for (const set of sets) {
-      const bRes = await fetch(`/api/admin/tax/brackets/${set}`, { credentials: "include" });
+      const bRes = await adminFetch(`/api/admin/tax/brackets/${set}`);
       const brackets = await bRes.json();
       setBracketData(prev => ({ ...prev, [set]: brackets }));
     }
   };
 
   const loadBrackets = async (set) => {
-    const res = await fetch(`/api/admin/tax/brackets/${set}`, { credentials: "include" });
+    const res = await adminFetch(`/api/admin/tax/brackets/${set}`);
     const brackets = await res.json();
     setBracketData(prev => ({ ...prev, [set]: brackets }));
   };
@@ -53,9 +54,8 @@ export default function TaxDataEdit({ showToast }) {
   const saveStateRate = async (rate) => {
     setSaving(rate.id);
     try {
-      await fetch(`/api/admin/tax/state-rates/${rate.id}`, {
-        method: "PUT", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      await adminFetch(`/api/admin/tax/state-rates/${rate.id}`, {
+        method: "PUT",
         body: JSON.stringify(rate),
       });
       showToast(`${rate.state_name} tax rate updated`);
@@ -67,9 +67,8 @@ export default function TaxDataEdit({ showToast }) {
     if (!brackets) return;
     setSaving(set);
     try {
-      await fetch(`/api/admin/tax/brackets/${set}`, {
-        method: "PUT", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+      await adminFetch(`/api/admin/tax/brackets/${set}`, {
+        method: "PUT",
         body: JSON.stringify({ brackets: brackets.map(b => ({ min: b.min_income, max: b.max_income, rate: b.rate })) }),
       });
       showToast(`${set} brackets updated`);

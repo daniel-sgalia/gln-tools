@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { adminFetch } from "../api";
 
 export default function AuditLog() {
   const [entries, setEntries] = useState([]);
@@ -10,7 +11,7 @@ export default function AuditLog() {
   const loadEntries = () => {
     const params = new URLSearchParams({ limit: PAGE_SIZE, offset: page * PAGE_SIZE });
     if (tableFilter) params.set("table", tableFilter);
-    fetch(`/api/admin/audit?${params}`, { credentials: "include" })
+    adminFetch(`/api/admin/audit?${params}`)
       .then(r => r.json())
       .then(data => { setEntries(data.rows); setTotal(data.total); });
   };

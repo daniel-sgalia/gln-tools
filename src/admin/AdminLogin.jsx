@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "../lib/supabase";
 
 const loginStyle = `
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap');
@@ -28,18 +29,11 @@ export default function AdminLogin({ onLogin }) {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Login failed");
-      onLogin(data);
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      if (authError) throw new Error(authError.message);
+      // onLogin will be called by onAuthStateChange in AdminApp
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
     }
   };
