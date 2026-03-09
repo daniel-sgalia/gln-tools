@@ -34,7 +34,7 @@ export default function UsCitiesEdit({ showToast }) {
   const saveCity = async (city) => {
     setSaving(city.id);
     try {
-      await adminFetch(`/api/admin/us-cities/${city.id}`, {
+      await adminFetch(`/api/admin/us-cities?id=${city.id}`, {
         method: "PUT",
         body: JSON.stringify(city),
       });
@@ -67,7 +67,7 @@ export default function UsCitiesEdit({ showToast }) {
 
   const handleDelete = async (city) => {
     if (!window.confirm(`Delete "${city.city_name}, ${city.state_code}"?\n\nThis will permanently remove this city's cost of living data.`)) return;
-    const res = await adminFetch(`/api/admin/us-cities/${city.id}`, { method: "DELETE" });
+    const res = await adminFetch(`/api/admin/us-cities?id=${city.id}`, { method: "DELETE" });
     if (res.ok) {
       showToast(`${city.city_name} deleted`);
       loadCities();

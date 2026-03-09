@@ -135,7 +135,7 @@ export default function CitiesList({ onEditCity, showToast }) {
 
   const handleDelete = async (city) => {
     if (!window.confirm(`Delete "${city.city_name}, ${city.country}"?\n\nThis will permanently remove the city and all its data (schools, neighborhoods, budgets, visa info, etc.).`)) return;
-    const res = await adminFetch(`/api/admin/cities/${city.id}`, { method: "DELETE" });
+    const res = await adminFetch(`/api/admin/cities?id=${city.id}`, { method: "DELETE" });
     if (res.ok) {
       showToast(`${city.city_name} deleted`);
       loadCities();

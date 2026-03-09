@@ -16,21 +16,21 @@ export default function TaxDataEdit({ showToast }) {
   const [refreshing, setRefreshing] = useState(null);
   const [tab, setTab] = useState("states");
 
-  const loadStateRates = () => adminFetch("/api/admin/tax/state-rates").then(r => r.json()).then(setStateRates);
+  const loadStateRates = () => adminFetch("/api/admin/tax?action=state-rates").then(r => r.json()).then(setStateRates);
 
   const loadBracketSets = async () => {
-    const res = await adminFetch("/api/admin/tax/bracket-sets");
+    const res = await adminFetch("/api/admin/tax?action=bracket-sets");
     const sets = await res.json();
     setBracketSets(sets);
     for (const set of sets) {
-      const bRes = await adminFetch(`/api/admin/tax/brackets/${set}`);
+      const bRes = await adminFetch(`/api/admin/tax?action=brackets&set=${set}`);
       const brackets = await bRes.json();
       setBracketData(prev => ({ ...prev, [set]: brackets }));
     }
   };
 
   const loadBrackets = async (set) => {
-    const res = await adminFetch(`/api/admin/tax/brackets/${set}`);
+    const res = await adminFetch(`/api/admin/tax?action=brackets&set=${set}`);
     const brackets = await res.json();
     setBracketData(prev => ({ ...prev, [set]: brackets }));
   };
@@ -54,7 +54,7 @@ export default function TaxDataEdit({ showToast }) {
   const saveStateRate = async (rate) => {
     setSaving(rate.id);
     try {
-      await adminFetch(`/api/admin/tax/state-rates/${rate.id}`, {
+      await adminFetch(`/api/admin/tax?action=state-rate&id=${rate.id}`, {
         method: "PUT",
         body: JSON.stringify(rate),
       });
@@ -67,7 +67,7 @@ export default function TaxDataEdit({ showToast }) {
     if (!brackets) return;
     setSaving(set);
     try {
-      await adminFetch(`/api/admin/tax/brackets/${set}`, {
+      await adminFetch(`/api/admin/tax?action=brackets&set=${set}`, {
         method: "PUT",
         body: JSON.stringify({ brackets: brackets.map(b => ({ min: b.min_income, max: b.max_income, rate: b.rate })) }),
       });

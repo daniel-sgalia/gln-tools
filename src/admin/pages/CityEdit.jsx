@@ -11,7 +11,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   const [bracketSets, setBracketSets] = useState([]);
 
   const loadCity = () => {
-    adminFetch(`/api/admin/cities/${cityId}`)
+    adminFetch(`/api/admin/cities?id=${cityId}`)
       .then(r => r.json())
       .then(setCity);
   };
@@ -19,7 +19,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   useEffect(loadCity, [cityId]);
 
   useEffect(() => {
-    adminFetch("/api/admin/tax/bracket-sets")
+    adminFetch("/api/admin/tax?action=bracket-sets")
       .then(r => r.json())
       .then(setBracketSets)
       .catch(() => {});
@@ -30,7 +30,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   const saveGeneral = async () => {
     setSaving(true);
     try {
-      const res = await adminFetch(`/api/admin/cities/${cityId}`, {
+      const res = await adminFetch(`/api/admin/cities?id=${cityId}`, {
         method: "PUT",
         body: JSON.stringify(city),
       });
@@ -43,7 +43,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
     const scores = {};
     city.scores.forEach(s => { scores[s.dimension] = parseInt(s.score); });
     try {
-      const res = await adminFetch(`/api/admin/cities/${cityId}/scores`, {
+      const res = await adminFetch(`/api/admin/city-sub?action=scores&id=${cityId}`, {
         method: "PUT",
         body: JSON.stringify({ scores, source: city.source }),
       });
@@ -53,7 +53,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
 
   const saveSchool = async (school) => {
     const method = school.id ? "PUT" : "POST";
-    const url = school.id ? `/api/admin/cities/schools/${school.id}` : `/api/admin/cities/${cityId}/schools`;
+    const url = school.id ? `/api/admin/city-sub?action=school&subId=${school.id}` : `/api/admin/city-sub?action=schools&id=${cityId}`;
     await adminFetch(url, {
       method,
       body: JSON.stringify(school),
@@ -63,7 +63,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   };
 
   const deleteSchool = async (schoolId) => {
-    await adminFetch(`/api/admin/cities/schools/${schoolId}`, { method: "DELETE" });
+    await adminFetch(`/api/admin/city-sub?action=school&subId=${schoolId}`, { method: "DELETE" });
     showToast("School removed");
     loadCity();
   };
@@ -71,7 +71,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
   const saveBudget = async () => {
     setSaving(true);
     try {
-      await adminFetch(`/api/admin/cities/${cityId}/budget`, {
+      await adminFetch(`/api/admin/city-sub?action=budget&id=${cityId}`, {
         method: "PUT",
         body: JSON.stringify({
           items: city.budgetBreakdowns.map(b => ({
@@ -89,7 +89,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
     if (!city.destinationCol) return;
     setSaving(true);
     try {
-      await adminFetch(`/api/admin/cities/${cityId}/col`, {
+      await adminFetch(`/api/admin/city-sub?action=col&id=${cityId}`, {
         method: "PUT",
         body: JSON.stringify(city.destinationCol),
       });
@@ -102,7 +102,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
     setSaving(true);
     try {
       const tp = city.taxProgram;
-      await adminFetch(`/api/admin/cities/${cityId}/tax-program`, {
+      await adminFetch(`/api/admin/city-sub?action=tax-program&id=${cityId}`, {
         method: "PUT",
         body: JSON.stringify({
           programName: tp.program_name, programDesc: tp.program_desc,
