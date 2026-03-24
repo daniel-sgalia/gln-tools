@@ -88,16 +88,21 @@ export default function AdminApp() {
   useEffect(() => {
     // Check existing session and fetch user profile
     const initAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        try {
-          const res = await adminFetch("/api/auth/me");
-          if (res.ok) {
-            setUser(await res.json());
-          }
-        } catch {}
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          try {
+            const res = await adminFetch("/api/auth/me");
+            if (res.ok) {
+              setUser(await res.json());
+            }
+          } catch {}
+        }
+      } catch (err) {
+        console.warn("Auth init failed:", err.message);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     initAuth();
 
