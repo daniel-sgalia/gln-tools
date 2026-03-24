@@ -115,7 +115,13 @@ export default function AdminApp() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         try {
-          const res = await adminFetch("/api/auth/me");
+          // Use the session token directly instead of calling getSession() again
+          const res = await fetch("/api/auth/me", {
+            headers: {
+              'Authorization': `Bearer ${session.access_token}`,
+              'Content-Type': 'application/json',
+            },
+          });
           if (res.ok) setUser(await res.json());
         } catch {}
       } else if (event === 'SIGNED_OUT') {

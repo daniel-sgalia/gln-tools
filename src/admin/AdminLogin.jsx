@@ -29,8 +29,11 @@ export default function AdminLogin({ onLogin }) {
     setError(null);
     setLoading(true);
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
-      if (authError) throw new Error(authError.message);
+      const result = await Promise.race([
+        supabase.auth.signInWithPassword({ email, password }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Sign-in timed out. Please try again.')), 8000)),
+      ]);
+      if (result.error) throw new Error(result.error.message);
       // onLogin will be called by onAuthStateChange in AdminApp
     } catch (err) {
       setError(err.message);
