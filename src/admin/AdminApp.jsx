@@ -87,9 +87,14 @@ export default function AdminApp() {
 
   useEffect(() => {
     // Check existing session and fetch user profile
+    // Race against a timeout — Supabase's Web Locks API can hang indefinitely
     const initAuth = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const sessionResult = await Promise.race([
+          supabase.auth.getSession(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 4000)),
+        ]);
+        const session = sessionResult?.data?.session;
         if (session) {
           try {
             const res = await adminFetch("/api/auth/me");
@@ -99,7 +104,7 @@ export default function AdminApp() {
           } catch {}
         }
       } catch (err) {
-        console.warn("Auth init failed:", err.message);
+        console.warn("Auth init:", err.message);
       } finally {
         setLoading(false);
       }
