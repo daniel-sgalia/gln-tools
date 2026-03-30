@@ -4,7 +4,7 @@ import SourceField from "../components/SourceField";
 
 const TABS = ["General", "Scores", "Schools", "Deep Dive", "Cost of Living", "Tax Program"];
 
-export default function CityEdit({ cityId, onBack, showToast }) {
+export default function CityEdit({ cityId, onBack, showToast, readOnly = false }) {
   const [city, setCity] = useState(null);
   const [tab, setTab] = useState("General");
   const [saving, setSaving] = useState(false);
@@ -210,7 +210,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
           <SourceField source={city.source} sourceUrl={city.source_url}
             onSourceChange={v => updateField("source", v)} onUrlChange={v => updateField("source_url", v)} />
           <div style={{ marginTop: 20 }}>
-            <button className="admin-btn" onClick={saveGeneral} disabled={saving}>{saving ? "Saving..." : "Save Changes"}</button>
+            <button className="admin-btn" onClick={saveGeneral} disabled={readOnly || saving} title={readOnly ? "Read-only in demo" : ""}>{saving ? "Saving..." : "Save Changes"}</button>
           </div>
         </div>
       )}
@@ -233,7 +233,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
             ))}
           </div>
           <div style={{ marginTop: 20 }}>
-            <button className="admin-btn" onClick={saveScores} disabled={saving}>{saving ? "Saving..." : "Save Scores"}</button>
+            <button className="admin-btn" onClick={saveScores} disabled={readOnly || saving} title={readOnly ? "Read-only in demo" : ""}>{saving ? "Saving..." : "Save Scores"}</button>
           </div>
         </div>
       )}
@@ -288,8 +288,8 @@ export default function CityEdit({ cityId, onBack, showToast }) {
                 onSourceChange={v => { const updated = [...city.schools]; updated[i] = { ...school, source: v }; setCity(prev => ({ ...prev, schools: updated })); }}
                 onUrlChange={v => { const updated = [...city.schools]; updated[i] = { ...school, source_url: v }; setCity(prev => ({ ...prev, schools: updated })); }} />
               <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-                <button className="admin-btn admin-btn-sm" onClick={() => saveSchool(school)}>Save</button>
-                <button className="admin-btn-outline admin-btn-sm admin-btn-danger" onClick={() => deleteSchool(school.id)}>Remove</button>
+                {!readOnly && <button className="admin-btn admin-btn-sm" onClick={() => saveSchool(school)}>Save</button>}
+                {!readOnly && <button className="admin-btn-outline admin-btn-sm admin-btn-danger" onClick={() => deleteSchool(school.id)}>Remove</button>}
               </div>
             </div>
           ))}
@@ -330,7 +330,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
               <label className="admin-label">Total Range</label>
               <input className="admin-input" value={city.budgetTotal?.total_range || ""} onChange={e => setCity(prev => ({ ...prev, budgetTotal: { ...prev.budgetTotal, total_range: e.target.value } }))} />
             </div>
-            <button className="admin-btn" onClick={saveBudget} disabled={saving} style={{ marginTop: 12 }}>{saving ? "Saving..." : "Save Budget"}</button>
+            <button className="admin-btn" onClick={saveBudget} disabled={readOnly || saving} title={readOnly ? "Read-only in demo" : ""} style={{ marginTop: 12 }}>{saving ? "Saving..." : "Save Budget"}</button>
           </div>
 
           <div className="admin-card">
@@ -380,7 +380,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
           <SourceField source={city.destinationCol.source} sourceUrl={city.destinationCol.source_url}
             onSourceChange={v => setCity(prev => ({ ...prev, destinationCol: { ...prev.destinationCol, source: v } }))}
             onUrlChange={v => setCity(prev => ({ ...prev, destinationCol: { ...prev.destinationCol, source_url: v } }))} />
-          <button className="admin-btn" onClick={saveCol} disabled={saving} style={{ marginTop: 16 }}>{saving ? "Saving..." : "Save Cost of Living"}</button>
+          <button className="admin-btn" onClick={saveCol} disabled={readOnly || saving} title={readOnly ? "Read-only in demo" : ""} style={{ marginTop: 16 }}>{saving ? "Saving..." : "Save Cost of Living"}</button>
         </div>
       )}
 
@@ -447,7 +447,7 @@ export default function CityEdit({ cityId, onBack, showToast }) {
           <SourceField source={city.taxProgram.source} sourceUrl={city.taxProgram.source_url}
             onSourceChange={v => setCity(prev => ({ ...prev, taxProgram: { ...prev.taxProgram, source: v } }))}
             onUrlChange={v => setCity(prev => ({ ...prev, taxProgram: { ...prev.taxProgram, source_url: v } }))} />
-          <button className="admin-btn" onClick={saveTaxProgram} disabled={saving} style={{ marginTop: 16 }}>{saving ? "Saving..." : "Save Tax Program"}</button>
+          <button className="admin-btn" onClick={saveTaxProgram} disabled={readOnly || saving} title={readOnly ? "Read-only in demo" : ""} style={{ marginTop: 16 }}>{saving ? "Saving..." : "Save Tax Program"}</button>
         </div>
       )}
     </div>

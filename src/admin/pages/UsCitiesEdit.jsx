@@ -13,7 +13,7 @@ const US_STATES = [
   "WV West Virginia","WI Wisconsin","WY Wyoming","DC District of Columbia","PR Puerto Rico",
 ].map(s => ({ code: s.slice(0, 2), name: s.slice(3) }));
 
-export default function UsCitiesEdit({ showToast }) {
+export default function UsCitiesEdit({ showToast, readOnly = false }) {
   const [cities, setCities] = useState([]);
   const [saving, setSaving] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
@@ -83,9 +83,9 @@ export default function UsCitiesEdit({ showToast }) {
           <div className="admin-title">US Cost of Living Data</div>
           <div className="admin-subtitle">{cities.length} comparison cities</div>
         </div>
-        <button className="admin-btn" onClick={() => setShowAdd(!showAdd)}>
+        {!readOnly && <button className="admin-btn" onClick={() => setShowAdd(!showAdd)}>
           {showAdd ? "Cancel" : "+ Add City"}
-        </button>
+        </button>}
       </div>
 
       {showAdd && (
@@ -118,7 +118,7 @@ export default function UsCitiesEdit({ showToast }) {
         <div key={city.id} className="admin-card">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <h3>{city.city_name}, {city.state_code}</h3>
-            <button className="admin-btn-outline admin-btn-sm admin-btn-danger" onClick={() => handleDelete(city)}>Delete</button>
+            {!readOnly && <button className="admin-btn-outline admin-btn-sm admin-btn-danger" onClick={() => handleDelete(city)}>Delete</button>}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
             {["housing", "school", "healthcare", "groceries", "transport", "lifestyle"].map(field => (
@@ -139,7 +139,7 @@ export default function UsCitiesEdit({ showToast }) {
               <input className="admin-source-input" value={city.source_url || ""} onChange={e => updateCity(city.id, "source_url", e.target.value)} />
             </div>
           </div>
-          <button className="admin-btn admin-btn-sm" onClick={() => saveCity(city)} disabled={saving === city.id} style={{ marginTop: 12 }}>
+          <button className="admin-btn admin-btn-sm" onClick={() => saveCity(city)} disabled={readOnly || saving === city.id} title={readOnly ? "Read-only in demo" : ""} style={{ marginTop: 12 }}>
             {saving === city.id ? "Saving..." : "Save"}
           </button>
         </div>

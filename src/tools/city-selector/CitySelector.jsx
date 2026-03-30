@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { loadAllData } from "../../data/dataProvider";
 
 const GOOGLE_FONTS = `
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&family=Sora:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&family=Sora:wght@400;500;600;800&display=swap');
 `;
 
 const style = `
@@ -46,45 +46,47 @@ const style = `
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    opacity: 0.6;
     transition: opacity 0.3s;
     z-index: 100;
   }
-  .ao-corner-link:hover { opacity: 1; }
+  .ao-corner-link:hover { opacity: 0.8; }
   .ao-corner-logo { height: 24px; width: 24px; }
   .ao-corner-text {
     font-family: 'Sora', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    color: #C8FF3E;
-    letter-spacing: -0.2px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #F0EBE1;
+    letter-spacing: -0.5px;
   }
+  .ao-corner-text span { color: #C8FF3E; }
 
   .built-by {
     display: flex;
     align-items: center;
     gap: 6px;
     text-decoration: none;
-    opacity: 0.45;
+    opacity: 0.7;
     transition: opacity 0.3s;
     margin-top: -12px;
     margin-bottom: 16px;
   }
-  .built-by:hover { opacity: 0.8; }
-  .built-by-logo { height: 16px; width: 16px; }
+  .built-by:hover { opacity: 1; }
+  .built-by-logo { height: 14px; width: 14px; }
   .built-by-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 11px;
-    color: rgba(240,235,225,0.6);
-    letter-spacing: 0.3px;
+    font-weight: 400;
+    color: rgba(240,235,225,0.5);
+    letter-spacing: -0.1px;
   }
   .built-by-text {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 11px;
-    font-weight: 600;
-    color: #C8FF3E;
-    letter-spacing: 0.3px;
+    font-weight: 800;
+    color: #F0EBE1;
+    letter-spacing: -0.3px;
   }
+  .built-by-text span { color: #C8FF3E; }
 
   /* HEADER */
   .header {
@@ -104,6 +106,8 @@ const style = `
     transition: opacity 0.3s;
   }
   .header-logo:hover { opacity: 1; }
+  .header-compact { padding: 16px 0 0; }
+  .header-compact .header-logo { height: 28px; margin-bottom: 8px; }
   .header-eyebrow {
     font-family: 'Outfit', sans-serif;
     font-size: 11px;
@@ -2490,30 +2494,34 @@ Rules:
       <div className="app">
         <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="ao-corner-link">
           <img src="/alignedops-logo.svg" alt="AlignedOps" className="ao-corner-logo" />
-          <span className="ao-corner-text">AlignedOps</span>
+          <span className="ao-corner-text">Aligned<span>Ops</span></span>
         </a>
 
         {/* HEADER */}
-        <div className="header">
+        <div className={`header ${step >= 1 && step <= TOTAL_QUESTIONS ? "header-compact" : ""}`}>
           <a href="https://globallivingnetwork.com/about-us/" target="_blank" rel="noopener noreferrer">
             <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" />
           </a>
-          <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="built-by">
-            <img src="/alignedops-logo.svg" alt="AlignedOps" className="built-by-logo" />
-            <span className="built-by-label">Built by</span>
-            <span className="built-by-text">AlignedOps</span>
-          </a>
-          <h1>
-            Thinking About <em>Moving</em>
-            <br />
-            Abroad?
-          </h1>
-          <p className="header-sub">
-            Tell us a bit about your situation and we'll match you with the
-            right cities - tailored to your lifestyle, budget, family needs,
-            and long-term goals abroad.
-          </p>
-          <div className="divider" />
+          {step < 1 && (
+            <>
+              <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="built-by">
+                <img src="/alignedops-logo.svg" alt="AlignedOps" className="built-by-logo" />
+                <span className="built-by-label">Built by</span>
+                <span className="built-by-text">Aligned<span>Ops</span></span>
+              </a>
+              <h1>
+                Thinking About <em>Moving</em>
+                <br />
+                Abroad?
+              </h1>
+              <p className="header-sub">
+                Tell us a bit about your situation and we'll match you with the
+                right cities - tailored to your lifestyle, budget, family needs,
+                and long-term goals abroad.
+              </p>
+              <div className="divider" />
+            </>
+          )}
         </div>
 
         {/* PROGRESS BAR */}

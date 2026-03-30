@@ -4,7 +4,7 @@ import AdminApp from "../admin/AdminApp";
 const style = `
 .demo-gear-btn {
   position: fixed;
-  top: 20px;
+  top: 46px;
   right: 20px;
   z-index: 10000;
   width: 40px;
@@ -41,7 +41,7 @@ const style = `
 }
 .demo-mode-badge {
   position: fixed;
-  top: 26px;
+  top: 52px;
   right: 68px;
   z-index: 10000;
   font-family: 'Outfit', sans-serif;
@@ -59,23 +59,43 @@ const style = `
   opacity: 1;
   transform: translateX(0);
 }
-.demo-note {
+.demo-topbar {
   position: fixed;
-  top: 68px;
-  right: 16px;
-  z-index: 10000;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  background: #C8FF3E;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-family: 'Outfit', sans-serif;
-  font-size: 10px;
-  color: rgba(240,235,225,0.7);
-  text-align: right;
-  max-width: 150px;
-  line-height: 1.5;
-  pointer-events: none;
-  background: rgba(14, 28, 48, 0.8);
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.08);
 }
+.demo-topbar-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0C0C0E;
+  letter-spacing: 1.5px;
+}
+.demo-topbar-text {
+  font-size: 12px;
+  color: rgba(12,12,14,0.6);
+}
+.demo-topbar-sep {
+  font-size: 12px;
+  color: rgba(12,12,14,0.3);
+  margin: 0 4px;
+}
+.demo-topbar-cta {
+  font-size: 12px;
+  color: #0C0C0E;
+  text-decoration: none;
+  font-weight: 600;
+}
+.demo-topbar-cta:hover { text-decoration: underline; }
 `;
 
 export default function DemoShell({ children }) {
@@ -100,8 +120,12 @@ export default function DemoShell({ children }) {
         </svg>
       </button>
 
-      <div className="demo-note">
-        Demo only. In production, admin is behind a separate login.
+      <div className="demo-topbar">
+        <span className="demo-topbar-label">DEMO MODE</span>
+        <span className="demo-topbar-text">&mdash; Want to whitelabel this tool?</span>
+        <a href="https://book.alignedops.io/30-minute-meeting" target="_blank" rel="noopener noreferrer" className="demo-topbar-cta">Book a call</a>
+        <span className="demo-topbar-sep">|</span>
+        <a href="mailto:hello@alignedops.io" className="demo-topbar-cta">hello@alignedops.io</a>
       </div>
 
       <div style={{ display: showAdmin ? "none" : "block" }}>

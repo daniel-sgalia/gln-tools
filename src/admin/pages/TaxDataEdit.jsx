@@ -8,7 +8,7 @@ const KNOWN_SOURCES = {
   brazil: { label: "Receita Federal", url: "https://www.gov.br/receitafederal/" },
 };
 
-export default function TaxDataEdit({ showToast }) {
+export default function TaxDataEdit({ showToast, readOnly = false }) {
   const [stateRates, setStateRates] = useState([]);
   const [bracketSets, setBracketSets] = useState([]);
   const [bracketData, setBracketData] = useState({});
@@ -155,7 +155,7 @@ export default function TaxDataEdit({ showToast }) {
                   <td><input className="admin-source-input" value={rate.source || ""} style={{ width: 120 }} onChange={e => {
                     const updated = [...stateRates]; updated[i] = { ...rate, source: e.target.value }; setStateRates(updated);
                   }} /></td>
-                  <td><button className="admin-btn admin-btn-sm" onClick={() => saveStateRate(rate)} disabled={saving === rate.id}>Save</button></td>
+                  <td><button className="admin-btn admin-btn-sm" onClick={() => saveStateRate(rate)} disabled={readOnly || saving === rate.id} title={readOnly ? "Read-only in demo" : ""}>Save</button></td>
                 </tr>
               ))}
             </tbody>
@@ -180,16 +180,16 @@ export default function TaxDataEdit({ showToast }) {
                   <td><input className="admin-input" type="number" step="0.001" value={b.rate} onChange={e =>
                     updateBracket(tab, i, "rate", parseFloat(e.target.value))
                   } /></td>
-                  <td><button className="admin-btn-outline admin-btn-sm admin-btn-danger" onClick={() => removeBracketRow(tab, i)}>×</button></td>
+                  {!readOnly && <td><button className="admin-btn-outline admin-btn-sm admin-btn-danger" onClick={() => removeBracketRow(tab, i)}>×</button></td>}
                 </tr>
               ))}
             </tbody>
           </table>
           <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-            <button className="admin-btn" onClick={() => saveBrackets(tab)} disabled={saving === tab}>
+            <button className="admin-btn" onClick={() => saveBrackets(tab)} disabled={readOnly || saving === tab} title={readOnly ? "Read-only in demo" : ""}>
               {saving === tab ? "Saving..." : "Save Brackets"}
             </button>
-            <button className="admin-btn-outline" onClick={() => addBracketRow(tab)}>+ Add Row</button>
+            {!readOnly && <button className="admin-btn-outline" onClick={() => addBracketRow(tab)}>+ Add Row</button>}
           </div>
         </div>
       )}

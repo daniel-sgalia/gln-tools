@@ -49,7 +49,7 @@ function toKey(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-export default function CitiesList({ onEditCity, showToast }) {
+export default function CitiesList({ onEditCity, showToast, readOnly = false }) {
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
@@ -153,9 +153,9 @@ export default function CitiesList({ onEditCity, showToast }) {
           <div className="admin-title">Destination Cities</div>
           <div className="admin-subtitle">{cities.length} cities managed</div>
         </div>
-        <button className="admin-btn" onClick={() => setShowAdd(!showAdd)}>
+        {!readOnly && <button className="admin-btn" onClick={() => setShowAdd(!showAdd)}>
           {showAdd ? "Cancel" : "+ Add City"}
-        </button>
+        </button>}
       </div>
 
       {showAdd && (
@@ -216,9 +216,9 @@ export default function CitiesList({ onEditCity, showToast }) {
               )}
             </div>
           </div>
-          <button className="admin-btn" onClick={handleCreate} disabled={creating} style={{ marginTop: 8 }}>
+          {!readOnly && <button className="admin-btn" onClick={handleCreate} disabled={creating} style={{ marginTop: 8 }}>
             {creating ? "Creating..." : "Create City"}
-          </button>
+          </button>}
         </div>
       )}
 
@@ -248,7 +248,7 @@ export default function CitiesList({ onEditCity, showToast }) {
                 </td>
                 <td style={{ display: "flex", gap: 6 }}>
                   <button className="admin-btn admin-btn-sm" onClick={() => onEditCity(city.id)}>Edit</button>
-                  <button className="admin-btn-outline admin-btn-sm admin-btn-danger" onClick={() => handleDelete(city)}>Delete</button>
+                  {!readOnly && <button className="admin-btn-outline admin-btn-sm admin-btn-danger" onClick={() => handleDelete(city)}>Delete</button>}
                 </td>
               </tr>
             ))}

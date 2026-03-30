@@ -44,6 +44,14 @@ const style = `
 .admin-btn-sm { padding: 5px 10px; font-size: 12px; }
 .admin-btn-danger { background: rgba(224,92,92,0.15); border: 1px solid rgba(224,92,92,0.3); color: #E05C5C; }
 .admin-btn-danger:hover { background: rgba(224,92,92,0.25); }
+.admin-btn[disabled], .admin-btn-outline[disabled], .admin-btn-danger[disabled] { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+.readonly-wrap { position: relative; display: inline-block; }
+.readonly-wrap[title] { cursor: not-allowed; }
+.readonly-wrap > button { pointer-events: none; opacity: 0.35; }
+.demo-banner { position: fixed; top: 0; left: 220px; right: 0; z-index: 9999; background: rgba(200,255,62,0.08); border-bottom: 1px solid rgba(200,255,62,0.12); padding: 6px 24px; display: flex; align-items: center; gap: 12px; }
+.demo-banner-label { font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 700; color: #C8FF3E; letter-spacing: 1.5px; white-space: nowrap; }
+.demo-banner-text { font-size: 11px; color: rgba(240,235,225,0.4); }
+.demo-banner ~ * { margin-top: 36px; }
 .admin-input { background: #162540; border: 1px solid rgba(255,255,255,0.1); color: #F0EBE1; padding: 8px 12px; border-radius: 8px; font-size: 14px; font-family: inherit; width: 100%; }
 .admin-input:focus { outline: none; border-color: rgba(201,169,110,0.4); }
 .admin-input::placeholder { color: rgba(240,235,225,0.25); }
@@ -83,7 +91,7 @@ const NAV_ITEMS = [
 export default function AdminApp({ demoMode = false, onBack = null }) {
   const [user, setUser] = useState(demoMode ? { displayName: "Demo Viewer", role: "viewer" } : null);
   const [loading, setLoading] = useState(!demoMode);
-  const [page, setPage] = useState("dashboard");
+  const [page, setPage] = useState(demoMode ? "cities" : "dashboard");
   const [editCityId, setEditCityId] = useState(null);
   const [toast, setToast] = useState(null);
 
@@ -160,10 +168,10 @@ export default function AdminApp({ demoMode = false, onBack = null }) {
   const renderPage = () => {
     switch (page) {
       case "dashboard": return <AdminDashboard onNavigate={setPage} />;
-      case "cities": return <CitiesList onEditCity={navigateToCity} showToast={showToast} />;
-      case "city-edit": return <CityEdit cityId={editCityId} onBack={() => setPage("cities")} showToast={showToast} />;
-      case "us-cities": return <UsCitiesEdit showToast={showToast} />;
-      case "tax": return <TaxDataEdit showToast={showToast} />;
+      case "cities": return <CitiesList onEditCity={navigateToCity} showToast={showToast} readOnly={demoMode} />;
+      case "city-edit": return <CityEdit cityId={editCityId} onBack={() => setPage("cities")} showToast={showToast} readOnly={demoMode} />;
+      case "us-cities": return <UsCitiesEdit showToast={showToast} readOnly={demoMode} />;
+      case "tax": return <TaxDataEdit showToast={showToast} readOnly={demoMode} />;
       case "audit": return <AuditLog />;
       default: return <AdminDashboard onNavigate={setPage} />;
     }
