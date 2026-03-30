@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { loadAllData } from "../../data/dataProvider";
 
 const GOOGLE_FONTS = `
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&family=Sora:wght@400;500;600&display=swap');
 `;
 
 const style = `
@@ -35,6 +35,55 @@ const style = `
     flex-direction: column;
     align-items: center;
     padding: 0 16px 60px;
+    position: relative;
+  }
+
+  .ao-corner-link {
+    position: absolute;
+    top: 26px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+    z-index: 100;
+  }
+  .ao-corner-link:hover { opacity: 1; }
+  .ao-corner-logo { height: 24px; width: 24px; }
+  .ao-corner-text {
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #C8FF3E;
+    letter-spacing: -0.2px;
+  }
+
+  .built-by {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    opacity: 0.45;
+    transition: opacity 0.3s;
+    margin-top: -12px;
+    margin-bottom: 16px;
+  }
+  .built-by:hover { opacity: 0.8; }
+  .built-by-logo { height: 16px; width: 16px; }
+  .built-by-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    color: rgba(240,235,225,0.6);
+    letter-spacing: 0.3px;
+  }
+  .built-by-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #C8FF3E;
+    letter-spacing: 0.3px;
   }
 
   /* HEADER */
@@ -366,7 +415,7 @@ const style = `
     border-left: 2px solid var(--gold);
   }
 
-  /* METRICS GRID — 6 boxes, 3 columns */
+  /* METRICS GRID - 6 boxes, 3 columns */
   .city-metrics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1189,7 +1238,7 @@ const CITY_SCORE_DATA = {
     key: "lisbon", city: "Lisbon", country: "Portugal", flag: "\u{1F1F5}\u{1F1F9}",
     costOfLivingIndex: 58, safetyRating: "Very High", healthcareQuality: "Excellent",
     internetReliability: "Very Good", expatCommunity: "Large & established",
-    climate: "Mediterranean — warm dry summers, mild rainy winters",
+    climate: "Mediterranean - warm dry summers, mild rainy winters",
     scores: {
       climateType: "mediterranean", budgetFriendliness: 5, safety: 10, healthcare: 10,
       schools: 9, culture: 8, nature: 6, expat: 9, business: 7, visaSpeed: 5, costSavings: 5,
@@ -1199,7 +1248,7 @@ const CITY_SCORE_DATA = {
       "United Kingdom": { speed: 5, boost: 0 }, "Australia / NZ": { speed: 5, boost: 0 },
       "EU Country": { speed: 10, boost: 15 }, "Other": { speed: 4, boost: -3 },
     },
-    caveat: "Lisbon housing costs have risen sharply since 2020 — expect $2,000–$3,500/month for a quality family apartment in desirable neighborhoods like Estrela or Cascais.",
+    caveat: "Lisbon housing costs have risen sharply since 2020 - expect $2,000–$3,500/month for a quality family apartment in desirable neighborhoods like Estrela or Cascais.",
     schoolsData: [
       { name: "St. Julian's School", type: "International", curriculum: "IB & British A-Levels", grades: "Pre-K through 13", tuitionUSD: "$12,000–$22,000/year", note: "Founded 1932. English-medium with mandatory Portuguese. Strong university placement to UK and US institutions." },
       { name: "Carlucci American International School of Lisbon", type: "American International", curriculum: "American / AP & IB Diploma", grades: "Pre-K through 12", tuitionUSD: "$15,000–$28,000/year", note: "US college-prep focused with IB Diploma option. Fully English instruction. US-accredited." },
@@ -1210,7 +1259,7 @@ const CITY_SCORE_DATA = {
       schools: "Thriving international school scene", visa: "EU residency via D8 Digital Nomad Visa",
       culture: "Vibrant arts, fado music, and café culture", business: "NHR tax program for new residents",
       expat: "One of Europe's largest English-speaking expat hubs", cost: "30–40% cheaper than Western Europe",
-      nature: "Atlantic beaches and Sintra hills within 30 minutes", climate: "300+ days of sunshine — Europe's sunniest capital",
+      nature: "Atlantic beaches and Sintra hills within 30 minutes", climate: "300+ days of sunshine - Europe's sunniest capital",
       default: "EU residency via D8 Digital Nomad Visa",
     },
   },
@@ -1218,7 +1267,7 @@ const CITY_SCORE_DATA = {
     key: "mexicoCity", city: "Mexico City", country: "Mexico", flag: "\u{1F1F2}\u{1F1FD}",
     costOfLivingIndex: 42, safetyRating: "Moderate", healthcareQuality: "Very Good",
     internetReliability: "Very Good", expatCommunity: "Large & established",
-    climate: "Temperate — spring-like year-round at 7,350 ft elevation",
+    climate: "Temperate - spring-like year-round at 7,350 ft elevation",
     scores: {
       climateType: "temperate", budgetFriendliness: 8, safety: 5, healthcare: 8,
       schools: 8, culture: 10, nature: 5, expat: 10, business: 7, visaSpeed: 8, costSavings: 8,
@@ -1247,7 +1296,7 @@ const CITY_SCORE_DATA = {
     key: "merida", city: "Mérida", country: "Mexico", flag: "\u{1F1F2}\u{1F1FD}",
     costOfLivingIndex: 35, safetyRating: "High", healthcareQuality: "Good",
     internetReliability: "Good", expatCommunity: "Growing",
-    climate: "Tropical — hot and humid year-round, rainy season June–October",
+    climate: "Tropical - hot and humid year-round, rainy season June–October",
     scores: {
       climateType: "tropical", budgetFriendliness: 10, safety: 8, healthcare: 6,
       schools: 4, culture: 5, nature: 6, expat: 6, business: 4, visaSpeed: 8, costSavings: 10,
@@ -1257,7 +1306,7 @@ const CITY_SCORE_DATA = {
       "United Kingdom": { speed: 7, boost: 0 }, "Australia / NZ": { speed: 7, boost: 0 },
       "EU Country": { speed: 7, boost: 0 }, "Other": { speed: 6, boost: -2 },
     },
-    caveat: "International school options are more limited than Mexico City or Lisbon — families with teens may need to consider online/hybrid schooling supplements.",
+    caveat: "International school options are more limited than Mexico City or Lisbon - families with teens may need to consider online/hybrid schooling supplements.",
     schoolsData: [
       { name: "Mérida International School", type: "International / Bilingual", curriculum: "American / Mexican SEP", grades: "Pre-K through 9", tuitionUSD: "$4,000–$7,000/year", note: "Bilingual English-Spanish. Small class sizes. Expanding to upper grades. Popular with expat families." },
       { name: "Colegio Americano de Mérida", type: "Private / Bilingual", curriculum: "American / Mexican", grades: "Pre-K through 12", tuitionUSD: "$3,500–$6,000/year", note: "Established bilingual school with strong local reputation. American-style curriculum with Mexican SEP compliance." },
@@ -1275,7 +1324,7 @@ const CITY_SCORE_DATA = {
     key: "sanJuan", city: "San Juan", country: "Puerto Rico", flag: "\u{1F1F5}\u{1F1F7}",
     costOfLivingIndex: 78, safetyRating: "Moderate", healthcareQuality: "Good",
     internetReliability: "Very Good", expatCommunity: "Large & established",
-    climate: "Tropical — warm year-round with hurricane season June–November",
+    climate: "Tropical - warm year-round with hurricane season June–November",
     scores: {
       climateType: "tropical", budgetFriendliness: 3, safety: 5, healthcare: 6,
       schools: 7, culture: 7, nature: 7, expat: 8, business: 10, visaSpeed: 10, costSavings: 3,
@@ -1285,7 +1334,7 @@ const CITY_SCORE_DATA = {
       "United Kingdom": { speed: 3, boost: -5 }, "Australia / NZ": { speed: 3, boost: -5 },
       "EU Country": { speed: 3, boost: -5 }, "Other": { speed: 2, boost: -8 },
     },
-    caveat: "Cost of living is higher than mainland Latin America (closer to mid-tier US cities). Hurricane preparedness is essential — the 2017 season was a major disruption.",
+    caveat: "Cost of living is higher than mainland Latin America (closer to mid-tier US cities). Hurricane preparedness is essential - the 2017 season was a major disruption.",
     schoolsData: [
       { name: "Baldwin School of Puerto Rico", type: "Private / College-Prep", curriculum: "American / AP", grades: "Pre-K through 12", tuitionUSD: "$12,000–$18,000/year", note: "Top-ranked private school in PR. English-medium instruction. Strong AP program and US college placement." },
       { name: "Robinson School", type: "Private / Bilingual", curriculum: "American / AP", grades: "Pre-K through 12", tuitionUSD: "$10,000–$16,000/year", note: "Bilingual English-Spanish. IB candidate school. Located in Condado area. Strong STEM and arts programs." },
@@ -1303,7 +1352,7 @@ const CITY_SCORE_DATA = {
     key: "escazu", city: "Escazú", country: "Costa Rica", flag: "\u{1F1E8}\u{1F1F7}",
     costOfLivingIndex: 55, safetyRating: "High", healthcareQuality: "Very Good",
     internetReliability: "Very Good", expatCommunity: "Large & established",
-    climate: "Tropical highland — spring-like year-round at 3,900 ft",
+    climate: "Tropical highland - spring-like year-round at 3,900 ft",
     scores: {
       climateType: "tropical", budgetFriendliness: 5, safety: 8, healthcare: 8,
       schools: 9, culture: 5, nature: 10, expat: 9, business: 5, visaSpeed: 5, costSavings: 5,
@@ -1313,7 +1362,7 @@ const CITY_SCORE_DATA = {
       "United Kingdom": { speed: 5, boost: 0 }, "Australia / NZ": { speed: 5, boost: 0 },
       "EU Country": { speed: 5, boost: 0 }, "Other": { speed: 4, boost: -2 },
     },
-    caveat: "Escazú's expat-heavy areas can feel like an American suburb — if you want authentic Costa Rican culture, consider spending weekends outside the central valley.",
+    caveat: "Escazú's expat-heavy areas can feel like an American suburb - if you want authentic Costa Rican culture, consider spending weekends outside the central valley.",
     schoolsData: [
       { name: "Country Day School", type: "American International", curriculum: "American / AP & IB", grades: "Pre-K through 12", tuitionUSD: "$12,000–$20,000/year", note: "Costa Rica's top international school. US-accredited. English instruction. Outstanding college placement including Ivy League." },
       { name: "Lincoln School", type: "American International", curriculum: "American / IB Diploma", grades: "Pre-K through 12", tuitionUSD: "$10,000–$17,000/year", note: "Founded by the US Embassy community. Full IB program. Diverse student body from 40+ nationalities." },
@@ -1331,7 +1380,7 @@ const CITY_SCORE_DATA = {
     key: "panamaCity", city: "Panama City", country: "Panama", flag: "\u{1F1F5}\u{1F1E6}",
     costOfLivingIndex: 52, safetyRating: "Moderate", healthcareQuality: "Very Good",
     internetReliability: "Very Good", expatCommunity: "Large & established",
-    climate: "Tropical — hot and humid year-round, dry season Dec–April",
+    climate: "Tropical - hot and humid year-round, dry season Dec–April",
     scores: {
       climateType: "tropical", budgetFriendliness: 6, safety: 5, healthcare: 8,
       schools: 7, culture: 6, nature: 7, expat: 8, business: 9, visaSpeed: 9, costSavings: 7,
@@ -1341,14 +1390,14 @@ const CITY_SCORE_DATA = {
       "United Kingdom": { speed: 9, boost: 5 }, "Australia / NZ": { speed: 9, boost: 5 },
       "EU Country": { speed: 9, boost: 5 }, "Other": { speed: 6, boost: 0 },
     },
-    caveat: "Panama City traffic is notoriously bad — choose your neighborhood carefully (Costa del Este or Clayton for families) to minimize commute stress.",
+    caveat: "Panama City traffic is notoriously bad - choose your neighborhood carefully (Costa del Este or Clayton for families) to minimize commute stress.",
     schoolsData: [
       { name: "International School of Panama (ISP)", type: "International", curriculum: "IB (PYP, MYP, DP)", grades: "Pre-K through 12", tuitionUSD: "$14,000–$22,000/year", note: "Full IB school with 50+ nationalities. English instruction. State-of-the-art campus in Ciudad del Saber." },
       { name: "Balboa Academy", type: "American International", curriculum: "American / AP", grades: "Pre-K through 12", tuitionUSD: "$8,000–$14,000/year", note: "American-style curriculum near the Panama Canal Zone. English-medium. Strong community feel with smaller class sizes." },
     ],
     highlightsByDimension: {
       visa: "Immediate permanent residency available", business: "0% tax on foreign-sourced income",
-      cost: "US dollar economy — no currency risk", healthcare: "Modern infrastructure & healthcare",
+      cost: "US dollar economy - no currency risk", healthcare: "Modern infrastructure & healthcare",
       expat: "Cosmopolitan city with global expat community", nature: "Panama Canal, rainforests, and island getaways",
       safety: "Safe expat neighborhoods (Costa del Este, Clayton)", climate: "Tropical warmth with a pleasant dry season",
       schools: "Strong IB and American school options", culture: "Casco Viejo historic district and dining scene",
@@ -1359,7 +1408,7 @@ const CITY_SCORE_DATA = {
     key: "florianopolis", city: "Florianópolis", country: "Brazil", flag: "🇧🇷",
     costOfLivingIndex: 45, safetyRating: "High", healthcareQuality: "Good",
     internetReliability: "Good", expatCommunity: "Growing",
-    climate: "Subtropical — warm summers, mild winters, beach lifestyle year-round",
+    climate: "Subtropical - warm summers, mild winters, beach lifestyle year-round",
     scores: {
       climateType: "tropical", budgetFriendliness: 7, safety: 7, healthcare: 6,
       schools: 5, culture: 7, nature: 10, expat: 5, business: 5, visaSpeed: 6, costSavings: 7,
@@ -1369,32 +1418,32 @@ const CITY_SCORE_DATA = {
       "United Kingdom": { speed: 6, boost: 0 }, "Australia / NZ": { speed: 6, boost: 0 },
       "EU Country": { speed: 6, boost: 0 }, "Other": { speed: 5, boost: -2 },
     },
-    caveat: "Florianópolis is an island city — traffic over the bridges can be challenging during peak season (Dec–Feb). Portuguese is essential for daily life outside tourist areas.",
+    caveat: "Florianópolis is an island city - traffic over the bridges can be challenging during peak season (Dec–Feb). Portuguese is essential for daily life outside tourist areas.",
     schoolsData: [
       { name: "Escola Internacional de Florianópolis", type: "International / Bilingual", curriculum: "Brazilian & IB-influenced", grades: "Pre-K through 9", tuitionUSD: "$4,000–$8,000/year", note: "Bilingual English-Portuguese. Growing international school with small class sizes. Popular with expat families." },
       { name: "Colégio Catarinense", type: "Private", curriculum: "Brazilian National", grades: "Pre-K through 12", tuitionUSD: "$3,000–$6,000/year", note: "Top-rated private school in Florianópolis. Portuguese instruction. Strong academics and extracurriculars." },
     ],
     highlightsByDimension: {
-      nature: "42 beaches on a stunning island — surf, hike, and sail year-round",
+      nature: "42 beaches on a stunning island - surf, hike, and sail year-round",
       safety: "One of Brazil's safest and highest quality-of-life cities",
       cost: "40–60% cheaper than major US cities with beach lifestyle",
       culture: "Vibrant surf culture, Azorean heritage, and foodie scene",
       healthcare: "SUS public healthcare plus affordable private clinics",
       expat: "Growing digital nomad and international community",
-      business: "Brazil's top tech hub — 'Silicon Island' startup ecosystem",
+      business: "Brazil's top tech hub - 'Silicon Island' startup ecosystem",
       visa: "Digital Nomad Visa for remote workers",
       schools: "Bilingual school options for expat families",
       climate: "Subtropical climate with warm summers and mild winters",
-      default: "42 beaches on a stunning island — surf, hike, and sail year-round",
+      default: "42 beaches on a stunning island - surf, hike, and sail year-round",
     },
   },
 };
 
 // ─── SCORING LOOKUP CONSTANTS ────────────────────────────────
 const CLIMATE_MAP = {
-  "Tropical — warm year-round": "tropical",
-  "Mediterranean — warm & dry summers": "mediterranean",
-  "Temperate — four distinct seasons": "temperate",
+  "Tropical - warm year-round": "tropical",
+  "Mediterranean - warm & dry summers": "mediterranean",
+  "Temperate - four distinct seasons": "temperate",
   "Doesn't matter to me": null,
 };
 
@@ -1454,7 +1503,8 @@ function scoreCities(profile, cityData) {
   return cities.map((cityData) => {
     let score = 50;
     const s = cityData.scores;
-    const visa = cityData.visaByOrigin[profile.citizenship] || cityData.visaByOrigin["Other"];
+    const visa = cityData.visaByOrigin?.[profile.citizenship] || cityData.visaByOrigin?.["Other"];
+    if (!visa) return { cityData, rawScore: 0 };
 
     // 1. Climate match
     if (climatePreference === null) {
@@ -1522,8 +1572,8 @@ function buildHighlights(cityData, priorities, profile) {
 
   // 2. Add visa highlight if citizenship gives a big boost
   if (highlights.length < 4 && !usedKeys.has("visa")) {
-    const visa = cityData.visaByOrigin[profile.citizenship] || cityData.visaByOrigin["Other"];
-    if (visa.boost >= 5 || visa.speed >= 9) {
+    const visa = cityData.visaByOrigin?.[profile.citizenship] || cityData.visaByOrigin?.["Other"];
+    if (visa && (visa.boost >= 5 || visa.speed >= 9)) {
       highlights.push(cityData.highlightsByDimension.visa);
       usedKeys.add("visa");
     }
@@ -1550,19 +1600,19 @@ function buildHighlights(cityData, priorities, profile) {
 function buildAiSummary(cityData, profile) {
   const s = cityData.scores;
   const priorities = profile.priorities.split(", ");
-  const visa = cityData.visaByOrigin[profile.citizenship] || cityData.visaByOrigin["Other"];
+  const visa = cityData.visaByOrigin?.[profile.citizenship] || cityData.visaByOrigin?.["Other"];
   const hasKids = profile.familySituation?.includes("children") || profile.familySituation?.includes("teens");
   const isRetiree = profile.familySituation?.includes("Retiree");
   const fragments = [];
 
   // Citizenship-specific opener
-  if (visa.boost >= 10) {
+  if (visa?.boost >= 10) {
     if (cityData.key === "sanJuan") fragments.push(`As a ${profile.citizenship} citizen, ${cityData.city} requires no visa, no passport, and no immigration process`);
-    else if (cityData.key === "lisbon") fragments.push(`As an EU citizen, you have automatic right to live and work in ${cityData.city} — no visa needed`);
+    else if (cityData.key === "lisbon") fragments.push(`As an EU citizen, you have automatic right to live and work in ${cityData.city} - no visa needed`);
   }
 
   // Budget relevance
-  if (s.budgetFriendliness >= 8) fragments.push(`your ${profile.budget.toLowerCase()} budget stretches remarkably far here — expect 2–3x the purchasing power of a comparable US city`);
+  if (s.budgetFriendliness >= 8) fragments.push(`your ${profile.budget.toLowerCase()} budget stretches remarkably far here - expect 2–3x the purchasing power of a comparable US city`);
   else if (s.budgetFriendliness <= 3) fragments.push(`while the cost of living is higher than other options, your ${profile.budget.toLowerCase()} budget positions you comfortably`);
 
   // Priority-driven sentences
@@ -1584,11 +1634,11 @@ function buildAiSummary(cityData, profile) {
     fragments.push("one of the most affordable relocation destinations with genuine cost savings");
 
   // Timeline relevance
-  if (visa.speed >= 9) fragments.push(`fast-track residency aligns perfectly with your ${profile.timeline.toLowerCase()} timeline`);
+  if (visa?.speed >= 9) fragments.push(`fast-track residency aligns perfectly with your ${profile.timeline.toLowerCase()} timeline`);
 
   const selected = fragments.slice(0, 3);
   if (selected.length === 0)
-    return `${cityData.city} offers a solid match for your profile — combining ${cityData.safetyRating.toLowerCase()} safety, ${cityData.healthcareQuality.toLowerCase()} healthcare, and a ${cityData.expatCommunity.toLowerCase()} expat community. Your ${profile.budget.toLowerCase()} budget works well here, and the ${cityData.climate.toLowerCase()} climate suits many relocators.`;
+    return `${cityData.city} offers a solid match for your profile - combining ${cityData.safetyRating.toLowerCase()} safety, ${cityData.healthcareQuality.toLowerCase()} healthcare, and a ${cityData.expatCommunity.toLowerCase()} expat community. Your ${profile.budget.toLowerCase()} budget works well here, and the ${cityData.climate.toLowerCase()} climate suits many relocators.`;
 
   selected[0] = selected[0].charAt(0).toUpperCase() + selected[0].slice(1);
   if (selected.length === 1) return `${selected[0]}. ${cityData.city} is a strong fit for ${profile.familySituation.toLowerCase()} looking to relocate.`;
@@ -1655,9 +1705,9 @@ const QUESTIONS = [
     text: "What climate do you prefer?",
     hint: "Climate affects lifestyle, energy costs, and which cities feel like home.",
     options: [
-      { label: "Tropical — warm year-round", icon: "🌴" },
-      { label: "Mediterranean — warm & dry summers", icon: "☀️" },
-      { label: "Temperate — four distinct seasons", icon: "🍂" },
+      { label: "Tropical - warm year-round", icon: "🌴" },
+      { label: "Mediterranean - warm & dry summers", icon: "☀️" },
+      { label: "Temperate - four distinct seasons", icon: "🍂" },
       { label: "Doesn't matter to me", icon: "🌍" },
     ],
   },
@@ -1693,7 +1743,7 @@ const DEEP_DIVE_DATA = {
     neighborhoods: [
       { name: "Estrela / Lapa", vibe: "Leafy & family-friendly", description: "Quiet tree-lined streets with embassies, gardens, and top schools nearby. 15 minutes to downtown Lisbon." },
       { name: "Cascais", vibe: "Coastal & affluent", description: "Beachside town 30 minutes from Lisbon by train. International school hub with a resort-town feel year-round." },
-      { name: "Príncipe Real", vibe: "Trendy & walkable", description: "Lisbon's most cosmopolitan neighborhood — boutiques, gardens, and restaurants. Best for couples and professionals." },
+      { name: "Príncipe Real", vibe: "Trendy & walkable", description: "Lisbon's most cosmopolitan neighborhood - boutiques, gardens, and restaurants. Best for couples and professionals." },
     ],
     visaPathway: {
       type: "D8 Digital Nomad Visa",
@@ -1701,13 +1751,13 @@ const DEEP_DIVE_DATA = {
       steps: [
         { label: "Document preparation", time: "2–3 weeks", detail: "Proof of remote income (€3,500+/mo), health insurance, criminal background check" },
         { label: "Consulate application", time: "1–2 weeks", detail: "Submit at your nearest Portuguese consulate with all supporting documents" },
-        { label: "Visa processing", time: "4–8 weeks", detail: "Consulate reviews and approves — processing times vary by location" },
+        { label: "Visa processing", time: "4–8 weeks", detail: "Consulate reviews and approves - processing times vary by location" },
         { label: "Arrive & register", time: "First 2 weeks in PT", detail: "SEF registration, NIF tax number, NISS social security, SNS health card" },
       ],
     },
     glnServices: [
       { service: "Apartment search & lease negotiation", detail: "We find and secure housing in your target neighborhood before you arrive" },
-      { service: "D8 visa application — full document prep", detail: "We handle the paperwork, apostille, translations, and consulate scheduling" },
+      { service: "D8 visa application - full document prep", detail: "We handle the paperwork, apostille, translations, and consulate scheduling" },
       { service: "School enrollment & waitlist management", detail: "Applications, campus tours, and admissions follow-up for your children" },
       { service: "NIF, bank account & health registration", detail: "All essential registrations completed in your first week on the ground" },
       { service: "Airport pickup & settling-in support", detail: "Our Lisbon team meets you at arrival and handles first-week logistics" },
@@ -1719,14 +1769,14 @@ const DEEP_DIVE_DATA = {
       { category: "Housing", amount: "$1,200–$2,800", note: "2–3 bed apartment in Condesa, Roma, or Polanco" },
       { category: "International School", amount: "$700–$2,500/child", note: "Per child/month at top bilingual or American schools", familyOnly: true },
       { category: "Healthcare", amount: "$200–$400", note: "Private insurance or pay-per-visit at top hospitals" },
-      { category: "Groceries & Dining", amount: "$400–$700", note: "Markets, fondas, and restaurants — exceptional value" },
+      { category: "Groceries & Dining", amount: "$400–$700", note: "Markets, fondas, and restaurants - exceptional value" },
       { category: "Transport", amount: "$100–$250", note: "Metro, Uber, or hired driver" },
       { category: "Lifestyle", amount: "$400–$1,000", note: "Culture, nightlife, weekend trips" },
     ],
     totalRange: "$3,000–$7,650",
     neighborhoods: [
       { name: "Condesa / Roma", vibe: "Trendy & walkable", description: "Tree-lined boulevards, art-deco architecture, cafés on every corner. The expat epicenter with a vibrant food scene." },
-      { name: "Polanco", vibe: "Upscale & polished", description: "Mexico City's most affluent neighborhood — luxury shopping, top restaurants, museums. Close to American School Foundation." },
+      { name: "Polanco", vibe: "Upscale & polished", description: "Mexico City's most affluent neighborhood - luxury shopping, top restaurants, museums. Close to American School Foundation." },
       { name: "Santa Fe", vibe: "Modern & suburban", description: "Newer business district with modern apartments, malls, and international schools. Feels more American-suburban." },
     ],
     visaPathway: {
@@ -1734,14 +1784,14 @@ const DEEP_DIVE_DATA = {
       processingTime: "1–3 months total",
       steps: [
         { label: "Gather financial proof", time: "1–2 weeks", detail: "6 months of bank statements showing $2,500+/mo income or $43,000+ in savings" },
-        { label: "Consulate appointment", time: "1–2 weeks", detail: "Apply at your nearest Mexican consulate — in-person interview required" },
-        { label: "Visa issued", time: "2–4 weeks", detail: "Receive visa sticker in passport — valid for 180 days to enter Mexico" },
+        { label: "Consulate appointment", time: "1–2 weeks", detail: "Apply at your nearest Mexican consulate - in-person interview required" },
+        { label: "Visa issued", time: "2–4 weeks", detail: "Receive visa sticker in passport - valid for 180 days to enter Mexico" },
         { label: "Exchange for resident card", time: "First 30 days in MX", detail: "Visit INM office to exchange visa for physical resident card (1-year renewable)" },
       ],
     },
     glnServices: [
       { service: "Apartment search in Condesa, Roma, or Polanco", detail: "We find vetted listings and negotiate lease terms before you arrive" },
-      { service: "Temporary resident visa — full application support", detail: "Document prep, consulate scheduling, and INM exchange upon arrival" },
+      { service: "Temporary resident visa - full application support", detail: "Document prep, consulate scheduling, and INM exchange upon arrival" },
       { service: "School enrollment at ASF, Greengates, or Peterson", detail: "We handle applications, tours, and waitlist navigation" },
       { service: "CURP, RFC & bank account setup", detail: "Essential IDs and banking set up in your first week" },
       { service: "Airport pickup & neighborhood orientation", detail: "Our Mexico City team handles your arrival and first-week logistics" },
@@ -1753,8 +1803,8 @@ const DEEP_DIVE_DATA = {
       { category: "Housing", amount: "$800–$1,800", note: "2–3 bed house or apartment in Santiago or García Ginerés" },
       { category: "International School", amount: "$300–$600/child", note: "Per child/month at bilingual schools", familyOnly: true },
       { category: "Healthcare", amount: "$150–$300", note: "Private insurance or direct-pay at clinics" },
-      { category: "Groceries & Dining", amount: "$300–$500", note: "Local markets and restaurants — very affordable" },
-      { category: "Transport", amount: "$80–$200", note: "Car rental or Uber — city is spread out" },
+      { category: "Groceries & Dining", amount: "$300–$500", note: "Local markets and restaurants - very affordable" },
+      { category: "Transport", amount: "$80–$200", note: "Car rental or Uber - city is spread out" },
       { category: "Lifestyle", amount: "$300–$600", note: "Beach trips, cenotes, cultural events" },
     ],
     totalRange: "$1,930–$4,000",
@@ -1768,14 +1818,14 @@ const DEEP_DIVE_DATA = {
       processingTime: "1–3 months total",
       steps: [
         { label: "Gather financial proof", time: "1–2 weeks", detail: "6 months of bank statements showing $2,500+/mo income or $43,000+ in savings" },
-        { label: "Consulate appointment", time: "1–2 weeks", detail: "Apply at your nearest Mexican consulate — in-person interview required" },
-        { label: "Visa issued", time: "2–4 weeks", detail: "Receive visa sticker in passport — valid for 180 days to enter Mexico" },
+        { label: "Consulate appointment", time: "1–2 weeks", detail: "Apply at your nearest Mexican consulate - in-person interview required" },
+        { label: "Visa issued", time: "2–4 weeks", detail: "Receive visa sticker in passport - valid for 180 days to enter Mexico" },
         { label: "Exchange for resident card", time: "First 30 days in MX", detail: "Visit INM office in Mérida to exchange visa for physical resident card" },
       ],
     },
     glnServices: [
       { service: "Home search in Santiago, García Ginerés, or North Mérida", detail: "We find vetted houses and negotiate leases in your preferred neighborhood" },
-      { service: "Temporary resident visa — full application support", detail: "Document prep, consulate scheduling, and INM exchange upon arrival" },
+      { service: "Temporary resident visa - full application support", detail: "Document prep, consulate scheduling, and INM exchange upon arrival" },
       { service: "School enrollment at local bilingual schools", detail: "We arrange tours, handle applications, and manage enrollment" },
       { service: "CURP, RFC & bank account setup", detail: "Essential IDs and banking set up in your first week" },
       { service: "Airport pickup & city orientation", detail: "Our Yucatán team meets you at Mérida airport and handles settling in" },
@@ -1786,24 +1836,24 @@ const DEEP_DIVE_DATA = {
     budgetBreakdown: [
       { category: "Housing", amount: "$1,800–$3,500", note: "2–3 bed apartment or condo in Condado or Guaynabo" },
       { category: "Private School", amount: "$1,000–$1,500/child", note: "Per child/month at Baldwin or Robinson School", familyOnly: true },
-      { category: "Healthcare", amount: "$300–$600", note: "US-standard health insurance — higher than mainland LatAm" },
-      { category: "Groceries & Dining", amount: "$600–$900", note: "Imported goods are pricier — local produce is affordable" },
-      { category: "Transport", amount: "$200–$400", note: "Car is essential — gas, insurance, parking" },
+      { category: "Healthcare", amount: "$300–$600", note: "US-standard health insurance - higher than mainland LatAm" },
+      { category: "Groceries & Dining", amount: "$600–$900", note: "Imported goods are pricier - local produce is affordable" },
+      { category: "Transport", amount: "$200–$400", note: "Car is essential - gas, insurance, parking" },
       { category: "Lifestyle", amount: "$500–$1,000", note: "Beach life, dining, island hopping" },
     ],
     totalRange: "$4,400–$7,900",
     neighborhoods: [
-      { name: "Condado", vibe: "Urban beach & vibrant", description: "San Juan's most walkable beach neighborhood — hotels, restaurants, nightlife. Popular with Act 60 relocators." },
+      { name: "Condado", vibe: "Urban beach & vibrant", description: "San Juan's most walkable beach neighborhood - hotels, restaurants, nightlife. Popular with Act 60 relocators." },
       { name: "Guaynabo", vibe: "Suburban & family-oriented", description: "Upscale suburb with excellent schools, gated communities, and quiet tree-lined streets. Best for families." },
       { name: "Dorado", vibe: "Resort & luxury", description: "Exclusive beachfront community 30 min west of San Juan. Ritz-Carlton Reserve, golf courses, and top private schools." },
     ],
     visaPathway: {
       type: "No Visa Required",
-      processingTime: "Immediate — US territory",
+      processingTime: "Immediate - US territory",
       steps: [
-        { label: "Establish PR residency", time: "Day 1", detail: "Move to Puerto Rico — no visa, no passport needed. You're already a US citizen on US soil." },
+        { label: "Establish PR residency", time: "Day 1", detail: "Move to Puerto Rico - no visa, no passport needed. You're already a US citizen on US soil." },
         { label: "Apply for Act 60 tax decree", time: "2–4 weeks", detail: "Submit Act 60 application for 4% corporate tax and 0% capital gains on PR-sourced income" },
-        { label: "Set up bona fide residency", time: "First 30 days", detail: "PR driver's license, voter registration, local bank account — establish domicile" },
+        { label: "Set up bona fide residency", time: "First 30 days", detail: "PR driver's license, voter registration, local bank account - establish domicile" },
         { label: "Pass presence test", time: "Ongoing", detail: "Spend 183+ days/year in PR, make it your tax home, have closer connections to PR than US mainland" },
       ],
     },
@@ -1822,12 +1872,12 @@ const DEEP_DIVE_DATA = {
       { category: "International School", amount: "$1,000–$1,700/child", note: "Per child/month at Country Day or Lincoln School", familyOnly: true },
       { category: "Healthcare", amount: "$100–$300", note: "CAJA public system included; private supplement optional" },
       { category: "Groceries & Dining", amount: "$500–$800", note: "Mix of local markets, Auto Mercado, and restaurants" },
-      { category: "Transport", amount: "$150–$350", note: "Car recommended — gas, insurance, tolls" },
+      { category: "Transport", amount: "$150–$350", note: "Car recommended - gas, insurance, tolls" },
       { category: "Lifestyle", amount: "$400–$800", note: "Adventure activities, beach weekends, dining" },
     ],
     totalRange: "$3,350–$6,450",
     neighborhoods: [
-      { name: "San Rafael de Escazú", vibe: "Upscale & convenient", description: "Heart of the expat community — walkable to restaurants, Multiplaza mall, and international schools." },
+      { name: "San Rafael de Escazú", vibe: "Upscale & convenient", description: "Heart of the expat community - walkable to restaurants, Multiplaza mall, and international schools." },
       { name: "Santa Ana", vibe: "Quiet & family-focused", description: "Adjacent town with newer developments, gated communities, and a more relaxed pace. Close to Lincoln School." },
       { name: "San Antonio de Escazú", vibe: "Hillside & scenic", description: "Higher elevation with cooler temps and mountain views. Mix of traditional Costa Rican homes and modern builds." },
     ],
@@ -1836,14 +1886,14 @@ const DEEP_DIVE_DATA = {
       processingTime: "2–4 months total",
       steps: [
         { label: "Prove stable income", time: "1–2 weeks", detail: "Document $2,500+/mo in pension, investment, or remote income for 2+ years" },
-        { label: "Submit application in CR", time: "1–2 weeks", detail: "Apply through Migración in Costa Rica — can enter on tourist visa first" },
-        { label: "Processing & approval", time: "6–10 weeks", detail: "Migración reviews application — interim status allows you to stay" },
+        { label: "Submit application in CR", time: "1–2 weeks", detail: "Apply through Migración in Costa Rica - can enter on tourist visa first" },
+        { label: "Processing & approval", time: "6–10 weeks", detail: "Migración reviews application - interim status allows you to stay" },
         { label: "Receive cédula", time: "2–4 weeks after approval", detail: "Pick up residency card, register with CAJA (public healthcare), open bank account" },
       ],
     },
     glnServices: [
       { service: "Home search in Escazú or Santa Ana", detail: "We find vetted properties and negotiate terms in the best family neighborhoods" },
-      { service: "Rentista visa — full application support", detail: "Income documentation, Migración filing, and status tracking" },
+      { service: "Rentista visa - full application support", detail: "Income documentation, Migración filing, and status tracking" },
       { service: "School enrollment at Country Day or Lincoln", detail: "Applications, campus tours, and waitlist management for your children" },
       { service: "CAJA registration, bank account & cédula pickup", detail: "Healthcare enrollment and essential registrations in your first weeks" },
       { service: "Airport pickup & Central Valley orientation", detail: "Our Costa Rica team handles arrival logistics and area tours" },
@@ -1854,30 +1904,30 @@ const DEEP_DIVE_DATA = {
     budgetBreakdown: [
       { category: "Housing", amount: "$1,200–$2,800", note: "2–3 bed apartment in Costa del Este or Clayton" },
       { category: "International School", amount: "$700–$1,800/child", note: "Per child/month at ISP or Balboa Academy", familyOnly: true },
-      { category: "Healthcare", amount: "$200–$400", note: "Private insurance — world-class hospitals available" },
+      { category: "Healthcare", amount: "$200–$400", note: "Private insurance - world-class hospitals available" },
       { category: "Groceries & Dining", amount: "$400–$700", note: "Supermarkets, markets, and restaurants" },
-      { category: "Transport", amount: "$100–$300", note: "Metro, Uber, or car — traffic is heavy" },
+      { category: "Transport", amount: "$100–$300", note: "Metro, Uber, or car - traffic is heavy" },
       { category: "Lifestyle", amount: "$400–$900", note: "Dining, beaches, San Blas island trips" },
     ],
     totalRange: "$3,000–$6,900",
     neighborhoods: [
-      { name: "Costa del Este", vibe: "Modern & family-friendly", description: "Panama's newest upscale neighborhood — modern towers, parks, international schools, and waterfront dining." },
+      { name: "Costa del Este", vibe: "Modern & family-friendly", description: "Panama's newest upscale neighborhood - modern towers, parks, international schools, and waterfront dining." },
       { name: "Clayton", vibe: "Green & suburban", description: "Former US military base turned leafy suburb. Home to City of Knowledge, parks, and family-friendly atmosphere." },
-      { name: "Casco Viejo", vibe: "Historic & trendy", description: "UNESCO World Heritage old town — restored colonial buildings, rooftop bars, boutique hotels. Best for couples and professionals." },
+      { name: "Casco Viejo", vibe: "Historic & trendy", description: "UNESCO World Heritage old town - restored colonial buildings, rooftop bars, boutique hotels. Best for couples and professionals." },
     ],
     visaPathway: {
       type: "Friendly Nations Visa",
       processingTime: "3–6 months total",
       steps: [
-        { label: "Open Panama bank account", time: "1–2 weeks", detail: "Deposit $5,000+ minimum — this serves as proof of economic ties" },
+        { label: "Open Panama bank account", time: "1–2 weeks", detail: "Deposit $5,000+ minimum - this serves as proof of economic ties" },
         { label: "Gather documents", time: "2–3 weeks", detail: "Passport, background check (apostilled), professional or economic activity letter" },
         { label: "Submit application", time: "1 week", detail: "File through immigration lawyer at Servicio Nacional de Migración" },
-        { label: "Receive permanent residency", time: "8–16 weeks", detail: "Permanent resident card issued — no need to renew. Path to citizenship in 5 years." },
+        { label: "Receive permanent residency", time: "8–16 weeks", detail: "Permanent resident card issued - no need to renew. Path to citizenship in 5 years." },
       ],
     },
     glnServices: [
       { service: "Apartment search in Costa del Este or Clayton", detail: "We find vetted properties and negotiate leases in top family areas" },
-      { service: "Friendly Nations Visa — full application support", detail: "Bank account opening, document prep, apostille, and immigration filing" },
+      { service: "Friendly Nations Visa - full application support", detail: "Bank account opening, document prep, apostille, and immigration filing" },
       { service: "School enrollment at ISP or Balboa Academy", detail: "Applications, campus tours, and admissions support for your children" },
       { service: "Bank account, cedula & driver's license setup", detail: "All essential registrations completed with our on-ground team" },
       { service: "Airport pickup & Panama City orientation", detail: "Our team meets you at Tocumen and handles settling-in logistics" },
@@ -1888,16 +1938,16 @@ const DEEP_DIVE_DATA = {
     budgetBreakdown: [
       { category: "Housing", amount: "$800–$2,000", note: "2–3 bed apartment in Lagoa da Conceição, Campeche, or Centro" },
       { category: "International School", amount: "$350–$700/child", note: "Per child/month at bilingual or private schools", familyOnly: true },
-      { category: "Healthcare", amount: "$100–$250", note: "Private health plan (Unimed) — SUS public system also available" },
+      { category: "Healthcare", amount: "$100–$250", note: "Private health plan (Unimed) - SUS public system also available" },
       { category: "Groceries & Dining", amount: "$350–$600", note: "Local markets, supermarkets, and beachside restaurants" },
-      { category: "Transport", amount: "$100–$250", note: "Car recommended on the island — Uber available in urban areas" },
+      { category: "Transport", amount: "$100–$250", note: "Car recommended on the island - Uber available in urban areas" },
       { category: "Lifestyle", amount: "$300–$700", note: "Surf lessons, beach clubs, boat trips, nightlife" },
     ],
     totalRange: "$2,000–$4,500",
     neighborhoods: [
-      { name: "Lagoa da Conceição", vibe: "Bohemian & active", description: "The island's social hub — surrounded by lagoon and dunes, packed with restaurants, bars, and surf shops. Most popular with expats and digital nomads." },
+      { name: "Lagoa da Conceição", vibe: "Bohemian & active", description: "The island's social hub - surrounded by lagoon and dunes, packed with restaurants, bars, and surf shops. Most popular with expats and digital nomads." },
       { name: "Campeche", vibe: "Beach & relaxed", description: "Quieter south-island neighborhood with stunning beach, growing café scene, and family-friendly vibes. Close to nature trails." },
-      { name: "Jurerê Internacional", vibe: "Upscale & resort-like", description: "Florianópolis' most exclusive neighborhood — luxury homes, beach clubs, and a polished resort atmosphere year-round." },
+      { name: "Jurerê Internacional", vibe: "Upscale & resort-like", description: "Florianópolis' most exclusive neighborhood - luxury homes, beach clubs, and a polished resort atmosphere year-round." },
     ],
     visaPathway: {
       type: "Digital Nomad Visa (VITEM XIV)",
@@ -1905,13 +1955,13 @@ const DEEP_DIVE_DATA = {
       steps: [
         { label: "Prove remote income", time: "1–2 weeks", detail: "Documentation of $1,500+/mo remote income from foreign employer or clients" },
         { label: "Consulate application", time: "1–2 weeks", detail: "Apply at your nearest Brazilian consulate with passport, background check, and income proof" },
-        { label: "Visa processing", time: "4–8 weeks", detail: "Consulate reviews application — processing times vary by location" },
+        { label: "Visa processing", time: "4–8 weeks", detail: "Consulate reviews application - processing times vary by location" },
         { label: "Arrive & register", time: "First 30 days in BR", detail: "Register with Federal Police, get CPF tax number, open bank account" },
       ],
     },
     glnServices: [
       { service: "Apartment search in Lagoa, Campeche, or Jurerê", detail: "We find vetted properties and negotiate leases in the best island neighborhoods" },
-      { service: "Digital Nomad Visa — full application support", detail: "Income documentation, consulate filing, and Federal Police registration upon arrival" },
+      { service: "Digital Nomad Visa - full application support", detail: "Income documentation, consulate filing, and Federal Police registration upon arrival" },
       { service: "School enrollment at local bilingual schools", detail: "We arrange tours, handle applications, and manage enrollment for your children" },
       { service: "CPF, bank account & health plan registration", detail: "Essential IDs, banking, and Unimed health coverage set up in your first week" },
       { service: "Airport pickup & island orientation", detail: "Our Florianópolis team meets you at Hercílio Luz airport and handles settling in" },
@@ -2037,7 +2087,7 @@ const DESTINATION_TAX_PROGRAMS = {
     programDesc: "20% flat tax on qualifying foreign employment income for 10 years",
     effectiveRate: 0.20,
     method: "flat",
-    caveat: "Program rules changed in 2024 — qualifying activities required. Consult a Portuguese tax advisor.",
+    caveat: "Program rules changed in 2024 - qualifying activities required. Consult a Portuguese tax advisor.",
   },
   "Panama City": {
     programName: "Territorial Tax System",
@@ -2166,7 +2216,7 @@ export default function CitySelector() {
 
 A user has completed a relocation profile quiz. Based on their answers, recommend 4–7 specific cities ranked by fit.
 
-IMPORTANT: Use real, accurate, current data. Real school names, real cost figures, real safety assessments. This is for live client use — accuracy matters.
+IMPORTANT: Use real, accurate, current data. Real school names, real cost figures, real safety assessments. This is for live client use - accuracy matters.
 
 User Profile:
 - Citizenship: ${profile.citizenship}
@@ -2204,7 +2254,7 @@ Return ONLY a JSON array (no markdown, no backticks, no commentary) with this st
     "healthcareQuality": "Excellent",
     "internetReliability": "Very Good",
     "expatCommunity": "Large & established",
-    "climate": "Mediterranean — dry summers, mild wet winters",
+    "climate": "Mediterranean - dry summers, mild wet winters",
     "aiSummary": "2–3 sentences personalized to THIS user's profile explaining why this city is a strong match. Be specific about their priorities, family situation, and budget.",
     "highlights": ["highlight 1", "highlight 2", "highlight 3", "highlight 4"],
     "schools": [
@@ -2214,7 +2264,7 @@ Return ONLY a JSON array (no markdown, no backticks, no commentary) with this st
         "curriculum": "IB",
         "grades": "Pre-K through 12",
         "tuitionUSD": "$12,000–$18,000/year",
-        "note": "One sentence about the school — language of instruction, notable features."
+        "note": "One sentence about the school - language of instruction, notable features."
       }
     ],
     "caveat": "One honest consideration or trade-off specific to this user's profile."
@@ -2222,7 +2272,7 @@ Return ONLY a JSON array (no markdown, no backticks, no commentary) with this st
 ]
 
 Rules:
-- Rank by matchScore (highest first). Scores should range from 60–97. Be honest — poor fits get lower scores.
+- Rank by matchScore (highest first). Scores should range from 60–97. Be honest - poor fits get lower scores.
 - costOfLivingIndex: 100 = same as average US city. Lower = cheaper. Use real comparative data.
 - safetyRating: "Very High", "High", "Moderate", or "Low"
 - healthcareQuality: "Excellent", "Very Good", "Good", or "Adequate"
@@ -2438,10 +2488,21 @@ Rules:
     <>
       <style>{style}</style>
       <div className="app">
+        <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="ao-corner-link">
+          <img src="/alignedops-logo.svg" alt="AlignedOps" className="ao-corner-logo" />
+          <span className="ao-corner-text">AlignedOps</span>
+        </a>
+
         {/* HEADER */}
         <div className="header">
-          <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" />
-          <div className="header-eyebrow">Global Living Network</div>
+          <a href="https://globallivingnetwork.com/about-us/" target="_blank" rel="noopener noreferrer">
+            <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" />
+          </a>
+          <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="built-by">
+            <img src="/alignedops-logo.svg" alt="AlignedOps" className="built-by-logo" />
+            <span className="built-by-label">Built by</span>
+            <span className="built-by-text">AlignedOps</span>
+          </a>
           <h1>
             Thinking About <em>Moving</em>
             <br />
@@ -2449,7 +2510,7 @@ Rules:
           </h1>
           <p className="header-sub">
             Tell us a bit about your situation and we'll match you with the
-            right cities — tailored to your lifestyle, budget, family needs,
+            right cities - tailored to your lifestyle, budget, family needs,
             and long-term goals abroad.
           </p>
           <div className="divider" />
@@ -2484,7 +2545,7 @@ Rules:
               Find your family's next home abroad
             </div>
             <p className="question-hint">
-              Answer 6 quick questions about your situation — where you're
+              Answer 6 quick questions about your situation - where you're
               coming from, what matters most, and when you might move. We'll
               recommend the best cities across 7 top destinations, with school
               options, cost of living data, and honest guidance to help you
@@ -2643,7 +2704,7 @@ Rules:
                       <div className="stat-box">
                         <div className="stat-label">Climate</div>
                         <div className="stat-value">
-                          {r.climate?.split("—")[0]?.trim() || r.climate}
+                          {r.climate?.split("-")[0]?.trim() || r.climate}
                         </div>
                       </div>
                     </div>
@@ -2717,7 +2778,7 @@ Rules:
               <div className="cta-title">Ready to take the next step?</div>
               <div className="cta-sub">
                 Click "Start Planning" on any city above to see a detailed
-                relocation brief — budget breakdown, neighborhoods, visa steps,
+                relocation brief - budget breakdown, neighborhoods, visa steps,
                 and what GLN handles to make your move happen.
               </div>
               <button className="restart-link" onClick={restart}>
@@ -2887,7 +2948,7 @@ Rules:
                 </div>
               </div>
 
-              {/* SCHOOLS — only for families */}
+              {/* SCHOOLS - only for families */}
               {hasKids && selectedCity.schools && selectedCity.schools.length > 0 && (
                 <div className="dd-section">
                   <div className="dd-section-title">Top Schools in {selectedCity.city}</div>
@@ -3030,7 +3091,7 @@ Rules:
 
                       {destProgram?.caveat && (
                         <div className="tax-disclaimer">
-                          ⚠ {destProgram.caveat}. This is a simplified estimate for illustration only — consult a qualified cross-border tax professional before making relocation decisions.
+                          ⚠ {destProgram.caveat}. This is a simplified estimate for illustration only - consult a qualified cross-border tax professional before making relocation decisions.
                         </div>
                       )}
                       {destProgram?._meta?.source && (
@@ -3078,7 +3139,7 @@ Rules:
                     <div className="lead-sub">
                       Tell us how to reach you and a GLN relocation advisor will
                       send your personalized {selectedCity.city} brief within 24
-                      hours — with vetted housing options, visa next steps, and a
+                      hours - with vetted housing options, visa next steps, and a
                       timeline built around your move.
                     </div>
                     <form className="lead-form" onSubmit={handleLeadSubmit}>
@@ -3132,7 +3193,7 @@ Rules:
                     </div>
                     <div className="lead-success-text">
                       A GLN relocation advisor will reach out within 24 hours
-                      with your personalized {selectedCity.city} brief —
+                      with your personalized {selectedCity.city} brief -
                       including vetted housing options, visa next steps,
                       {hasKids ? " school enrollment guidance," : ""} and a
                       timeline built around your {answers.timeline?.toLowerCase() || ""} move.

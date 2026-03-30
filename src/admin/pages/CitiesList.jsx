@@ -7,7 +7,7 @@ const normalize = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLo
 // ISO 3166-1 alpha-2 → flag emoji
 const codeToFlag = (code) => String.fromCodePoint(...code.split("").map(c => 0x1F1E6 + c.charCodeAt(0) - 65));
 
-// Complete country list — sorted alphabetically by name
+// Complete country list - sorted alphabetically by name
 const COUNTRIES = [
   "AF Afghanistan","AL Albania","DZ Algeria","AD Andorra","AO Angola","AG Antigua and Barbuda",
   "AR Argentina","AM Armenia","AU Australia","AT Austria","AZ Azerbaijan","BS Bahamas","BH Bahrain",
@@ -59,7 +59,7 @@ export default function CitiesList({ onEditCity, showToast }) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const suggestionsRef = useRef(null);
 
-  // Filtered suggestions — accent-insensitive
+  // Filtered suggestions - accent-insensitive
   const filteredSuggestions = newCity.city_name.trim()
     ? citySuggestions.filter(c => normalize(c).includes(normalize(newCity.city_name))).slice(0, 20)
     : [];
@@ -240,11 +240,11 @@ export default function CitiesList({ onEditCity, showToast }) {
               <tr key={city.id}>
                 <td style={{ fontWeight: 500 }}>{city.flag} {city.city_name}</td>
                 <td>{city.country}</td>
-                <td>{city.cost_of_living_index || "—"}</td>
-                <td>{city.safety_rating || "—"}</td>
-                <td style={{ fontSize: 12, color: "rgba(240,235,225,0.5)" }}>{city.source || "—"}</td>
+                <td>{city.cost_of_living_index || "-"}</td>
+                <td>{city.safety_rating || "-"}</td>
+                <td style={{ fontSize: 12, color: "rgba(240,235,225,0.5)" }}>{city.source || "-"}</td>
                 <td style={{ fontSize: 12, color: "rgba(240,235,225,0.5)" }}>
-                  {city.last_updated ? new Date(city.last_updated + 'Z').toLocaleDateString() : "—"}
+                  {city.last_updated ? new Date(city.last_updated + 'Z').toLocaleDateString() : "-"}
                 </td>
                 <td style={{ display: "flex", gap: 6 }}>
                   <button className="admin-btn admin-btn-sm" onClick={() => onEditCity(city.id)}>Edit</button>

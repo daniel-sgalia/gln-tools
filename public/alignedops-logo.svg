@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#0C0C0E"/>
+  <!-- Back chevron (dark olive green) -->
+  <polyline points="14,14 30,32 14,50" fill="none" stroke="#4a5e1a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Front chevron (lime green) -->
+  <polyline points="28,14 44,32 28,50" fill="none" stroke="#C8FF3E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

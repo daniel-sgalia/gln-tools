@@ -49,16 +49,16 @@ export default function AuditLog() {
                 <td style={{ fontSize: 12, color: "rgba(240,235,225,0.5)", whiteSpace: "nowrap" }}>
                   {new Date(entry.timestamp + 'Z').toLocaleString()}
                 </td>
-                <td style={{ fontSize: 13 }}>{entry.user_email || "—"}</td>
+                <td style={{ fontSize: 13 }}>{entry.user_email || "-"}</td>
                 <td><span style={{ color: entry.action === "create" ? "#4CAF82" : entry.action === "delete" ? "#E05C5C" : "#C9A96E" }}>{entry.action}</span></td>
                 <td style={{ fontSize: 12 }}>{entry.table_name}</td>
                 <td>{entry.record_label || `#${entry.record_id}`}</td>
-                <td style={{ fontSize: 12, color: "rgba(240,235,225,0.6)" }}>{entry.field_name || "—"}</td>
+                <td style={{ fontSize: 12, color: "rgba(240,235,225,0.6)" }}>{entry.field_name || "-"}</td>
                 <td style={{ fontSize: 12, color: "rgba(240,235,225,0.4)", maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {entry.old_value ? JSON.parse(entry.old_value) : "—"}
+                  {entry.old_value ? JSON.parse(entry.old_value) : "-"}
                 </td>
                 <td style={{ fontSize: 12, color: "#C9A96E", maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {entry.new_value ? JSON.parse(entry.new_value) : "—"}
+                  {entry.new_value ? JSON.parse(entry.new_value) : "-"}
                 </td>
               </tr>
             ))}

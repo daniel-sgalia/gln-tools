@@ -103,7 +103,7 @@ export default function UsCitiesEdit({ showToast }) {
                 onChange={e => setNewCity(prev => ({ ...prev, state_code: e.target.value }))}>
                 <option value="">Select state...</option>
                 {US_STATES.map(s => (
-                  <option key={s.code} value={s.code}>{s.code} — {s.name}</option>
+                  <option key={s.code} value={s.code}>{s.code} - {s.name}</option>
                 ))}
               </select>
             </div>

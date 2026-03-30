@@ -24,9 +24,9 @@ export default function AdminDashboard({ onNavigate }) {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 32 }}>
         {[
-          { label: "Destination Cities", value: stats?.cities || "—", page: "cities", icon: "🌍" },
-          { label: "US Comparison Cities", value: stats?.usCities || "—", page: "us-cities", icon: "🇺🇸" },
-          { label: "Tax Programs", value: stats?.taxPrograms || "—", page: "tax", icon: "💰" },
+          { label: "Destination Cities", value: stats?.cities || "-", page: "cities", icon: "🌍" },
+          { label: "US Comparison Cities", value: stats?.usCities || "-", page: "us-cities", icon: "🇺🇸" },
+          { label: "Tax Programs", value: stats?.taxPrograms || "-", page: "tax", icon: "💰" },
         ].map(card => (
           <div key={card.label} className="admin-card" style={{ cursor: "pointer" }} onClick={() => onNavigate(card.page)}>
             <div style={{ fontSize: 28, marginBottom: 8 }}>{card.icon}</div>

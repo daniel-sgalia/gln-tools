@@ -13,6 +13,8 @@ const style = `
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 .admin-app { font-family: 'Outfit', sans-serif; background: #07101F; color: #F0EBE1; min-height: 100vh; display: flex; }
 .admin-sidebar { width: 220px; background: #0E1C30; border-right: 1px solid rgba(255,255,255,0.08); padding: 24px 0; flex-shrink: 0; position: fixed; top: 0; left: 0; bottom: 0; display: flex; flex-direction: column; }
+.admin-back-btn { display: flex; align-items: center; gap: 4px; background: none; border: none; color: rgba(240,235,225,0.5); font-family: inherit; font-size: 12px; padding: 8px 20px 12px; cursor: pointer; transition: color 0.15s; letter-spacing: 0.3px; }
+.admin-back-btn:hover { color: #C9A96E; }
 .admin-sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 16px; font-size: 18px; font-weight: 600; color: #C9A96E; letter-spacing: 0.5px; }
 .admin-sidebar-nav { display: flex; flex-direction: column; gap: 2px; padding: 0 8px; flex: 1; }
 .admin-nav-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; color: rgba(240,235,225,0.6); font-size: 14px; font-weight: 400; transition: all 0.15s; display: flex; align-items: center; gap: 10px; }
@@ -78,14 +80,15 @@ const NAV_ITEMS = [
   { id: "audit", label: "Audit Log", icon: "📋" },
 ];
 
-export default function AdminApp() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function AdminApp({ demoMode = false, onBack = null }) {
+  const [user, setUser] = useState(demoMode ? { displayName: "Demo Viewer", role: "viewer" } : null);
+  const [loading, setLoading] = useState(!demoMode);
   const [page, setPage] = useState("dashboard");
   const [editCityId, setEditCityId] = useState(null);
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
+    if (demoMode) return;
     // Check existing session and fetch user profile
     // Race against a timeout — Supabase's Web Locks API can hang indefinitely
     const initAuth = async () => {
@@ -171,6 +174,11 @@ export default function AdminApp() {
       <style>{style}</style>
       <div className="admin-app">
         <div className="admin-sidebar">
+          {onBack && (
+            <button className="admin-back-btn" onClick={onBack}>
+              <span style={{ marginRight: 6 }}>&larr;</span> Back to Tool
+            </button>
+          )}
           <div className="admin-sidebar-logo">GLN Admin</div>
           <div className="admin-sidebar-nav">
             {NAV_ITEMS.map((item) => (
@@ -186,7 +194,7 @@ export default function AdminApp() {
           </div>
           <div className="admin-sidebar-footer">
             <div className="admin-user-info">{user.displayName || user.display_name} ({user.role})</div>
-            <button className="admin-logout-btn" onClick={handleLogout}>Log out</button>
+            {!demoMode && <button className="admin-logout-btn" onClick={handleLogout}>Log out</button>}
           </div>
         </div>
         <div className="admin-main">

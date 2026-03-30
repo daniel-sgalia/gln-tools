@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: {
-      port: 5180,
+      port: 5181,
       proxy: {
         '/api/messages': {
           target: 'https://api.anthropic.com',

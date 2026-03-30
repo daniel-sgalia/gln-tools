@@ -576,7 +576,7 @@ export default function VisaPathwayExplorer() {
     }
   };
 
-  const buildPrompt = (profile) => `You are a world-class international relocation advisor for Global Living Network. A user has completed their profile. Analyze their situation and return EXACTLY a JSON array of 6 visa pathway recommendations — one for each destination: Puerto Rico, Costa Rica, Portugal, Mexico, Panama, Brazil.
+  const buildPrompt = (profile) => `You are a world-class international relocation advisor for Global Living Network. A user has completed their profile. Analyze their situation and return EXACTLY a JSON array of 6 visa pathway recommendations - one for each destination: Puerto Rico, Costa Rica, Portugal, Mexico, Panama, Brazil.
 
 User Profile:
 - Citizenship: ${profile.citizenship}
@@ -608,13 +608,13 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
     {
       destination: "Puerto Rico",
       flag: "\u{1F1F5}\u{1F1F7}",
-      visaName: "Act 60 — Export Services",
+      visaName: "Act 60 - Export Services",
       matchScore: 94,
       difficulty: "Moderate",
       incomeRequirement: "No minimum (tax benefit requires export services)",
       processingTime: "2–4 months",
-      pathToResidency: "US territory — no visa needed",
-      aiSummary: `As a ${profile.citizenship} citizen with ${profile.incomeType.toLowerCase()} income, Puerto Rico's Act 60 offers a powerful combination: 4% corporate tax, 0% capital gains, and no federal income tax on local-sourced income — all without needing a visa. Your ${profile.monthlyIncome} income positions you well for the tax incentive thresholds.`,
+      pathToResidency: "US territory - no visa needed",
+      aiSummary: `As a ${profile.citizenship} citizen with ${profile.incomeType.toLowerCase()} income, Puerto Rico's Act 60 offers a powerful combination: 4% corporate tax, 0% capital gains, and no federal income tax on local-sourced income - all without needing a visa. Your ${profile.monthlyIncome} income positions you well for the tax incentive thresholds.`,
       keyBenefits: ["4% corporate tax rate", "0% capital gains tax", "No passport needed (US territory)", "English-speaking"],
       caveat: "Must establish bona fide residency (183+ days/year) and pass presence tests to qualify for Act 60 benefits."
     },
@@ -629,7 +629,7 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
       pathToResidency: "1 year → renew → permanent after 5 years",
       aiSummary: `Portugal's D8 visa is ideal for your ${profile.incomeType.toLowerCase()} profile. The new IFICI tax regime (replacing NHR) offers 20% flat tax on qualifying foreign income for 10 years. With ${profile.familySize.toLowerCase()} relocating, Portugal's excellent healthcare and education systems are a strong fit.`,
       keyBenefits: ["20% flat tax (IFICI regime)", "EU residency & Schengen access", "World-class healthcare", "Path to EU citizenship (5 years)"],
-      caveat: "IFICI regime has stricter eligibility than old NHR — must not have been a Portuguese tax resident in prior 5 years."
+      caveat: "IFICI regime has stricter eligibility than old NHR - must not have been a Portuguese tax resident in prior 5 years."
     },
     {
       destination: "Mexico",
@@ -640,9 +640,9 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
       incomeRequirement: "$2,500/mo or $42,000 in savings",
       processingTime: "1–3 months",
       pathToResidency: "1 year → renew up to 4 years → permanent",
-      aiSummary: `Mexico's temporary residency visa has one of the lowest barriers to entry for your income level. With ${profile.monthlyIncome} monthly income, you comfortably exceed the threshold. The ${profile.timeline.toLowerCase()} timeline works perfectly — Mexico has the fastest processing of any destination on this list.`,
+      aiSummary: `Mexico's temporary residency visa has one of the lowest barriers to entry for your income level. With ${profile.monthlyIncome} monthly income, you comfortably exceed the threshold. The ${profile.timeline.toLowerCase()} timeline works perfectly - Mexico has the fastest processing of any destination on this list.`,
       keyBenefits: ["Low cost of living", "Close proximity to US", "Fast processing", "No language requirement for visa"],
-      caveat: "Territorial tax system means you'll likely still owe US taxes on worldwide income — consult a cross-border tax advisor."
+      caveat: "Territorial tax system means you'll likely still owe US taxes on worldwide income - consult a cross-border tax advisor."
     },
     {
       destination: "Panama",
@@ -653,9 +653,9 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
       incomeRequirement: "$5,000 bank deposit + economic tie",
       processingTime: "2–4 months",
       pathToResidency: "Immediate permanent residency → citizenship after 5 years",
-      aiSummary: `Panama's Friendly Nations Visa offers immediate permanent residency with minimal requirements — just a $5,000 bank deposit and an economic tie (job offer, business, or property). As a ${profile.citizenship} citizen, you qualify automatically. The territorial tax system means foreign-sourced income is tax-free.`,
+      aiSummary: `Panama's Friendly Nations Visa offers immediate permanent residency with minimal requirements - just a $5,000 bank deposit and an economic tie (job offer, business, or property). As a ${profile.citizenship} citizen, you qualify automatically. The territorial tax system means foreign-sourced income is tax-free.`,
       keyBenefits: ["Territorial taxation (0% on foreign income)", "Immediate permanent residency", "US dollar economy", "Pensionado discounts on everything"],
-      caveat: "Must establish a genuine economic tie to Panama — opening a corporation ($1,500–$2,000) is the most common route."
+      caveat: "Must establish a genuine economic tie to Panama - opening a corporation ($1,500–$2,000) is the most common route."
     },
     {
       destination: "Costa Rica",
@@ -668,7 +668,7 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
       pathToResidency: "2 years temporary → permanent after 3 years",
       aiSummary: `Costa Rica offers excellent quality of life for ${profile.familySize.toLowerCase()}. The Rentista visa requires proof of $2,500/mo stable income, which your ${profile.incomeType.toLowerCase()} income satisfies. Costa Rica's universal healthcare (CAJA) covers residents, and the expat community is well-established.`,
       keyBenefits: ["Universal healthcare (CAJA)", "Pura Vida lifestyle", "Strong expat community", "Excellent biodiversity & nature"],
-      caveat: "Cost of living in expat-heavy areas (Escazú, Tamarindo) can approach US levels — budget carefully for international schools."
+      caveat: "Cost of living in expat-heavy areas (Escazú, Tamarindo) can approach US levels - budget carefully for international schools."
     },
     {
       destination: "Brazil",
@@ -681,7 +681,7 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
       pathToResidency: "1 year → renew → permanent after 4 years",
       aiSummary: `Brazil's digital nomad visa has a low income threshold at $1,500/mo, but the bureaucratic process is more complex than other destinations. For ${profile.familySize.toLowerCase()}, Brazil offers vibrant culture and low cost of living outside major cities, though the language barrier (Portuguese) is a factor.`,
       keyBenefits: ["Lowest income requirement", "Rich culture & lifestyle", "Very low cost of living (outside SP/Rio)", "Large country with diverse climates"],
-      caveat: "Portuguese language is essential for daily life outside tourist areas — budget for language classes and expect a steeper cultural adjustment."
+      caveat: "Portuguese language is essential for daily life outside tourist areas - budget for language classes and expect a steeper cultural adjustment."
     },
   ];
 
@@ -701,7 +701,7 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
       let parsed;
 
       if (useMock) {
-        // Demo mode — use mock data with realistic delay
+        // Demo mode - use mock data with realistic delay
         await new Promise((r) => setTimeout(r, 3200));
         parsed = getMockResults(profile);
       } else {
@@ -749,12 +749,13 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
 
         {/* HEADER */}
         <div className="header">
-          <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" />
-          <div className="header-eyebrow">Global Living Network</div>
+          <a href="https://globallivingnetwork.com/about-us/" target="_blank" rel="noopener noreferrer">
+            <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" />
+          </a>
           <h1>Your Path to <em>Living</em><br />Abroad</h1>
           <p className="header-sub">
             Thinking about moving abroad? Tell us about your situation and we'll
-            show you exactly how to make it happen — residency options across 6
+            show you exactly how to make it happen - residency options across 6
             top destinations, personalized to your income, family, and timeline.
           </p>
           <div className="divider" />
@@ -782,7 +783,7 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
             <div className="question-text" style={{ marginBottom: 10 }}>See where you can live abroad</div>
             <p className="question-hint">
               Answer 5 quick questions about your citizenship, income, family,
-              and timeline — we'll show you the strongest residency options across
+              and timeline - we'll show you the strongest residency options across
               Puerto Rico, Costa Rica, Portugal, Mexico, Panama, and Brazil with
               honest, data-driven guidance.
             </p>
@@ -922,7 +923,7 @@ Rank them by matchScore (highest first). Use the user's actual profile to person
               <div className="cta-sub">
                 Tell us about your move and we'll connect you with vetted
                 immigration attorneys, local real estate agents, and relocation
-                specialists in your top destination. Zero spam, zero pressure —
+                specialists in your top destination. Zero spam, zero pressure -
                 just useful guidance.
               </div>
               <a className="cta-btn" href="https://globallivingnetwork.com/contact-us/" target="_blank" rel="noreferrer">
