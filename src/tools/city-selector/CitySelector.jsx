@@ -91,7 +91,7 @@ const style = `
   /* HEADER */
   .header {
     width: 100%;
-    max-width: 800px;
+    max-width: 720px;
     padding: 32px 0 0;
     display: flex;
     flex-direction: column;
@@ -131,10 +131,10 @@ const style = `
     color: var(--gold-light);
   }
   .header-sub {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 400;
     color: rgba(240,235,225,0.75);
-    max-width: 480px;
+    max-width: 600px;
     line-height: 1.6;
     margin-bottom: 40px;
   }
@@ -147,7 +147,7 @@ const style = `
   /* PROGRESS */
   .progress-bar {
     width: 100%;
-    max-width: 560px;
+    max-width: 720px;
     margin: 0 auto 16px;
   }
   .progress-steps {
@@ -156,7 +156,7 @@ const style = `
     margin-bottom: 8px;
   }
   .progress-step {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -180,11 +180,11 @@ const style = `
   /* QUESTION CARD */
   .question-card {
     width: 100%;
-    max-width: 560px;
+    max-width: 720px;
     background: var(--navy-mid);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 28px 32px;
+    padding: 32px 40px;
     animation: fadeUp 0.4s ease;
   }
   @keyframes fadeUp {
@@ -192,7 +192,7 @@ const style = `
     to   { opacity: 1; transform: translateY(0); }
   }
   .question-number {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -201,32 +201,33 @@ const style = `
   }
   .question-text {
     font-family: 'Cormorant Garant', serif;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 600;
     color: var(--cream);
     line-height: 1.3;
     margin-bottom: 8px;
   }
   .question-hint {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--muted);
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     line-height: 1.5;
   }
   .options-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
   }
   .options-grid.single { grid-template-columns: 1fr; }
+  .options-grid.two-col { grid-template-columns: 1fr 1fr; }
   .option-btn {
     background: var(--navy-light);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 14px 18px;
+    padding: 16px 20px;
     color: var(--cream);
     font-family: 'Outfit', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 400;
     cursor: pointer;
     text-align: left;
@@ -250,15 +251,15 @@ const style = `
   .option-icon { display: none; }
 
   .next-btn {
-    margin-top: 24px;
+    margin-top: 20px;
     width: 100%;
-    padding: 15px;
+    padding: 16px;
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
     border: none;
     border-radius: 10px;
     color: var(--navy);
     font-family: 'Outfit', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.5px;
     cursor: pointer;
@@ -1217,6 +1218,10 @@ const style = `
     border-left: 2px solid var(--amber);
   }
 
+  @media (max-width: 768px) {
+    .options-grid { grid-template-columns: 1fr 1fr; }
+    .options-grid.single { grid-template-columns: 1fr; }
+  }
   @media (max-width: 560px) {
     .question-card { padding: 28px 20px; }
     .options-grid { grid-template-columns: 1fr; }
@@ -2381,7 +2386,7 @@ Rules:
   };
 
   const restart = () => {
-    setStep(0);
+    setStep(1);
     setAnswers({});
     setSelected(null);
     setResults(null);
@@ -2553,7 +2558,7 @@ Rules:
             <div className="question-text">{currentQ.text}</div>
             <div className="question-hint">{currentQ.hint}</div>
             <div
-              className={`options-grid ${currentQ.options.length <= 4 ? "single" : ""}`}
+              className={`options-grid ${currentQ.options.length <= 3 ? "single" : currentQ.options.length <= 5 ? "two-col" : ""}`}
             >
               {currentQ.options.map((opt) => (
                 <button
