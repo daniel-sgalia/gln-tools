@@ -34,7 +34,7 @@ const style = `
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 16px 60px;
+    padding: 12px 16px 60px;
     position: relative;
   }
 
@@ -67,8 +67,8 @@ const style = `
     text-decoration: none;
     opacity: 0.7;
     transition: opacity 0.3s;
-    margin-top: -12px;
-    margin-bottom: 16px;
+    margin-top: -8px;
+    margin-bottom: 6px;
   }
   .built-by:hover { opacity: 1; }
   .built-by-logo { height: 14px; width: 14px; }
@@ -106,8 +106,8 @@ const style = `
     transition: opacity 0.3s;
   }
   .header-logo:hover { opacity: 1; }
-  .header-compact { padding: 16px 0 0; }
-  .header-compact .header-logo { height: 28px; margin-bottom: 8px; }
+  .header-compact { padding: 8px 0 0; }
+  .header-compact .header-logo { height: 24px; margin-bottom: 4px; }
   .header-eyebrow {
     font-family: 'Outfit', sans-serif;
     font-size: 11px;
@@ -132,8 +132,8 @@ const style = `
   }
   .header-sub {
     font-size: 15px;
-    font-weight: 300;
-    color: var(--muted);
+    font-weight: 400;
+    color: rgba(240,235,225,0.75);
     max-width: 480px;
     line-height: 1.6;
     margin-bottom: 40px;
@@ -148,12 +148,12 @@ const style = `
   .progress-bar {
     width: 100%;
     max-width: 560px;
-    margin: 0 auto 40px;
+    margin: 0 auto 16px;
   }
   .progress-steps {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .progress-step {
     font-size: 10px;
@@ -184,7 +184,7 @@ const style = `
     background: var(--navy-mid);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 40px;
+    padding: 28px 32px;
     animation: fadeUp 0.4s ease;
   }
   @keyframes fadeUp {
@@ -2162,6 +2162,11 @@ export default function CitySelector() {
 
   const handleStart = () => { setStep(1); setSelected(null); };
 
+  // Auto-start on first render — skip the intro screen
+  useEffect(() => {
+    if (step === 0) handleStart();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleSelect = (label) => {
     if (currentQ?.multiSelect) {
       setSelected((prev) => {
@@ -2498,28 +2503,21 @@ Rules:
         </a>
 
         {/* HEADER */}
-        <div className={`header ${step >= 1 && step <= TOTAL_QUESTIONS ? "header-compact" : ""}`}>
+        <div className="header header-compact">
           <a href="https://globallivingnetwork.com/about-us/" target="_blank" rel="noopener noreferrer">
             <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" />
           </a>
-          {step < 1 && (
+          {step >= 1 && step <= TOTAL_QUESTIONS && (
             <>
               <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="built-by">
                 <img src="/alignedops-logo.svg" alt="AlignedOps" className="built-by-logo" />
                 <span className="built-by-label">Built by</span>
                 <span className="built-by-text">Aligned<span>Ops</span></span>
               </a>
-              <h1>
-                Thinking About <em>Moving</em>
-                <br />
-                Abroad?
-              </h1>
-              <p className="header-sub">
-                Tell us a bit about your situation and we'll match you with the
-                right cities - tailored to your lifestyle, budget, family needs,
-                and long-term goals abroad.
+              <p className="header-sub" style={{ marginBottom: 20, maxWidth: 520 }}>
+                Personalized city matches with cost of living, visa pathways,
+                schools, and neighborhood data — in under two minutes.
               </p>
-              <div className="divider" />
             </>
           )}
         </div>
@@ -2543,25 +2541,6 @@ Rules:
                 style={{ width: `${progressPct}%` }}
               />
             </div>
-          </div>
-        )}
-
-        {/* INTRO */}
-        {step === 0 && (
-          <div className="question-card" style={{ textAlign: "center" }}>
-            <div className="question-text" style={{ marginBottom: 10 }}>
-              Find your family's next home abroad
-            </div>
-            <p className="question-hint">
-              Answer 6 quick questions about your situation - where you're
-              coming from, what matters most, and when you might move. We'll
-              recommend the best cities across 7 top destinations, with school
-              options, cost of living data, and honest guidance to help you
-              take the next step with clarity.
-            </p>
-            <button className="next-btn" onClick={handleStart}>
-              Start Your Relocation Plan →
-            </button>
           </div>
         )}
 
