@@ -116,12 +116,12 @@ export default function DemoShell({ children }) {
         </div>
       )}
 
-      <div className="demo-topbar">
-        <span className="demo-topbar-label">DEMO MODE</span>
-        <span className="demo-topbar-text">&mdash; Is your intake process costing you leads?</span>
+      <div className="demo-topbar" style={{ position: 'fixed' }}>
+        <span className="demo-topbar-text">Is your intake process costing you leads?</span>
         <a href="https://book.alignedops.io/30-minute-meeting" target="_blank" rel="noopener noreferrer" className="demo-topbar-cta-btn">Book a call</a>
         <span className="demo-topbar-sep">|</span>
         <a href="mailto:hello@alignedops.io" className="demo-topbar-cta">hello@alignedops.io</a>
+        <span className="demo-topbar-label" style={{ position: 'absolute', left: 24 }}>DEMO MODE</span>
       </div>
 
       <div style={{ display: showAdmin ? "none" : "block", paddingTop: 36 }}>

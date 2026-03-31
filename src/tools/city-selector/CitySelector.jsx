@@ -34,7 +34,7 @@ const style = `
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 12px 16px 60px;
+    padding: 6px 16px 60px;
     position: relative;
   }
 
@@ -65,12 +65,12 @@ const style = `
     align-items: center;
     gap: 6px;
     text-decoration: none;
-    opacity: 0.7;
-    transition: opacity 0.3s;
+    opacity: 1;
+    transition: transform 0.2s;
     margin-top: -8px;
     margin-bottom: 6px;
   }
-  .built-by:hover { opacity: 1; }
+  .built-by:hover { transform: scale(1.05); }
   .built-by-logo { height: 14px; width: 14px; }
   .built-by-label {
     font-family: 'Sora', sans-serif;
@@ -106,7 +106,7 @@ const style = `
     transition: opacity 0.3s;
   }
   .header-logo:hover { opacity: 1; }
-  .header-compact { padding: 10px 0 0; }
+  .header-compact { padding: 4px 0 0; }
   .header-compact .header-logo { height: 28px; margin-bottom: 4px; }
   .header-eyebrow {
     font-family: 'Outfit', sans-serif;
@@ -131,7 +131,7 @@ const style = `
     color: var(--gold-light);
   }
   .header-sub {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 400;
     color: rgba(240,235,225,0.85);
     max-width: 600px;
@@ -2502,29 +2502,28 @@ Rules:
     <>
       <style>{style}</style>
       <div className="app">
+        {/* LOGO ROW */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4, width: '100%', alignSelf: 'flex-start', paddingLeft: 8 }}>
+          <a href="https://globallivingnetwork.com/about-us/" target="_blank" rel="noopener noreferrer">
+            <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" style={{ marginBottom: 0 }} />
+          </a>
+          {step >= 1 && step <= TOTAL_QUESTIONS && (
+            <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="built-by" style={{ marginTop: 0, marginBottom: 0 }}>
+              <img src="/alignedops-logo.svg" alt="AlignedOps" className="built-by-logo" />
+              <span className="built-by-label">Built by</span>
+              <span className="built-by-text">Aligned<span>Ops</span></span>
+            </a>
+          )}
+        </div>
+
         {/* HEADER */}
         <div className="header header-compact">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
-            <a href="https://globallivingnetwork.com/about-us/" target="_blank" rel="noopener noreferrer">
-              <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" style={{ marginBottom: 0 }} />
-            </a>
-            {step >= 1 && step <= TOTAL_QUESTIONS && (
-              <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="built-by" style={{ marginTop: 0, marginBottom: 0 }}>
-                <img src="/alignedops-logo.svg" alt="AlignedOps" className="built-by-logo" />
-                <span className="built-by-label">Built by</span>
-                <span className="built-by-text">Aligned<span>Ops</span></span>
-              </a>
-            )}
-          </div>
           {step >= 1 && step <= TOTAL_QUESTIONS && (
             <>
-              <div className="header-eyebrow" style={{ display: 'block', marginBottom: 6 }}>Project Brief:</div>
-              <p className="header-sub" style={{ marginBottom: 20, maxWidth: 580 }}>
-                Built for relocation advisors who lose leads to slow intake.
-                Clients self-qualify in under two minutes and receive ranked
-                city matches with cost of living, visa, school, and
-                neighborhood data. Your business receives a qualified lead
-                with actionable data points before the first call.
+              <p className="header-sub" style={{ marginBottom: 16, maxWidth: 920 }}>
+                <span className="header-eyebrow" style={{ display: 'inline', marginBottom: 0, marginRight: 6 }}>Project Brief:</span>
+                Relocation advisors lose leads to boring forms. This tool proves your expertise — clients explore
+                cities, visas, schools, and costs in two minutes. You get a warm, qualified lead before the first call.
               </p>
             </>
           )}
