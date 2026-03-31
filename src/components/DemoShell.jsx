@@ -17,19 +17,19 @@ const style = `
   font-family: 'Outfit', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #C9A96E;
-  border: 1px solid rgba(201,169,110,0.35);
+  color: #0E1C30;
+  border: 1px solid rgba(0,0,0,0.15);
   border-radius: 8px;
   padding: 8px 16px;
-  background: rgba(201,169,110,0.06);
+  background: rgba(0,0,0,0.04);
   cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
 }
 .demo-cog-cta a:hover {
-  border-color: rgba(201,169,110,0.6);
-  background: rgba(201,169,110,0.12);
-  color: #E8C98A;
+  border-color: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.08);
+  color: #B08A35;
 }
 .demo-cog-cta svg {
   width: 18px;

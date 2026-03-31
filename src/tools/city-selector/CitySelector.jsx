@@ -10,17 +10,18 @@ const style = `
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --navy: #07101F;
-    --navy-mid: #0E1C30;
-    --navy-light: #162540;
-    --border: rgba(255,255,255,0.08);
-    --gold: #C9A96E;
-    --gold-light: #E8C98A;
-    --cream: #F0EBE1;
-    --muted: rgba(240,235,225,0.45);
-    --green: #4CAF82;
-    --amber: #E8944A;
-    --red: #E05C5C;
+    --navy: #F8F6F2;
+    --navy-mid: #FFFFFF;
+    --navy-light: #F0EDE6;
+    --border: rgba(0,0,0,0.10);
+    --gold: #B08A35;
+    --gold-light: #C9A96E;
+    --cream: #1A1A2E;
+    --muted: rgba(26,26,46,0.50);
+    --green: #2D8F5E;
+    --amber: #C47830;
+    --red: #C44545;
+    --navy-dark: #0E1C30;
   }
 
   body { background: var(--navy); color: var(--cream); font-family: 'Outfit', sans-serif; }
@@ -29,8 +30,8 @@ const style = `
     min-height: 100vh;
     background: var(--navy);
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,169,110,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 85% 90%, rgba(76,175,130,0.06) 0%, transparent 50%);
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(176,138,53,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 85% 90%, rgba(45,143,94,0.04) 0%, transparent 50%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,10 +56,10 @@ const style = `
     font-family: 'Sora', sans-serif;
     font-size: 18px;
     font-weight: 800;
-    color: #F0EBE1;
+    color: #1A1A2E;
     letter-spacing: -0.5px;
   }
-  .ao-corner-text span { color: #C8FF3E; }
+  .ao-corner-text span { color: #5BA832; }
 
   .built-by {
     display: flex;
@@ -76,17 +77,17 @@ const style = `
     font-family: 'Sora', sans-serif;
     font-size: 11px;
     font-weight: 400;
-    color: rgba(240,235,225,0.5);
+    color: rgba(26,26,46,0.40);
     letter-spacing: -0.1px;
   }
   .built-by-text {
     font-family: 'Sora', sans-serif;
     font-size: 11px;
     font-weight: 800;
-    color: #F0EBE1;
+    color: #1A1A2E;
     letter-spacing: -0.3px;
   }
-  .built-by-text span { color: #C8FF3E; }
+  .built-by-text span { color: #5BA832; }
 
   /* HEADER */
   .header {
@@ -101,7 +102,7 @@ const style = `
   .header-logo {
     height: 38px;
     margin-bottom: 20px;
-    filter: invert(1) brightness(0.92) sepia(0.15) hue-rotate(10deg) saturate(0.3);
+    filter: brightness(0.15) sepia(0.15) saturate(0.5);
     opacity: 0.85;
     transition: opacity 0.3s;
   }
@@ -133,7 +134,7 @@ const style = `
   .header-sub {
     font-size: 17px;
     font-weight: 400;
-    color: rgba(240,235,225,0.85);
+    color: rgba(26,26,46,0.85);
     max-width: 600px;
     line-height: 1.6;
     margin-bottom: 40px;
@@ -257,7 +258,7 @@ const style = `
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
     border: none;
     border-radius: 10px;
-    color: var(--navy);
+    color: var(--navy-dark);
     font-family: 'Outfit', sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -400,7 +401,7 @@ const style = `
 
   .top-badge {
     background: var(--gold);
-    color: var(--navy);
+    color: var(--navy-dark);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -413,7 +414,7 @@ const style = `
 
   .ai-summary {
     font-size: 14px;
-    color: rgba(240,235,225,0.75);
+    color: rgba(26,26,46,0.70);
     line-height: 1.65;
     margin-bottom: 20px;
     padding-left: 12px;
@@ -450,7 +451,7 @@ const style = `
     border-radius: 6px;
     padding: 4px 10px;
     font-size: 12px;
-    color: rgba(240,235,225,0.65);
+    color: rgba(26,26,46,0.55);
   }
 
   .card-footer {
@@ -475,7 +476,7 @@ const style = `
     white-space: nowrap;
     text-decoration: none;
   }
-  .explore-btn:hover { background: var(--gold); color: var(--navy); }
+  .explore-btn:hover { background: var(--gold); color: var(--navy-dark); }
 
   /* SCHOOLS ACCORDION */
   .schools-section {
@@ -546,7 +547,7 @@ const style = `
   }
   .school-note {
     font-size: 12px;
-    color: rgba(240,235,225,0.6);
+    color: rgba(26,26,46,0.50);
     line-height: 1.5;
   }
 
@@ -583,7 +584,7 @@ const style = `
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
     border: none;
     border-radius: 10px;
-    color: var(--navy);
+    color: var(--navy-dark);
     font-family: 'Outfit', sans-serif;
     font-size: 14px;
     font-weight: 700;
@@ -675,10 +676,10 @@ const style = `
   .source-badge {
     font-family: 'Outfit', sans-serif;
     font-size: 11px;
-    color: rgba(240,235,225,0.35);
+    color: rgba(26,26,46,0.30);
     margin-top: 12px;
     padding-top: 8px;
-    border-top: 1px solid rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(0,0,0,0.03);
     display: flex;
     align-items: center;
     gap: 6px;
@@ -718,7 +719,7 @@ const style = `
   }
   .budget-note {
     font-size: 11px;
-    color: rgba(240,235,225,0.5);
+    color: rgba(26,26,46,0.40);
     line-height: 1.4;
   }
   .budget-total {
@@ -778,7 +779,7 @@ const style = `
   }
   .neighborhood-desc {
     font-size: 13px;
-    color: rgba(240,235,225,0.65);
+    color: rgba(26,26,46,0.55);
     line-height: 1.6;
   }
 
@@ -855,7 +856,7 @@ const style = `
   }
   .step-detail {
     font-size: 12px;
-    color: rgba(240,235,225,0.55);
+    color: rgba(26,26,46,0.45);
     line-height: 1.5;
   }
 
@@ -892,7 +893,7 @@ const style = `
   }
   .gln-service-detail {
     font-size: 12px;
-    color: rgba(240,235,225,0.5);
+    color: rgba(26,26,46,0.40);
     line-height: 1.5;
   }
 
@@ -945,7 +946,7 @@ const style = `
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
     border: none;
     border-radius: 10px;
-    color: var(--navy);
+    color: var(--navy-dark);
     font-family: 'Outfit', sans-serif;
     font-size: 14px;
     font-weight: 700;
@@ -1052,7 +1053,7 @@ const style = `
     font-size: 14px;
     color: var(--muted);
     text-decoration: line-through;
-    text-decoration-color: rgba(240,235,225,0.25);
+    text-decoration-color: rgba(26,26,46,0.20);
   }
   .col-dest-cost { font-size: 14px; font-weight: 500; color: var(--cream); }
   .col-savings { font-size: 13px; font-weight: 600; color: var(--green); text-align: right; }
@@ -1151,7 +1152,7 @@ const style = `
     border-bottom: 1px solid var(--border);
   }
   .tax-line-item:last-child { border-bottom: none; }
-  .tax-line-label { font-size: 13px; color: rgba(240,235,225,0.7); }
+  .tax-line-label { font-size: 13px; color: rgba(26,26,46,0.65); }
   .tax-line-value { font-size: 14px; font-weight: 500; color: var(--cream); }
   .tax-line-item.total {
     border-top: 2px solid var(--border);
@@ -1179,7 +1180,7 @@ const style = `
   .tax-program-name { font-size: 14px; font-weight: 600; color: var(--green); }
   .tax-program-desc {
     font-size: 12px;
-    color: rgba(240,235,225,0.6);
+    color: rgba(26,26,46,0.50);
     line-height: 1.5;
     margin-bottom: 16px;
   }
@@ -1206,7 +1207,7 @@ const style = `
     line-height: 1;
     margin-bottom: 6px;
   }
-  .tax-savings-note { font-size: 12px; color: rgba(240,235,225,0.5); }
+  .tax-savings-note { font-size: 12px; color: rgba(26,26,46,0.40); }
   .tax-disclaimer {
     font-size: 12px;
     color: var(--muted);
@@ -2519,13 +2520,11 @@ Rules:
         {/* HEADER */}
         <div className="header header-compact">
           {step >= 1 && step <= TOTAL_QUESTIONS && (
-            <>
-              <p className="header-sub" style={{ marginBottom: 28, maxWidth: 920 }}>
-                <span className="header-eyebrow" style={{ display: 'inline', marginBottom: 0, marginRight: 6 }}>Project Brief:</span>
-                Relocation advisors lose leads to boring forms. This tool proves your expertise. Clients explore
-                cities, visas, schools, and costs in two minutes. You get a warm, qualified lead before the first call.
-              </p>
-            </>
+            <p className="header-sub" style={{ marginBottom: 16, maxWidth: 920, lineHeight: 1.7 }}>
+              <span className="header-eyebrow" style={{ display: 'inline', marginBottom: 0, marginRight: 6 }}>Project Brief:</span>
+              Relocation advisors lose leads to boring forms. This tool proves your expertise. Clients explore
+              cities, visas, schools, and costs in two minutes. You get a warm, qualified lead before the first call.
+            </p>
           )}
         </div>
 
