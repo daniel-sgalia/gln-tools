@@ -2520,9 +2520,9 @@ Rules:
         <div className="header header-compact">
           {step >= 1 && step <= TOTAL_QUESTIONS && (
             <>
-              <p className="header-sub" style={{ marginBottom: 16, maxWidth: 920 }}>
+              <p className="header-sub" style={{ marginBottom: 28, maxWidth: 920 }}>
                 <span className="header-eyebrow" style={{ display: 'inline', marginBottom: 0, marginRight: 6 }}>Project Brief:</span>
-                Relocation advisors lose leads to boring forms. This tool proves your expertise — clients explore
+                Relocation advisors lose leads to boring forms. This tool proves your expertise. Clients explore
                 cities, visas, schools, and costs in two minutes. You get a warm, qualified lead before the first call.
               </p>
             </>
