@@ -106,11 +106,11 @@ const style = `
     transition: opacity 0.3s;
   }
   .header-logo:hover { opacity: 1; }
-  .header-compact { padding: 8px 0 0; }
-  .header-compact .header-logo { height: 24px; margin-bottom: 4px; }
+  .header-compact { padding: 10px 0 0; }
+  .header-compact .header-logo { height: 28px; margin-bottom: 4px; }
   .header-eyebrow {
     font-family: 'Outfit', sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -131,9 +131,9 @@ const style = `
     color: var(--gold-light);
   }
   .header-sub {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 400;
-    color: rgba(240,235,225,0.75);
+    color: rgba(240,235,225,0.85);
     max-width: 600px;
     line-height: 1.6;
     margin-bottom: 40px;
@@ -147,7 +147,7 @@ const style = `
   /* PROGRESS */
   .progress-bar {
     width: 100%;
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto 16px;
   }
   .progress-steps {
@@ -180,11 +180,11 @@ const style = `
   /* QUESTION CARD */
   .question-card {
     width: 100%;
-    max-width: 720px;
+    max-width: 760px;
     background: var(--navy-mid);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 32px 40px;
+    padding: 32px 44px;
     animation: fadeUp 0.4s ease;
   }
   @keyframes fadeUp {
@@ -201,7 +201,7 @@ const style = `
   }
   .question-text {
     font-family: 'Cormorant Garant', serif;
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 600;
     color: var(--cream);
     line-height: 1.3;
@@ -224,7 +224,7 @@ const style = `
     background: var(--navy-light);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 16px 20px;
+    padding: 18px 22px;
     color: var(--cream);
     font-family: 'Outfit', sans-serif;
     font-size: 15px;
@@ -2502,26 +2502,29 @@ Rules:
     <>
       <style>{style}</style>
       <div className="app">
-        <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="ao-corner-link">
-          <img src="/alignedops-logo.svg" alt="AlignedOps" className="ao-corner-logo" />
-          <span className="ao-corner-text">Aligned<span>Ops</span></span>
-        </a>
-
         {/* HEADER */}
         <div className="header header-compact">
-          <a href="https://globallivingnetwork.com/about-us/" target="_blank" rel="noopener noreferrer">
-            <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" />
-          </a>
-          {step >= 1 && step <= TOTAL_QUESTIONS && (
-            <>
-              <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="built-by">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
+            <a href="https://globallivingnetwork.com/about-us/" target="_blank" rel="noopener noreferrer">
+              <img src="/gln-logo.png" alt="Global Living Network" className="header-logo" style={{ marginBottom: 0 }} />
+            </a>
+            {step >= 1 && step <= TOTAL_QUESTIONS && (
+              <a href="https://alignedops.io" target="_blank" rel="noopener noreferrer" className="built-by" style={{ marginTop: 0, marginBottom: 0 }}>
                 <img src="/alignedops-logo.svg" alt="AlignedOps" className="built-by-logo" />
                 <span className="built-by-label">Built by</span>
                 <span className="built-by-text">Aligned<span>Ops</span></span>
               </a>
-              <p className="header-sub" style={{ marginBottom: 20, maxWidth: 520 }}>
-                Personalized city matches with cost of living, visa pathways,
-                schools, and neighborhood data — in under two minutes.
+            )}
+          </div>
+          {step >= 1 && step <= TOTAL_QUESTIONS && (
+            <>
+              <div className="header-eyebrow" style={{ display: 'block', marginBottom: 6 }}>Project Brief:</div>
+              <p className="header-sub" style={{ marginBottom: 20, maxWidth: 580 }}>
+                Built for relocation advisors who lose leads to slow intake.
+                Clients self-qualify in under two minutes and receive ranked
+                city matches with cost of living, visa, school, and
+                neighborhood data. Your business receives a qualified lead
+                with actionable data points before the first call.
               </p>
             </>
           )}
